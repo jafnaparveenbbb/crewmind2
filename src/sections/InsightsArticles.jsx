@@ -75,7 +75,7 @@ export default function InsightsArticles() {
                   Stay up-to-date on the latest healthcare innovations and thought leadership.
                 </p>
               </div>
-              <div className="section-title" style={{ marginTop: 'auto', paddingTop: '6rem' }}>
+              <div className="section-title insights__title-wrap">
                 <h2 className="f-64">
                   Explore
                 </h2>

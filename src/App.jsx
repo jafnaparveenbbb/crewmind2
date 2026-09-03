@@ -3,18 +3,17 @@ import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import Navbar from './components/Navbar';
 import PageLoader from './components/PageLoader';
 import CustomCursor from './components/CustomCursor';
 import ScrollArrow from './components/ScrollArrow';
 
 import HeroScroll from './sections/HeroScroll';
+import AboutSection from './sections/AboutSection';
 import IconCards from './sections/IconCards';
 import HorizontalStats from './sections/HorizontalStats';
-import CaseStudySlider from './sections/CaseStudySlider';
-import Testimonials from './sections/Testimonials';
-import TeamSection from './sections/TeamSection';
-import InsightsArticles from './sections/InsightsArticles';
+import CoreValues from './sections/CoreValues';
+import WhatMakesUsDifferent from './sections/WhatMakesUsDifferent';
+import ManagementPartners from './sections/ManagementPartners';
 import ClosingCTA from './sections/ClosingCTA';
 import Footer from './sections/Footer';
 
@@ -93,7 +92,7 @@ export default function App() {
   };
 
   const handleScrollArrowClick = () => {
-    const nextSection = document.getElementById('solutions');
+    const nextSection = document.getElementById('about');
     if (nextSection && lenisRef.current) {
       lenisRef.current.scrollTo(nextSection, { duration: 1.2 });
     }
@@ -107,9 +106,6 @@ export default function App() {
       {/* Initial Loading Screen */}
       {loading && <PageLoader onComplete={handleLoaderComplete} />}
 
-      {/* Navigation Header */}
-      <Navbar />
-
       {/* Sticky Scroll Indicator Arrow */}
       <ScrollArrow onClick={handleScrollArrowClick} isVisible={arrowVisible} />
 
@@ -118,28 +114,28 @@ export default function App() {
         {/* 1. Hero Experience (Video -> Iris/Zoom Transition -> Typography Field) */}
         <HeroScroll isLoaded={!loading} />
 
-        {/* 2. Icon Cards (Theme: light-blue) */}
+        {/* 2. About / Meet Crewmind (Theme: white) */}
+        <AboutSection />
+
+        {/* 3. Services / We Designed Support For Live Productions (Theme: light-blue) */}
         <IconCards />
 
-        {/* 3. Horizontal Stats (Theme: salmon, 400vh pinned) */}
+        {/* 4. Horizontal Stats / Impact in Numbers (Theme: salmon, 480vh pinned) */}
         <HorizontalStats />
 
-        {/* 4. Case Studies Deck (Themes: light-purple -> light-blue -> tan) */}
-        <CaseStudySlider />
+        {/* 4. The Industry Is Changing / Core Values (Theme: yellow) */}
+        <CoreValues />
 
-        {/* 5. Testimonials (Theme: clear) */}
-        <Testimonials />
+        {/* 5. What Makes Us Different (Theme: white) */}
+        <WhatMakesUsDifferent />
 
-        {/* 6. Team Section (Theme: clear) */}
-        <TeamSection />
+        {/* 6. Why Management Teams Partner With Us (Theme: salmon) */}
+        <ManagementPartners />
 
-        {/* 7. Insights & Articles (Theme: clear) */}
-        <InsightsArticles />
-
-        {/* 8. Closing CTA (Theme: footer-cta, Yellow) */}
+        {/* 7. Closing CTA (Theme: footer-cta, Yellow) */}
         <ClosingCTA />
 
-        {/* 9. Grand Footer (Theme: footer-mob, Black) */}
+        {/* 8. Grand Footer (Theme: footer-mob, Black) */}
         <Footer />
       </main>
     </div>

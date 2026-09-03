@@ -44,16 +44,16 @@ export default function ClosingCTA() {
           <div className="cta__row">
             
             {/* Title & Description */}
-            <div style={{ maxWidth: '42rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div style={{ maxWidth: '48rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <div className="section-title">
                 <h3 className="f-64">
-                  Discover <br />
-                  Significo.
+                  Strong productions <br />
+                  start with strong people.
                 </h3>
               </div>
               <div className="section-descr">
                 <p className="f-18">
-                  Find out how Significo’s people-centered designs can make health technology more empowering.
+                  Whether you're managing an artist, a festival, a concert tour, or a production team, Crewmind helps protect the people behind the performance.
                 </p>
               </div>
             </div>
@@ -89,8 +89,8 @@ export default function ClosingCTA() {
 
           {/* Bottom Button */}
           <div className="cta__btn">
-            <MagneticButton buttonStyle="black" href="#about">
-              Let’s go
+            <MagneticButton buttonStyle="black" href="#contact">
+              Book a Call Now
             </MagneticButton>
           </div>
 

@@ -77,8 +77,13 @@ import insight02 from '../assets/significo/insights/insight-02.png';
 
 // Misc
 import scrollUpSvg from '../assets/significo/misc/scroll-up.svg';
+import mainLogo from '../assets/significo/misc/main-logo.png';
 
 export const ASSETS = {
+  misc: {
+    scrollUp: scrollUpSvg,
+    mainLogo: mainLogo
+  },
   hero: {
     videoDesktop: heroVideo,
     videoMobile: heroVideoMob,
@@ -111,6 +116,14 @@ export const ASSETS = {
       { name: "dynamic", img: portrait24 }
     ]
   },
+  portraits: [
+    portrait01, portrait02, portrait03, portrait04,
+    portrait05, portrait06, portrait07, portrait08,
+    portrait09, portrait10, portrait11, portrait12,
+    portrait13, portrait14, portrait15, portrait16,
+    portrait17, portrait18, portrait19, portrait20,
+    portrait21, portrait22, portrait23, portrait24
+  ],
   horizontal: [
     horiz01, horiz02, horiz03, horiz04,
     horiz05, horiz06, horiz07, horiz08,

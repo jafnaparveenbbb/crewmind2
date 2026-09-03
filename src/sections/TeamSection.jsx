@@ -48,24 +48,24 @@ export default function TeamSection() {
   };
 
   return (
-    <section 
-      ref={sectionRef} 
-      className="section" 
+    <section
+      ref={sectionRef}
+      className="section"
       this-theme="clear"
       section-space=""
       id="team"
     >
       <div className="container">
         <div className="team">
-          
+
           <div className="team__title">
             <h3 className="f-64">Our Team</h3>
           </div>
 
           <div className="team__list">
             {team.map((member, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="team__item"
                 onMouseEnter={() => handleRowMouseEnter(member.avatar)}
                 onMouseLeave={handleRowMouseLeave}
@@ -92,8 +92,8 @@ export default function TeamSection() {
           </div>
 
           {/* Floating Cursor-tracking Avatar */}
-          <div 
-            ref={avatarParentRef} 
+          <div
+            ref={avatarParentRef}
             className="team__avatar--parent"
             style={{
               position: 'fixed',
@@ -103,7 +103,7 @@ export default function TeamSection() {
               zIndex: 90
             }}
           >
-            <div 
+            <div
               ref={avatarImgRef}
               className={`team__avatar ${activeAvatar ? 'show' : ''}`}
               style={{

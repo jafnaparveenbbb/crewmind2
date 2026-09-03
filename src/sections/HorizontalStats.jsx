@@ -12,6 +12,7 @@ export default function HorizontalStats() {
   const num1Ref = useRef(null);
   const num2Ref = useRef(null);
   const num3Ref = useRef(null);
+  const num4Ref = useRef(null);
 
   useEffect(() => {
     const isMobile = window.innerWidth <= 768;
@@ -55,7 +56,7 @@ export default function HorizontalStats() {
 
     // Floating Parallax Images
     const imgs = container.querySelectorAll('.horizontal__img');
-    const parallaxSpeeds = [25, -30, 40, -20, 35, -45, 30, -35, 45, -25, 35, -40];
+    const parallaxSpeeds = [20, -30, 40, -20, 35, -45, 30, -35, 45, -25, 35, -40];
     imgs.forEach((img, idx) => {
       const speed = parallaxSpeeds[idx % parallaxSpeeds.length];
       gsap.to(img, {
@@ -76,12 +77,12 @@ export default function HorizontalStats() {
       const obj = { val: 0 };
       gsap.to(obj, {
         val: targetVal,
-        duration: 1.5,
+        duration: 1.4,
         ease: "power2.out",
         onUpdate: () => {
           if (!ref.current) return;
           const display = isDecimal ? obj.val.toFixed(1) : Math.round(obj.val);
-          ref.current.innerText = `${display} ${suffix}`;
+          ref.current.innerText = `${display}${suffix}`;
         },
         scrollTrigger: {
           trigger: ref.current,
@@ -92,9 +93,9 @@ export default function HorizontalStats() {
       });
     };
 
-    animateCounter(num1Ref, 20.4, true, "M");
-    animateCounter(num2Ref, 43, false, "%");
-    animateCounter(num3Ref, 13, false, "");
+    animateCounter(num1Ref, 63, false, "%");
+    animateCounter(num2Ref, 66, false, "%");
+    animateCounter(num3Ref, 11, false, "%");
 
     return () => {
       ScrollTrigger.getAll().forEach(t => {
@@ -112,31 +113,26 @@ export default function HorizontalStats() {
       ref={containerRef}
       className="section horizontal"
       this-theme="salmon"
-      id="about"
+      id="impact"
     >
       <div className="horizontal__sticky">
         <div ref={listRef} className="horizontal__list">
 
-          {/* Slide 1: Real Talk, Real Impact */}
-          <div className="horizontal__item">
+          {/* Slide 1: Main Heading Only in 2 lines */}
+          <div className="horizontal__item is--first">
             <div className="horizontal__content is--left">
               <h3 className="f-96">
-                Real Talk, <br />
-                Real Impact
+                THE INDUSTRY <br />
+                CAN’T IGNORE THIS
               </h3>
-            </div>
-            <div className="horizontal__imgs">
-              <div className="horizontal__img is--1">
-                <img src={imgs[0]} alt="Impact visual" loading="eager" />
-              </div>
             </div>
           </div>
 
-          {/* Slide 2: 20.4 M */}
+          {/* Slide 2: 63% */}
           <div className="horizontal__item">
             <div className="horizontal__content">
-              <div ref={num1Ref} className="f-140">20.4 M</div>
-              <div className="f-40">Real people — real lives — we have built products and solutions for.</div>
+              <div ref={num1Ref} className="f-140">63%</div>
+              <div className="f-40">Music industry professionals experience depression.</div>
             </div>
             <div className="horizontal__imgs">
               <div className="horizontal__img is--2"><img src={imgs[1]} alt="Media" loading="eager" /></div>
@@ -146,11 +142,11 @@ export default function HorizontalStats() {
             </div>
           </div>
 
-          {/* Slide 3: 43% */}
+          {/* Slide 4: 66% */}
           <div className="horizontal__item">
             <div className="horizontal__content">
-              <div ref={num2Ref} className="f-140">43%</div>
-              <div className="f-40">Expert Women in Tech.</div>
+              <div ref={num2Ref} className="f-140">66%</div>
+              <div className="f-40">Report significant anxiety symptoms</div>
             </div>
             <div className="horizontal__imgs">
               <div className="horizontal__img is--6"><img src={imgs[5]} alt="Media" loading="eager" /></div>
@@ -159,15 +155,25 @@ export default function HorizontalStats() {
             </div>
           </div>
 
-          {/* Slide 4: 13 */}
+          {/* Slide 5: 11% */}
           <div className="horizontal__item">
             <div className="horizontal__content">
-              <div ref={num3Ref} className="f-140">13</div>
-              <div className="f-40">Nationalities Represented on Our Team.</div>
+              <div ref={num3Ref} className="f-140">11%</div>
+              <div className="f-40">Experienced suicidal thoughts in the last year.</div>
             </div>
             <div className="horizontal__imgs">
               <div className="horizontal__img is--9"><img src={imgs[8]} alt="Media" loading="eager" /></div>
               <div className="horizontal__img is--10"><img src={imgs[9]} alt="Media" loading="eager" /></div>
+            </div>
+          </div>
+
+          {/* Slide 6: 01 IN 6 */}
+          <div className="horizontal__item">
+            <div className="horizontal__content">
+              <div ref={num4Ref} className="f-140">01 IN 6</div>
+              <div className="f-40">Lost a colleague to suicide</div>
+            </div>
+            <div className="horizontal__imgs">
               <div className="horizontal__img is--11"><img src={imgs[10]} alt="Media" loading="eager" /></div>
               <div className="horizontal__img is--12"><img src={imgs[11]} alt="Media" loading="eager" /></div>
             </div>

@@ -2,12 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ASSETS } from '../utils/assets';
+import Navbar from '../components/Navbar';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroScroll({ isLoaded = true }) {
   const containerRef = useRef(null);
   const stickyRef = useRef(null);
+  const navRef = useRef(null);
   const videoBoxRef = useRef(null);
   const videoElementRef = useRef(null);
   const rowsParentRef = useRef(null);
@@ -15,8 +17,8 @@ export default function HeroScroll({ isLoaded = true }) {
   const row1Ref = useRef(null);
   const row2Ref = useRef(null);
   const row3Ref = useRef(null);
-  const row4Ref = useRef(null);
   const subtitleRef = useRef(null);
+  const bottomRef = useRef(null);
 
   useEffect(() => {
     const isMobile = window.innerWidth <= 768;
@@ -29,14 +31,14 @@ export default function HeroScroll({ isLoaded = true }) {
     const row1 = row1Ref.current;
     const row2 = row2Ref.current;
     const row3 = row3Ref.current;
-    const row4 = row4Ref.current;
     const subtitle = subtitleRef.current;
+    const heroBottom = bottomRef.current;
 
     if (!container || !stickyFrame || !videoBox || !rowsParent) return;
 
     // Explicitly play video
     if (videoElement) {
-      videoElement.play().catch(() => {});
+      videoElement.play().catch(() => { });
     }
 
     // Function to calculate exact relative offset of target circular portrait
@@ -44,7 +46,7 @@ export default function HeroScroll({ isLoaded = true }) {
       if (!targetImage || !stickyFrame) {
         return { x: 0, y: 0, size: 55 };
       }
-      
+
       // Temporarily measure at full scale 1
       const savedScale = gsap.getProperty(rowsParent, "scale") || 1;
       gsap.set(rowsParent, { scale: 1 });
@@ -87,7 +89,8 @@ export default function HeroScroll({ isLoaded = true }) {
       transformOrigin: "center center"
     });
 
-    if (subtitle) gsap.set(subtitle, { opacity: 0, y: 25 });
+    if (subtitle) gsap.set(subtitle, { opacity: 0, y: 30 });
+    if (heroBottom) gsap.set(heroBottom, { opacity: 1, y: 0 });
 
     const intermediateCircleSize = isMobile ? "24vw" : "14vw";
 
@@ -109,15 +112,35 @@ export default function HeroScroll({ isLoaded = true }) {
 
     // =========================================================================
     // THE EXACT HERO TRANSITION SEQUENCE:
-    // 1. [0.0 - 1.0]: Fullscreen Video holds at top of page
-    // 2. [1.0 - 4.2]: Video physically ZOOMS OUT from 100vw/100vh -> 14vw circular medallion at center
-    // 3. [3.6 - 6.8]: Typography field emerges & expands from center (scale 0.25 -> 1.0)
-    // 4. [4.6 - 7.6]: Circular Video FLIES from center into TARGET PORTRAIT IMAGE position & size
-    // 5. [7.2 - 7.8]: Circular Video seamlessly merges and becomes that portrait in the typography row
-    // 6. [4.8 - 9.0]: Multi-directional horizontal row scrub (x: ±14%)
-    // 7. [5.0 - 7.5]: Top subtitle fades in at top of viewport
-    // 8. [8.8 - 10.0]: Settled state holds, then pin releases into Section 2
+    // 1. [0.0 - 1.0]: Fullscreen Video holds at top of page, bottom sentence is fully visible
+    // 2. [0.6 - 2.2]: Bottom sentence diminishes/fades out smoothly as video begins zooming
+    // 3. [1.0 - 4.2]: Video physically ZOOMS OUT from 100vw/100vh -> 14vw circular medallion at center
+    // 4. [3.6 - 6.8]: Typography field emerges & expands from center (scale 0.25 -> 1.0)
+    // 5. [4.6 - 7.6]: Circular Video FLIES from center into TARGET PORTRAIT IMAGE position & size
+    // 6. [7.2 - 7.8]: Circular Video seamlessly merges and becomes that portrait in the typography row
+    // 7. [4.8 - 9.0]: Multi-directional horizontal row scrub (x: ±14%)
+    // 8. [4.2 - 6.5]: Top subtitle floats in at top of viewport
+    // 9. [8.8 - 10.0]: Settled state holds, then pin releases into Section 2
     // =========================================================================
+
+    // Step 1b: Fade out navbar and bottom hero text as video begins zooming
+    if (navRef.current) {
+      masterTl.to(navRef.current, {
+        opacity: 0,
+        y: -22,
+        duration: 1.4,
+        ease: "power2.out"
+      }, 0.4);
+    }
+
+    if (heroBottom) {
+      masterTl.to(heroBottom, {
+        opacity: 0,
+        y: -18,
+        duration: 1.6,
+        ease: "power2.out"
+      }, 0.6);
+    }
 
     // Step 2: Physical Zoom Out into Central Circular Medallion
     masterTl.to(videoBox, {
@@ -154,14 +177,14 @@ export default function HeroScroll({ isLoaded = true }) {
       ease: "power1.in"
     }, 7.2);
 
-    // Step 6: Top Subtitle (Centered at Top of Hero)
+    // Step 6: Top Subtitle (Centered at Top of Hero like 2nd image)
     if (subtitle) {
       masterTl.to(subtitle, {
         opacity: 1,
         y: 0,
         duration: 1.8,
         ease: "power2.out"
-      }, 5.0);
+      }, 4.2);
     }
 
     // Step 7: Opposing Multi-directional Row Movement
@@ -169,8 +192,7 @@ export default function HeroScroll({ isLoaded = true }) {
     masterTl
       .to(row1, { x: `+=${shiftPercent}%`, ease: "none", duration: 8 }, 1.0)
       .to(row2, { x: `-=${shiftPercent}%`, ease: "none", duration: 8 }, 1.0)
-      .to(row3, { x: `+=${shiftPercent}%`, ease: "none", duration: 8 }, 1.0)
-      .to(row4, { x: `-=${shiftPercent}%`, ease: "none", duration: 8 }, 1.0);
+      .to(row3, { x: `+=${shiftPercent}%`, ease: "none", duration: 8 }, 1.0);
 
     // Step 8: Settle before pin release
     masterTl.to(stickyFrame, {
@@ -207,7 +229,12 @@ export default function HeroScroll({ isLoaded = true }) {
     <section ref={containerRef} className="home-sticky">
       {/* Pinned Sticky Frame (Always in viewport 100vw x 100vh during scroll) */}
       <div ref={stickyRef} className="hero-sticky-frame">
-        
+
+        {/* Top Navbar: Exclusively in Hero */}
+        <div ref={navRef} className="hero-nav-layer">
+          <Navbar />
+        </div>
+
         {/* 1. Flying Circular Video Layer (Full-screen -> Center Circle -> Travels into Target Portrait) */}
         <div ref={videoBoxRef} className="hero__video-box">
           <video
@@ -226,47 +253,47 @@ export default function HeroScroll({ isLoaded = true }) {
 
         {/* 2. Top Subtitle (Centered horizontally, positioned at top of hero above typography) */}
         <div ref={subtitleRef} className="hero__subtitle">
-          <h3 className="f-24">
-            Crafting a new paradigm of
+          <h3 className="f-24 is--title">
+            We help teams stay supported
             <br />
-            healthcare, one that is
+            before challenges become disruptions.
           </h3>
         </div>
 
         {/* 3. Black Typographic Canvas with Oversized Words & 24 Circular Real Portraits */}
         <div ref={rowsParentRef} className="hero__rows--parent">
           <div className="hero__rows">
-            
+
             {/* Row 1 */}
             <div ref={row1Ref} className="hero__row">
               <div className="hero__line">
-                <span className="hero__word">creative</span>
+                <span className="hero__word">artists</span>
                 <div className="hero__circle">
-                  <img src={circles[0].img} alt="Creative" loading="eager" />
+                  <img src={circles[0].img} alt="Artists" loading="eager" />
                 </div>
-                <span className="hero__word">inclusive</span>
+                <span className="hero__word">tour managers</span>
                 <div className="hero__circle">
-                  <img src={circles[1].img} alt="Inclusive" loading="eager" />
-                </div>
-              </div>
-              <div className="hero__line">
-                <span className="hero__word">intuitive</span>
-                <div className="hero__circle">
-                  <img src={circles[2].img} alt="Intuitive" loading="eager" />
-                </div>
-                <span className="hero__word">elegant</span>
-                <div className="hero__circle">
-                  <img src={circles[3].img} alt="Elegant" loading="eager" />
+                  <img src={circles[1].img} alt="Tour Managers" loading="eager" />
                 </div>
               </div>
               <div className="hero__line">
-                <span className="hero__word">refined</span>
+                <span className="hero__word">production teams</span>
                 <div className="hero__circle">
-                  <img src={circles[4].img} alt="Refined" loading="eager" />
+                  <img src={circles[2].img} alt="Production Teams" loading="eager" />
                 </div>
-                <span className="hero__word">useful</span>
+                <span className="hero__word">technical crews</span>
                 <div className="hero__circle">
-                  <img src={circles[5].img} alt="Useful" loading="eager" />
+                  <img src={circles[3].img} alt="Technical Crews" loading="eager" />
+                </div>
+              </div>
+              <div className="hero__line">
+                <span className="hero__word">festivals</span>
+                <div className="hero__circle">
+                  <img src={circles[4].img} alt="Festivals" loading="eager" />
+                </div>
+                <span className="hero__word">live events</span>
+                <div className="hero__circle">
+                  <img src={circles[5].img} alt="Live Events" loading="eager" />
                 </div>
               </div>
             </div>
@@ -274,34 +301,34 @@ export default function HeroScroll({ isLoaded = true }) {
             {/* Row 2 */}
             <div ref={row2Ref} className="hero__row">
               <div className="hero__line">
-                <span className="hero__word">thoughtful</span>
+                <span className="hero__word">artists</span>
                 <div className="hero__circle">
-                  <img src={circles[6].img} alt="Thoughtful" loading="eager" />
+                  <img src={circles[6].img} alt="Artists" loading="eager" />
                 </div>
-                <span className="hero__word">bold</span>
+                <span className="hero__word">tour managers</span>
                 {/* Target circular portrait where video lands and merges */}
                 <div ref={targetImageRef} className="hero__circle is--target">
-                  <img src={circles[7].img} alt="Bold" loading="eager" />
+                  <img src={circles[7].img} alt="Tour Managers" loading="eager" />
                 </div>
               </div>
               <div className="hero__line">
-                <span className="hero__word">empathetic</span>
+                <span className="hero__word">production teams</span>
                 <div className="hero__circle">
-                  <img src={circles[8].img} alt="Empathetic" loading="eager" />
+                  <img src={circles[8].img} alt="Production Teams" loading="eager" />
                 </div>
-                <span className="hero__word">curious</span>
+                <span className="hero__word">technical crews</span>
                 <div className="hero__circle">
-                  <img src={circles[9].img} alt="Curious" loading="eager" />
+                  <img src={circles[9].img} alt="Technical Crews" loading="eager" />
                 </div>
               </div>
               <div className="hero__line">
-                <span className="hero__word">empathetic</span>
+                <span className="hero__word">festivals</span>
                 <div className="hero__circle">
-                  <img src={circles[10].img} alt="Empathetic" loading="eager" />
+                  <img src={circles[10].img} alt="Festivals" loading="eager" />
                 </div>
-                <span className="hero__word">useful</span>
+                <span className="hero__word">live events</span>
                 <div className="hero__circle">
-                  <img src={circles[11].img} alt="Useful" loading="eager" />
+                  <img src={circles[11].img} alt="Live Events" loading="eager" />
                 </div>
               </div>
             </div>
@@ -309,71 +336,50 @@ export default function HeroScroll({ isLoaded = true }) {
             {/* Row 3 */}
             <div ref={row3Ref} className="hero__row">
               <div className="hero__line">
-                <span className="hero__word">cohesive</span>
+                <span className="hero__word">artists</span>
                 <div className="hero__circle">
-                  <img src={circles[12].img} alt="Cohesive" loading="eager" />
+                  <img src={circles[12].img} alt="Artists" loading="eager" />
                 </div>
-                <span className="hero__word">balanced</span>
+                <span className="hero__word">tour managers</span>
                 <div className="hero__circle">
-                  <img src={circles[13].img} alt="Balanced" loading="eager" />
-                </div>
-              </div>
-              <div className="hero__line">
-                <span className="hero__word">functional</span>
-                <div className="hero__circle">
-                  <img src={circles[14].img} alt="Functional" loading="eager" />
-                </div>
-                <span className="hero__word">authentic</span>
-                <div className="hero__circle">
-                  <img src={circles[15].img} alt="Authentic" loading="eager" />
+                  <img src={circles[13].img} alt="Tour Managers" loading="eager" />
                 </div>
               </div>
               <div className="hero__line">
-                <span className="hero__word">agile</span>
+                <span className="hero__word">production teams</span>
                 <div className="hero__circle">
-                  <img src={circles[16].img} alt="Agile" loading="eager" />
+                  <img src={circles[14].img} alt="Production Teams" loading="eager" />
                 </div>
-                <span className="hero__word">useful</span>
+                <span className="hero__word">technical crews</span>
                 <div className="hero__circle">
-                  <img src={circles[17].img} alt="Useful" loading="eager" />
+                  <img src={circles[15].img} alt="Technical Crews" loading="eager" />
+                </div>
+              </div>
+              <div className="hero__line">
+                <span className="hero__word">festivals</span>
+                <div className="hero__circle">
+                  <img src={circles[16].img} alt="Festivals" loading="eager" />
+                </div>
+                <span className="hero__word">live events</span>
+                <div className="hero__circle">
+                  <img src={circles[17].img} alt="Live Events" loading="eager" />
                 </div>
               </div>
             </div>
 
-            {/* Row 4 */}
-            <div ref={row4Ref} className="hero__row">
-              <div className="hero__line">
-                <span className="hero__word">purposful</span>
-                <div className="hero__circle">
-                  <img src={circles[18].img} alt="Purposeful" loading="eager" />
-                </div>
-                <span className="hero__word">ethical</span>
-                <div className="hero__circle">
-                  <img src={circles[19].img} alt="Ethical" loading="eager" />
-                </div>
-              </div>
-              <div className="hero__line">
-                <span className="hero__word">insightful</span>
-                <div className="hero__circle">
-                  <img src={circles[20].img} alt="Insightful" loading="eager" />
-                </div>
-                <span className="hero__word">useful</span>
-                <div className="hero__circle">
-                  <img src={circles[21].img} alt="Useful" loading="eager" />
-                </div>
-              </div>
-              <div className="hero__line">
-                <span className="hero__word">adaptive</span>
-                <div className="hero__circle">
-                  <img src={circles[22].img} alt="Adaptive" loading="eager" />
-                </div>
-                <span className="hero__word">dynamic</span>
-                <div className="hero__circle">
-                  <img src={circles[23].img} alt="Dynamic" loading="eager" />
-                </div>
-              </div>
-            </div>
+          </div>
+        </div>
 
+        {/* 4. Bottom Hero Description (Initial client view on landing matching Image 1 & 2) */}
+        <div ref={bottomRef} className="hero__bottom">
+          <div className="hero__descr">
+            <h4 className="f-24">
+              Embedded
+              <br />
+              psychological support
+              <br />
+              for touring crews.
+            </h4>
           </div>
         </div>
 
