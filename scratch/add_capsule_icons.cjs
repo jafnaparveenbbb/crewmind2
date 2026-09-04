@@ -1,4 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+const fs = require('fs');
+
+const coreValuesContent = `import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Users, ShieldCheck, Workflow, BatteryCharging } from 'lucide-react';
@@ -102,7 +104,7 @@ export default function CoreValues() {
               </p>
             </div>
 
-            {/* Right Side: Stadium Stream Rotated at -15deg */}
+            {/* Right Side: Stadium Stream Rotated at -15deg (HEX #00063D Container with White Text) */}
             <div className="significo-about-stats__right">
               <div className="significo-about-stats__stream">
                 
@@ -173,3 +175,7 @@ export default function CoreValues() {
     </section>
   );
 }
+`;
+
+fs.writeFileSync('src/sections/CoreValues.jsx', coreValuesContent, 'utf8');
+console.log('Successfully updated CoreValues.jsx with icons!');

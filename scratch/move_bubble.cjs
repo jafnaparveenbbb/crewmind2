@@ -1,4 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+const fs = require('fs');
+const path = require('path');
+
+const horizontalStatsPath = path.join(__dirname, '..', 'src', 'sections', 'HorizontalStats.jsx');
+const indexCssPath = path.join(__dirname, '..', 'src', 'index.css');
+
+const horizontalStatsContent = `import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticButton from '../components/MagneticButton';
@@ -22,8 +28,8 @@ export default function HorizontalStats() {
     // Theme trigger for salmon
     ScrollTrigger.create({
       trigger: container,
-      start: "top 50%",
-      end: "bottom 50%",
+      start: () => \`top \${window.innerHeight / 2 + 10}\`,
+      end: () => \`bottom \${window.innerHeight / 2 - 10}\`,
       onEnter: () => document.body.setAttribute('theme', 'salmon'),
       onEnterBack: () => document.body.setAttribute('theme', 'salmon')
     });
@@ -81,7 +87,7 @@ export default function HorizontalStats() {
         onUpdate: () => {
           if (!ref.current) return;
           const display = isDecimal ? obj.val.toFixed(1) : Math.round(obj.val);
-          ref.current.innerText = `${display}${suffix}`;
+          ref.current.innerText = \`\${display}\${suffix}\`;
         },
         scrollTrigger: {
           trigger: ref.current,
@@ -196,4 +202,218 @@ export default function HorizontalStats() {
       </div>
     </section>
   );
+}
+`;
+
+fs.writeFileSync(horizontalStatsPath, horizontalStatsContent, 'utf8');
+console.log('HorizontalStats.jsx updated!');
+
+let css = fs.readFileSync(indexCssPath, 'utf8');
+const startTag = '/* ==========================================================================\r\n   HORIZONTAL STATS (480vh pinned)\r\n   ========================================================================== */';
+const startTagLF = '/* ==========================================================================\n   HORIZONTAL STATS (480vh pinned)\n   ========================================================================== */';
+const endTag = '/* ==========================================================================\r\n   CORE VALUES / THE INDUSTRY IS CHANGING';
+const endTagLF = '/* ==========================================================================\n   CORE VALUES / THE INDUSTRY IS CHANGING';
+
+const updatedHorizontalCss = `/* ==========================================================================
+   HORIZONTAL STATS (480vh pinned)
+   ========================================================================== */
+
+.horizontal {
+  height: 480vh;
+  position: relative;
+}
+
+.horizontal__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.horizontal__list {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  will-change: transform;
+}
+
+.horizontal__item {
+  flex: none;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 40px;
+  padding-right: 40px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.horizontal__item.is--first {
+  width: 100vw;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.horizontal__item.is--first .horizontal__content {
+  max-width: 90rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.horizontal__item.is--first .f-96 {
+  font-family: 'Staatliches', sans-serif;
+  font-size: clamp(4.8rem, 10vw, 12.5rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: 0.02em;
+  color: var(--black);
+  text-align: center;
+  margin: 0 auto;
+}
+
+.horizontal__content {
+  max-width: 58rem;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 2rem);
+  z-index: 2;
+  position: relative;
+}
+
+.horizontal__content .f-140 {
+  font-family: 'Staatliches', sans-serif;
+  font-size: clamp(5.5rem, 11vw, 13.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  color: var(--white);
+}
+
+.horizontal__content .f-40 {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(1.4rem, 2.2vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  max-width: 48rem;
+}
+
+/* Floating Bubble Positions In Open Blank Spaces */
+.horizontal__imgs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.horizontal__img {
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.16);
+  will-change: transform;
+}
+
+.horizontal__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.horizontal__img.pos--1 {
+  width: clamp(8.5rem, 12vw, 15rem);
+  bottom: 14%;
+  right: 24%;
+}
+
+.horizontal__img.pos--2 {
+  width: clamp(8rem, 11vw, 14rem);
+  top: 14%;
+  right: 15%;
+}
+
+.horizontal__img.pos--3 {
+  width: clamp(10rem, 14vw, 18rem);
+  bottom: 12%;
+  right: 28%;
+}
+
+.horizontal__img.pos--4 {
+  width: clamp(11rem, 15vw, 19rem);
+  top: 15%;
+  right: 14%;
+}
+
+.horizontal__img.pos--5 {
+  width: clamp(10.5rem, 14.5vw, 18rem);
+  bottom: 14%;
+  right: 15%;
+}
+
+.horizontal__img.pos--6 {
+  width: clamp(10rem, 14vw, 17rem);
+  top: 16%;
+  right: 18%;
+}
+
+.horizontal__btn--parent {
+  position: absolute;
+  bottom: 4rem;
+  left: calc(46 / var(--to-rem) * 100rem);
+  z-index: 3;
+}
+
+@media screen and (max-width: 768px) {
+  .horizontal__item {
+    width: 100vw;
+    padding-left: var(--page-padding-x);
+    padding-right: var(--page-padding-x);
+  }
+
+  .horizontal__btn--parent {
+    bottom: 2rem;
+    left: var(--page-padding-x);
+  }
+
+  .horizontal__img.pos--1 { width: 7.5rem; bottom: 8%; right: 8%; }
+  .horizontal__img.pos--2 { width: 7rem; top: 10%; right: 8%; }
+  .horizontal__img.pos--3 { width: 8.5rem; bottom: 10%; right: 12%; }
+  .horizontal__img.pos--4 { width: 8rem; top: 10%; right: 6%; }
+  .horizontal__img.pos--5 { width: 8.5rem; bottom: 8%; right: 6%; }
+  .horizontal__img.pos--6 { width: 8rem; top: 12%; right: 8%; }
+}
+
+`;
+
+let startIdx = css.indexOf(startTag);
+if (startIdx === -1) startIdx = css.indexOf(startTagLF);
+let endIdx = css.indexOf(endTag);
+if (endIdx === -1) endIdx = css.indexOf(endTagLF);
+
+if (startIdx !== -1 && endIdx !== -1) {
+  const updatedCss = css.substring(0, startIdx) + updatedHorizontalCss + css.substring(endIdx);
+  fs.writeFileSync(indexCssPath, updatedCss, 'utf8');
+  console.log('index.css updated successfully!');
+} else {
+  console.error('Could not find start or end tags in index.css');
 }
