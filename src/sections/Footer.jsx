@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import mainLogo from '../assets/significo/misc/main-logo.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,16 +55,14 @@ export default function Footer() {
         );
       }
 
-      // 2. Massive "CREWMIND." wordmark letter-by-letter rising animation
-      const chars = footer.querySelectorAll('.footer__char');
-      if (chars.length && wordmark) {
-        gsap.fromTo(chars,
+      // 2. Footer logo rising animation
+      if (wordmark) {
+        gsap.fromTo(wordmark,
           { y: 60, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            stagger: 0.04,
-            duration: 0.8,
+            duration: 0.85,
             ease: "power2.out",
             scrollTrigger: {
               trigger: footer,
@@ -113,7 +112,6 @@ export default function Footer() {
     }
   };
 
-  const CREWMIND_CHARS = ['c', 'r', 'e', 'w', 'm', 'i', 'n', 'd', '.'];
 
   return (
     <footer ref={footerRef} className="section footer-section" this-theme="footer-mob" id="contact">
@@ -250,14 +248,10 @@ export default function Footer() {
 
           </div>
 
-          {/* Massive Wordmark: "crewmind." with Scroll-driven Letter Elevation Animation */}
+          {/* Footer Logo: Navbar logo with scroll-driven entrance animation */}
           <div ref={wordmarkRef} className="footer__wordmark-wrap">
             <div className="footer__wordmark">
-              {CREWMIND_CHARS.map((char, index) => (
-                <div key={index} className={`footer__char is--${char === '.' ? 'dot' : char}`}>
-                  <span className="footer__char-letter">{char}</span>
-                </div>
-              ))}
+              <img src={mainLogo} alt="Crewmind Logo" className="footer__logo-img" />
             </div>
           </div>
 

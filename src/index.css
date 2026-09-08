@@ -2650,42 +2650,35 @@ footer {
   font-weight: 600;
 }
 
-/* Massive Full-Width Wordmark: "crewmind." */
+/* Footer Logo: Navbar logo scaled for massive footer presence */
 .footer__wordmark-wrap {
   width: 100%;
   margin-top: clamp(1.5rem, 3.5vw, 3rem);
   margin-bottom: 0.5rem;
   overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .footer__wordmark {
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: center;
   color: var(--white);
   height: auto;
 }
 
-.footer__char {
-  display: inline-flex;
-  align-items: flex-end;
-  will-change: transform, opacity;
-}
-
-.footer__char-letter {
-  font-family: 'Staatliches', sans-serif;
-  font-size: clamp(4.2rem, 12.8vw, 14.5rem);
-  line-height: 0.95;
-  letter-spacing: 0.02em;
-  color: #ffffff;
-  text-transform: uppercase;
-  display: inline-block;
-}
-
-.footer__char.is--dot .footer__char-letter {
-  font-size: clamp(4.2rem, 12.8vw, 14.5rem);
-  line-height: 0.95;
+.footer__logo-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: clamp(4.5rem, 13vw, 14.5rem);
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  margin: 0 auto;
 }
 
 .footer__divider {
@@ -2737,12 +2730,8 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  .footer__char-letter {
-    font-size: clamp(3rem, 10vw, 6.5rem);
-  }
-
-  .footer__wordmark {
-    height: clamp(3rem, 10vw, 6.5rem);
+  .footer__logo-img {
+    max-height: clamp(3rem, 10vw, 6.5rem);
   }
 
   .footer__bottom-row {

@@ -126,11 +126,11 @@ export default function App() {
         {/* 4. The Industry Is Changing / Core Values (Theme: yellow) */}
         <CoreValues />
 
-        {/* 5. What Makes Us Different (Theme: white) */}
-        <WhatMakesUsDifferent />
-
-        {/* 6. Why Management Teams Partner With Us (Theme: salmon) */}
+        {/* 5. Why Management Teams Partner With Us (Theme: salmon) */}
         <ManagementPartners />
+
+        {/* 6. What Makes Us Different (Theme: white) */}
+        <WhatMakesUsDifferent />
 
         {/* 7. Closing CTA (Theme: footer-cta, Yellow) */}
         <ClosingCTA />
