@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import mainLogo from '../assets/significo/misc/main-logo.png';
+import mainLogo2x from '../assets/significo/misc/main-logo-2x.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,16 +23,17 @@ export default function Footer() {
     const wordmark = wordmarkRef.current;
     if (!footer) return;
 
-    // Theme trigger for footer-mob / black
-    const stTheme = ScrollTrigger.create({
-      trigger: footer,
-      start: "top 80%",
-      end: "bottom bottom",
-      onEnter: () => document.body.setAttribute('theme', 'footer-mob'),
-      onEnterBack: () => document.body.setAttribute('theme', 'footer-mob')
-    });
-
     const ctx = gsap.context(() => {
+      // Theme trigger for footer-mob
+      ScrollTrigger.create({
+        trigger: footer,
+        start: "top 80%",
+        end: "bottom bottom",
+        onEnter: () => document.body.setAttribute('theme', 'footer-mob'),
+        onEnterBack: () => document.body.setAttribute('theme', 'footer-mob'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'footer-cta')
+      });
+
       // 1. Entrance animation for contact form and info blocks
       const leftCol = footer.querySelector('.footer__contact-col');
       const rightCol = footer.querySelector('.footer__info-col');
@@ -39,12 +41,12 @@ export default function Footer() {
 
       if (leftCol && rightCol) {
         gsap.fromTo([leftCol, rightCol],
-          { y: 35, opacity: 0 },
+          { y: 30, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            stagger: 0.12,
-            duration: 0.85,
+            stagger: 0.1,
+            duration: 0.8,
             ease: "power3.out",
             scrollTrigger: {
               trigger: footer,
@@ -55,32 +57,32 @@ export default function Footer() {
         );
       }
 
-      // 2. Footer logo rising animation
+      // 2. Footer wordmark rising reveal animation
       if (wordmark) {
         gsap.fromTo(wordmark,
-          { y: 60, opacity: 0 },
+          { y: 40, opacity: 0 },
           {
             y: 0,
             opacity: 1,
             duration: 0.85,
             ease: "power2.out",
             scrollTrigger: {
-              trigger: footer,
-              start: "top 70%",
+              trigger: wordmark,
+              start: "top 90%",
               toggleActions: "play none none none"
             }
           }
         );
       }
 
-      // 3. Bottom legal links & social icons reveal
+      // 3. Bottom legal links & copyright reveal
       if (bottomRow) {
         gsap.fromTo(bottomRow,
-          { y: 20, opacity: 0 },
+          { y: 15, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.8,
+            duration: 0.7,
             ease: "power2.out",
             scrollTrigger: {
               trigger: bottomRow,
@@ -93,7 +95,6 @@ export default function Footer() {
     }, footer);
 
     return () => {
-      stTheme.kill();
       ctx.revert();
     };
   }, []);
@@ -112,13 +113,12 @@ export default function Footer() {
     }
   };
 
-
   return (
     <footer ref={footerRef} className="section footer-section" this-theme="footer-mob" id="contact">
-      <div className="container">
+      <div className="footer__container">
         <div className="footer">
 
-          {/* Top Row: Contact Form Left & Business Inquiries Right */}
+          {/* Top Row: Contact Form Left (1.25fr) & Business Inquiries Right (0.75fr) */}
           <div className="footer__contact-grid">
 
             {/* Left Column: Contact Form */}
@@ -184,9 +184,14 @@ export default function Footer() {
                   </div>
 
                   <div className="footer__form-btn-wrap">
-                    <button type="submit" className="footer__submit-pill">
-                      <span>Submit</span>
-                      <span className="footer__submit-arrow">→</span>
+                    <button type="submit" className="footer__submit-pill" aria-label="Submit message">
+                      <span className="footer__submit-text">Submit</span>
+                      <span className="footer__submit-arrow" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </span>
                     </button>
                   </div>
                 </form>
@@ -205,14 +210,20 @@ export default function Footer() {
                 <a
                   href="mailto:crewmind2026@gmail.com"
                   className="footer__email-capsule"
+                  aria-label="Email crewmind2026@gmail.com"
                 >
-                  <span>crewmind2026@gmail.com</span>
-                  <span className="footer__email-arrow">→</span>
+                  <span className="footer__email-text">crewmind2026@gmail.com</span>
+                  <span className="footer__email-arrow" aria-hidden="true">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </span>
                 </a>
               </div>
 
               {/* Stay in Touch */}
-              <div className="footer__info-block" style={{ marginTop: '2.5rem' }}>
+              <div className="footer__info-block footer__info-stay">
                 <span className="footer__label">( STAY IN TOUCH )</span>
                 <div className="footer__social-group">
                   <a
@@ -220,6 +231,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noreferrer"
                     className="footer__social-square"
+                    aria-label="Instagram"
                     title="Instagram"
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -233,6 +245,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noreferrer"
                     className="footer__social-square"
+                    aria-label="LinkedIn"
                     title="LinkedIn"
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -248,10 +261,16 @@ export default function Footer() {
 
           </div>
 
-          {/* Footer Logo: Navbar logo with scroll-driven entrance animation */}
+          {/* Editorial Wordmark: Exact Official CREWMIND Logo */}
           <div ref={wordmarkRef} className="footer__wordmark-wrap">
             <div className="footer__wordmark">
-              <img src={mainLogo} alt="Crewmind Logo" className="footer__logo-img" />
+              <img
+                src={mainLogo}
+                srcSet={`${mainLogo} 1x, ${mainLogo2x} 2x`}
+                alt="CREWMIND"
+                className="footer__wordmark-logo"
+                loading="lazy"
+              />
             </div>
           </div>
 

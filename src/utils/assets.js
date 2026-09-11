@@ -1,8 +1,8 @@
 // Local Significo Assets Registry
 
 // Videos & Placeholders
-import heroVideo from '../assets/significo/videos/hero-video.mp4';
-import heroVideoMob from '../assets/significo/videos/hero-video-mob.mp4';
+import heroVideo from '../assets/significo/videos/herovideo.mp4';
+import heroVideoMob from '../assets/significo/videos/herovideo.mp4';
 import heroPlaceholderPc from '../assets/significo/hero/hero-placeholder-pc.png';
 import heroPlaceholderMob from '../assets/significo/hero/hero-placeholder-mob.jpeg';
 
@@ -79,41 +79,61 @@ import insight02 from '../assets/significo/insights/insight-02.png';
 import scrollUpSvg from '../assets/significo/misc/scroll-up.svg';
 import mainLogo from '../assets/significo/misc/main-logo.png';
 
+// Crew Images (Exclusively crewimg1 through crewimg8)
+import crewimg1 from '../assets/crew/crewimg1.jpeg';
+import crewimg2 from '../assets/crew/crewimg2.jpeg';
+import crewimg3 from '../assets/crew/crewimg3.jpg';
+import crewimg4 from '../assets/crew/crewimg4.avif';
+import crewimg5 from '../assets/crew/crewimg5.jpeg';
+import crewimg6 from '../assets/crew/crewimg6.jpeg';
+import crewming7 from '../assets/crew/crewming7.jpeg';
+import crewimg8 from '../assets/crew/crewimg8.jpeg';
+
+export const CREW_IMAGES = [
+  crewming7,
+  crewimg2,
+  crewimg6,
+  crewimg1,
+  crewimg5,
+  crewimg8
+];
+
 export const ASSETS = {
   misc: {
     scrollUp: scrollUpSvg,
     mainLogo: mainLogo
   },
+  crew: [crewimg8, crewimg2, crewimg3, crewimg4, crewimg5, crewimg6, crewming7, crewimg1],
   hero: {
     videoDesktop: heroVideo,
     videoMobile: heroVideoMob,
     placeholderPc: heroPlaceholderPc,
     placeholderMob: heroPlaceholderMob,
     circles: [
-      { name: "creative", img: portrait01 },
-      { name: "inclusive", img: portrait02 },
-      { name: "intuitive", img: portrait03 },
-      { name: "elegant", img: portrait04 },
-      { name: "refined", img: portrait05 },
-      { name: "useful", img: portrait06 },
-      { name: "thoughtful", img: portrait07 },
-      { name: "bold", img: portrait08 },
-      { name: "empathetic", img: portrait09 },
-      { name: "curious", img: portrait10 },
-      { name: "empathetic2", img: portrait11 },
-      { name: "useful2", img: portrait12 },
-      { name: "cohesive", img: portrait13 },
-      { name: "balanced", img: portrait14 },
-      { name: "functional", img: portrait15 },
-      { name: "authentic", img: portrait16 },
-      { name: "agile", img: portrait17 },
-      { name: "useful3", img: portrait18 },
-      { name: "purposful", img: portrait19 },
-      { name: "ethical", img: portrait20 },
-      { name: "insightful", img: portrait21 },
-      { name: "useful4", img: portrait22 },
-      { name: "adaptive", img: portrait23 },
-      { name: "dynamic", img: portrait24 }
+      { name: "creative", img: crewimg8 },
+      { name: "inclusive", img: crewimg2 },
+      { name: "intuitive", img: crewimg3 },
+      { name: "elegant", img: crewimg4 },
+      { name: "refined", img: crewimg5 },
+      { name: "useful", img: crewimg6 },
+      { name: "thoughtful", img: crewming7 },
+      { name: "bold", img: crewimg1 },
+      { name: "innovative", img: crewimg8 },
+      { name: "simple", img: crewimg2 },
+      { name: "purposeful", img: crewimg3 },
+      { name: "human", img: crewimg4 },
+      { name: "essential", img: crewimg5 },
+      { name: "timeless", img: crewimg6 },
+      { name: "focused", img: crewming7 },
+      { name: "reliable", img: crewimg1 },
+      { name: "useful2", img: crewimg8 },
+      { name: "useful3", img: crewimg2 },
+      { name: "purposful", img: crewimg3 },
+      { name: "ethical", img: crewimg4 },
+      { name: "insightful", img: crewimg5 },
+      { name: "useful4", img: crewimg6 },
+      { name: "adaptive", img: crewming7 },
+      { name: "dynamic", img: crewimg1 }
     ]
   },
   portraits: [
@@ -125,8 +145,13 @@ export const ASSETS = {
     portrait21, portrait22, portrait23, portrait24
   ],
   horizontal: [
-    horiz01, horiz02, horiz03, horiz04,
-    horiz05, horiz06, horiz07, horiz08,
+    crewming7,
+    crewimg2,
+    crewimg6,
+    crewimg1,
+    crewimg5,
+    crewimg8,
+    horiz07, horiz08,
     horiz09, horiz10, horiz11, horiz12
   ],
   caseStudies: [

@@ -27,19 +27,20 @@ export default function ManagementPartners() {
     const list = listRef.current;
     if (!section || !leftCol || !list) return;
 
-    // 1. Theme trigger for salmon
-    const stTheme = ScrollTrigger.create({
-      trigger: section,
-      start: "top 60%",
-      end: "bottom 30%",
-      onEnter: () => document.body.setAttribute('theme', 'salmon'),
-      onEnterBack: () => document.body.setAttribute('theme', 'salmon')
-    });
-
     const isDesktop = window.innerWidth >= 992;
     const totalItems = PARTNER_PILLARS.length;
 
     const ctx = gsap.context(() => {
+      // 1. Theme trigger for salmon
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top 60%",
+        end: "bottom 30%",
+        onEnter: () => document.body.setAttribute('theme', 'salmon'),
+        onEnterBack: () => document.body.setAttribute('theme', 'salmon'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'light-purple')
+      });
+
       // 2. Entrance reveal
       gsap.fromTo(
         leftCol.children,
@@ -76,7 +77,7 @@ export default function ManagementPartners() {
         }
       );
 
-      // 3. Pinned Scroll Animation: Left side permanent, right arrow list scrolls & progresses
+      // 3. Pinned Scroll Animation on desktop
       if (isDesktop) {
         ScrollTrigger.create({
           trigger: section,
@@ -95,7 +96,6 @@ export default function ManagementPartners() {
           }
         });
       } else {
-        // Mobile / Tablet smooth scroll trigger
         ScrollTrigger.create({
           trigger: section,
           start: "top 60%",
@@ -113,7 +113,6 @@ export default function ManagementPartners() {
     }, section);
 
     return () => {
-      stTheme.kill();
       ctx.revert();
     };
   }, []);
@@ -128,7 +127,7 @@ export default function ManagementPartners() {
       <div className="container">
         <div className="mgmt-grid">
           
-          {/* Left Column: Permanent / Pinned - 2-line Staatliches Title, Manrope Description, Yellow Button */}
+          {/* Left Column: Title, Description, Button */}
           <div ref={leftColRef} className="mgmt-left">
             <h2 className="mgmt-title">
               WHY MANAGEMENT TEAMS<br />PARTNER WITH US
@@ -145,7 +144,7 @@ export default function ManagementPartners() {
             </div>
           </div>
 
-          {/* Right Column: Sleek Reduced Size Scrolling Arrow/Checkmark List */}
+          {/* Right Column: Interactive List */}
           <div ref={rightColRef} className="mgmt-right">
             <div className="mgmt-list-container">
               <ul ref={listRef} className="mgmt-list">

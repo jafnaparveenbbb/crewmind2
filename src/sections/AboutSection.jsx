@@ -13,59 +13,52 @@ export default function AboutSection() {
     const section = sectionRef.current;
     if (!section) return;
 
-    // Theme trigger for white background
-    const stTheme = ScrollTrigger.create({
-      trigger: section,
-      start: "top 60%",
-      end: "bottom 40%",
-      onEnter: () => document.body.setAttribute('theme', 'white'),
-      onEnterBack: () => document.body.setAttribute('theme', 'white')
-    });
-
-    // Subtle scroll reveal animation matching Significo aesthetic
     const ctx = gsap.context(() => {
+      // Full-range theme trigger for white background with zero flicker
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top 75%",
+        end: "bottom 25%",
+        onEnter: () => document.body.setAttribute('theme', 'white'),
+        onEnterBack: () => document.body.setAttribute('theme', 'white'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'black')
+      });
+
+      // Smooth scroll entrance reveal
       gsap.from([headingRef.current, paragraphRef.current], {
         opacity: 0,
         y: 35,
-        duration: 1.1,
-        stagger: 0.18,
+        duration: 1.0,
+        stagger: 0.15,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
-          start: "top 75%",
+          start: "top 70%",
           toggleActions: "play none none reverse"
         }
       });
     }, section);
 
     return () => {
-      stTheme.kill();
       ctx.revert();
     };
   }, []);
 
   return (
-    <section 
-      ref={sectionRef} 
-      className="section about-section" 
-      this-theme="white" 
+    <section
+      ref={sectionRef}
+      className="section about-section"
+      this-theme="white"
       id="about"
     >
       <div className="container">
-        {/* 1. Thin horizontal top border line */}
-        <div className="about__top-border"></div>
-
-        {/* 2. Small label with circular dot */}
-        <div className="about__header">
-          <div className="about__label">
-            <span className="about__dot"></span>
-            <span className="f-14 is--btn caps">MEET CREWMIND</span>
-          </div>
-        </div>
-
-        {/* 3. 2-Column Main Content (Left: Large Heading, Right: Paragraph) */}
+        {/* 2-Column Main Content (Left: Label & Large Heading, Right: Paragraph) */}
         <div className="about__grid">
           <div className="about__left">
+            <div className="about__label">
+              <span className="about__dot"></span>
+              <span className="f-14 is--btn caps">MEET CREWMIND</span>
+            </div>
             <h2 ref={headingRef} className="about__heading">
               WE'RE NOT A CLINIC,
               <br />

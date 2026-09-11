@@ -31,7 +31,7 @@ export default function App() {
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-    // 2. Initialize Lenis Smooth Scrolling at 0
+    // 2. Initialize Lenis Smooth Scrolling
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -48,7 +48,7 @@ export default function App() {
     });
     gsap.ticker.lagSmoothing(0);
 
-    // Track scroll position for navbar & scroll arrow visibility
+    // Track scroll position for header state & scroll arrow visibility
     const handleScroll = () => {
       const scrollY = window.scrollY;
       if (scrollY > 50) {
@@ -88,7 +88,7 @@ export default function App() {
     // Refresh ScrollTrigger cleanly once layout and loader are settled
     setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 100);
+    }, 150);
   };
 
   const handleScrollArrowClick = () => {
@@ -111,31 +111,31 @@ export default function App() {
 
       {/* Main Page Content */}
       <main className="main">
-        {/* 1. Hero Experience (Video -> Iris/Zoom Transition -> Typography Field) */}
+        {/* 1. Hero Experience (Theme: Navy #00063D) */}
         <HeroScroll isLoaded={!loading} />
 
-        {/* 2. About / Meet Crewmind (Theme: white) */}
+        {/* 2. About / Meet Crewmind (Theme: White #FFFFFF) */}
         <AboutSection />
 
-        {/* 3. Services / We Designed Support For Live Productions (Theme: light-blue) */}
+        {/* 3. Services / Live Productions Support (Theme: Light-Blue #E8EBF7) */}
         <IconCards />
 
-        {/* 4. Horizontal Stats / Impact in Numbers (Theme: salmon, 480vh pinned) */}
+        {/* 4. Horizontal Stats / Impact in Numbers (Theme: White #FFFFFF) */}
         <HorizontalStats />
 
-        {/* 4. The Industry Is Changing / Core Values (Theme: yellow) */}
+        {/* 5. The Industry Is Changing / Core Values (Theme: Light-Purple #F0EEF8) */}
         <CoreValues />
 
-        {/* 5. Why Management Teams Partner With Us (Theme: salmon) */}
+        {/* 6. Why Management Teams Partner With Us (Theme: Salmon #FFEFEA) */}
         <ManagementPartners />
 
-        {/* 6. What Makes Us Different (Theme: white) */}
+        {/* 7. What Makes Us Different (Theme: Tan #F5EFEB) */}
         <WhatMakesUsDifferent />
 
-        {/* 7. Closing CTA (Theme: footer-cta, Yellow) */}
+        {/* 8. Closing CTA (Theme: Footer-CTA #00063D) */}
         <ClosingCTA />
 
-        {/* 8. Grand Footer (Theme: footer-mob, Black) */}
+        {/* 9. Grand Footer (Theme: Footer-Mob #00063D) */}
         <Footer />
       </main>
     </div>

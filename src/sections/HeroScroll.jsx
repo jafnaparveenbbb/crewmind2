@@ -13,11 +13,10 @@ export default function HeroScroll({ isLoaded = true }) {
   const videoBoxRef = useRef(null);
   const videoElementRef = useRef(null);
   const rowsParentRef = useRef(null);
-  const targetImageRef = useRef(null);
+  const centerCircleRef = useRef(null);
   const row1Ref = useRef(null);
   const row2Ref = useRef(null);
   const row3Ref = useRef(null);
-  const subtitleRef = useRef(null);
   const bottomRef = useRef(null);
 
   useEffect(() => {
@@ -27,74 +26,79 @@ export default function HeroScroll({ isLoaded = true }) {
     const videoBox = videoBoxRef.current;
     const videoElement = videoElementRef.current;
     const rowsParent = rowsParentRef.current;
-    const targetImage = targetImageRef.current;
+    const centerCircle = centerCircleRef.current;
     const row1 = row1Ref.current;
     const row2 = row2Ref.current;
     const row3 = row3Ref.current;
-    const subtitle = subtitleRef.current;
     const heroBottom = bottomRef.current;
 
     if (!container || !stickyFrame || !videoBox || !rowsParent) return;
 
-    // Explicitly play video
     if (videoElement) {
       videoElement.play().catch(() => { });
     }
 
-    // Function to calculate exact relative offset of target circular portrait
-    const getTargetCoords = () => {
-      if (!targetImage || !stickyFrame) {
-        return { x: 0, y: 0, size: 55 };
+    // Precise geometric calculation of center circle coordinates & radius relative to sticky frame
+    const getTargetCoordinates = () => {
+      const defaultRadius = isMobile ? 22 : 36;
+      if (!centerCircle || !stickyFrame) {
+        return {
+          clipX: window.innerWidth / 2,
+          clipY: window.innerHeight / 2,
+          radius: defaultRadius
+        };
       }
 
-      // Temporarily measure at full scale 1
+      // Temporarily measure in neutral scale and transform
       const savedScale = gsap.getProperty(rowsParent, "scale") || 1;
-      gsap.set(rowsParent, { scale: 1 });
+      const savedOrigin = gsap.getProperty(rowsParent, "transformOrigin") || "50% 50%";
+      const savedX1 = gsap.getProperty(row1, "x") || 0;
+      const savedX2 = gsap.getProperty(row2, "x") || 0;
+      const savedX3 = gsap.getProperty(row3, "x") || 0;
 
-      const targetRect = targetImage.getBoundingClientRect();
+      gsap.set(rowsParent, { scale: 1, transformOrigin: "50% 50%" });
+      gsap.set([row1, row2, row3], { x: 0 });
+
+      const targetRect = centerCircle.getBoundingClientRect();
       const stickyRect = stickyFrame.getBoundingClientRect();
 
-      const centerX = stickyRect.left + stickyRect.width / 2;
-      const centerY = stickyRect.top + stickyRect.height / 2;
+      const clipX = Math.round(targetRect.left + targetRect.width / 2 - stickyRect.left);
+      const clipY = Math.round(targetRect.top + targetRect.height / 2 - stickyRect.top);
+      const radius = Math.round(targetRect.width / 2) || defaultRadius;
 
-      const targetCenterX = targetRect.left + targetRect.width / 2;
-      const targetCenterY = targetRect.top + targetRect.height / 2;
+      // Restore
+      gsap.set(rowsParent, { scale: savedScale, transformOrigin: savedOrigin });
+      gsap.set(row1, { x: savedX1 });
+      gsap.set(row2, { x: savedX2 });
+      gsap.set(row3, { x: savedX3 });
 
-      // Restore scale
-      gsap.set(rowsParent, { scale: savedScale });
-
-      return {
-        x: targetCenterX - centerX,
-        y: targetCenterY - centerY,
-        size: targetRect.width || (isMobile ? 32 : 55)
-      };
+      return { clipX, clipY, radius };
     };
 
-    let targetCoords = getTargetCoords();
+    let { clipX, clipY, radius } = getTargetCoordinates();
 
-    // Initial setup at scrollY = 0
+    // 1. Initial State: Video is 100% Fullscreen, centered right on the target coordinates
     gsap.set(videoBox, {
-      width: "100vw",
-      height: "100vh",
-      borderRadius: "0%",
-      x: 0,
-      y: 0,
+      clipPath: `circle(150vmax at ${clipX}px ${clipY}px)`,
       opacity: 1,
       zIndex: 15
     });
 
+    // 2. Initial State: Typography starts enlarged (5.6x desktop, 3.8x mobile), anchored directly at (clipX, clipY)
+    const initialTextScale = isMobile ? 3.8 : 5.6;
     gsap.set(rowsParent, {
-      opacity: 0,
-      scale: 0.25,
-      transformOrigin: "center center"
+      opacity: 1,
+      scale: initialTextScale,
+      transformOrigin: `${clipX}px ${clipY}px`
     });
 
-    if (subtitle) gsap.set(subtitle, { opacity: 0, y: 30 });
+    gsap.set([row1, row2, row3], { x: 0 });
+
     if (heroBottom) gsap.set(heroBottom, { opacity: 1, y: 0 });
 
-    const intermediateCircleSize = isMobile ? "24vw" : "14vw";
+    const shiftAmount = isMobile ? (window.innerWidth * 0.45) : (window.innerWidth * 0.28);
 
-    // Master ScrollTrigger Pinned Timeline (Pinned to 100vw x 100vh throughout 350vh scroll)
+    // Master ScrollTrigger Pinned Timeline (Pinned across 400vh scroll with smooth 1.2s scrub damping)
     const masterTl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
@@ -102,121 +106,120 @@ export default function HeroScroll({ isLoaded = true }) {
         end: "bottom bottom",
         pin: stickyFrame,
         pinSpacing: false,
-        scrub: 0.5,
+        scrub: 1.2,
         invalidateOnRefresh: true,
+        onLeave: () => document.body.setAttribute('theme', 'white'),
+        onEnterBack: () => document.body.setAttribute('theme', 'black'),
         onRefresh: () => {
-          targetCoords = getTargetCoords();
+          const updated = getTargetCoordinates();
+          clipX = updated.clipX;
+          clipY = updated.clipY;
+          radius = updated.radius;
+          gsap.set(rowsParent, { transformOrigin: `${clipX}px ${clipY}px` });
         }
       }
     });
 
-    // =========================================================================
-    // THE EXACT HERO TRANSITION SEQUENCE:
-    // 1. [0.0 - 1.0]: Fullscreen Video holds at top of page, bottom sentence is fully visible
-    // 2. [0.6 - 2.2]: Bottom sentence diminishes/fades out smoothly as video begins zooming
-    // 3. [1.0 - 4.2]: Video physically ZOOMS OUT from 100vw/100vh -> 14vw circular medallion at center
-    // 4. [3.6 - 6.8]: Typography field emerges & expands from center (scale 0.25 -> 1.0)
-    // 5. [4.6 - 7.6]: Circular Video FLIES from center into TARGET PORTRAIT IMAGE position & size
-    // 6. [7.2 - 7.8]: Circular Video seamlessly merges and becomes that portrait in the typography row
-    // 7. [4.8 - 9.0]: Multi-directional horizontal row scrub (x: ±14%)
-    // 8. [4.2 - 6.5]: Top subtitle floats in at top of viewport
-    // 9. [8.8 - 10.0]: Settled state holds, then pin releases into Section 2
-    // =========================================================================
-
-    // Step 1b: Fade out navbar and bottom hero text as video begins zooming
+    // Step 1: Fade out navbar and bottom description gently on early scroll
     if (navRef.current) {
       masterTl.to(navRef.current, {
         opacity: 0,
-        y: -22,
-        duration: 1.4,
+        y: -20,
+        duration: 1.2,
         ease: "power2.out"
-      }, 0.4);
+      }, 0.0);
     }
 
     if (heroBottom) {
       masterTl.to(heroBottom, {
         opacity: 0,
-        y: -18,
-        duration: 1.6,
+        y: -15,
+        duration: 1.5,
         ease: "power2.out"
-      }, 0.6);
+      }, 0.0);
     }
 
-    // Step 2: Physical Zoom Out into Central Circular Medallion
+    // Step 2: Luxurious, gradual zoom-out of video from Fullscreen directly to center circle
     masterTl.to(videoBox, {
-      width: intermediateCircleSize,
-      height: intermediateCircleSize,
-      borderRadius: "50%",
-      boxShadow: "0 20px 60px rgba(0, 0, 0, 0.8)",
-      duration: 3.2,
+      clipPath: () => `circle(${radius}px at ${clipX}px ${clipY}px)`,
+      duration: 5.4,
       ease: "power2.inOut"
-    }, 1.0);
+    }, 0.0);
 
-    // Step 3: Typography Emerges & Expands Outward from Origin
+    // Step 3: Typography zooms out in parallel from enlarged size (5.6x -> 1.0x) anchored on the target circle
     masterTl.to(rowsParent, {
-      opacity: 1,
-      scale: 1,
-      duration: 3.2,
+      scale: 1.0,
+      duration: 5.2,
       ease: "power2.out"
-    }, 3.6);
+    }, 0.0);
 
-    // Step 4: Circular Video Flies and Lands onto Target Typography Portrait
-    masterTl.to(videoBox, {
-      x: () => targetCoords.x,
-      y: () => targetCoords.y,
-      width: () => `${targetCoords.size}px`,
-      height: () => `${targetCoords.size}px`,
-      duration: 3.0,
-      ease: "power2.inOut"
-    }, 4.6);
+    // Fade in all circle images with subtle stagger during the zoom-out
+    const circleImgs = rowsParent.querySelectorAll('.hero__circle img');
+    if (circleImgs.length > 0) {
+      masterTl.fromTo(circleImgs, {
+        opacity: 0.15,
+        scale: 0.85
+      }, {
+        opacity: 1,
+        scale: 1.05,
+        duration: 2.8,
+        stagger: {
+          each: 0.08,
+          from: "center"
+        },
+        ease: "power1.out"
+      }, 0.5);
+    }
 
-    // Step 5: Seamless Hand-off to Target Image
+    // Step 4: Seamless Hand-off - Video dissolves cleanly into the perfectly aligned Central Circle Image
     masterTl.to(videoBox, {
       opacity: 0,
-      duration: 0.6,
+      duration: 0.8,
       ease: "power1.in"
-    }, 7.2);
+    }, 4.8);
 
-    // Step 6: Top Subtitle (Centered at Top of Hero like 2nd image)
-    if (subtitle) {
-      masterTl.to(subtitle, {
-        opacity: 1,
-        y: 0,
-        duration: 1.8,
-        ease: "power2.out"
-      }, 4.2);
-    }
-
-    // Step 7: Opposing Multi-directional Row Movement
-    const shiftPercent = isMobile ? 25 : 14;
+    // Step 5: Horizontal gliding of rows starts AFTER video has completely settled into the circle
     masterTl
-      .to(row1, { x: `+=${shiftPercent}%`, ease: "none", duration: 8 }, 1.0)
-      .to(row2, { x: `-=${shiftPercent}%`, ease: "none", duration: 8 }, 1.0)
-      .to(row3, { x: `+=${shiftPercent}%`, ease: "none", duration: 8 }, 1.0);
+      .to(row1, { x: `+=${shiftAmount}px`, ease: "none", duration: 3.8 }, 5.6)
+      .to(row2, { x: `-=${shiftAmount}px`, ease: "none", duration: 3.8 }, 5.6)
+      .to(row3, { x: `+=${shiftAmount}px`, ease: "none", duration: 3.8 }, 5.6);
 
-    // Step 8: Settle before pin release
+    // Step 6: THE ICONIC SIGNIFICIO EXIT ZOOM-OUT TRANSITION INTO NEXT SECTION
+    // Pull back entire typography field into 3D perspective as Next Section reveals
+    masterTl.to(rowsParent, {
+      scale: isMobile ? 0.80 : 0.72,
+      opacity: 0,
+      duration: 1.8,
+      ease: "power2.inOut"
+    }, 8.6);
+
     masterTl.to(stickyFrame, {
-      opacity: 0.1,
-      duration: 1.2,
-      ease: "power1.in"
-    }, 9.0);
+      autoAlpha: 0,
+      duration: 1.0,
+      ease: "power1.inOut"
+    }, 9.2);
 
-    if (isLoaded) {
-      setTimeout(() => {
-        targetCoords = getTargetCoords();
-        ScrollTrigger.refresh();
-      }, 150);
-    }
-
-    const handleResize = () => {
-      targetCoords = getTargetCoords();
+    const refreshLayout = () => {
+      const updated = getTargetCoordinates();
+      clipX = updated.clipX;
+      clipY = updated.clipY;
+      radius = updated.radius;
+      gsap.set(rowsParent, { transformOrigin: `${clipX}px ${clipY}px` });
       ScrollTrigger.refresh();
     };
 
-    window.addEventListener('resize', handleResize);
+    if (document.fonts) {
+      document.fonts.ready.then(refreshLayout);
+    }
+
+    if (isLoaded) {
+      setTimeout(refreshLayout, 200);
+    }
+
+    window.addEventListener('resize', refreshLayout);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', refreshLayout);
       ScrollTrigger.getAll().forEach(t => {
         if (t.vars.trigger === container) t.kill();
       });
@@ -235,7 +238,7 @@ export default function HeroScroll({ isLoaded = true }) {
           <Navbar />
         </div>
 
-        {/* 1. Flying Circular Video Layer (Full-screen -> Center Circle -> Travels into Target Portrait) */}
+        {/* 1. Flying Circular Video Layer (Full-screen -> Center Circle -> Lands right on the Target Portrait) */}
         <div ref={videoBoxRef} className="hero__video-box">
           <video
             ref={videoElementRef}
@@ -251,119 +254,94 @@ export default function HeroScroll({ isLoaded = true }) {
           </video>
         </div>
 
-        {/* 2. Top Subtitle (Centered horizontally, positioned at top of hero above typography) */}
-        <div ref={subtitleRef} className="hero__subtitle">
-          <h3 className="f-24 is--title">
-            We help teams stay supported
-            <br />
-            before challenges become disruptions.
-          </h3>
-        </div>
-
-        {/* 3. Black Typographic Canvas with Oversized Words & 24 Circular Real Portraits */}
+        {/* 2. Black Typographic Canvas with Oversized Words & Circular Real Portraits */}
         <div ref={rowsParentRef} className="hero__rows--parent">
           <div className="hero__rows">
 
             {/* Row 1 */}
             <div ref={row1Ref} className="hero__row">
-              <div className="hero__line">
-                <span className="hero__word">artists</span>
-                <div className="hero__circle">
-                  <img src={circles[0].img} alt="Artists" loading="eager" />
-                </div>
-                <span className="hero__word">tour managers</span>
-                <div className="hero__circle">
-                  <img src={circles[1].img} alt="Tour Managers" loading="eager" />
-                </div>
+              <span className="hero__word">tour managers</span>
+              <div className="hero__circle">
+                <img src={circles[0]?.img} alt="Tour Managers" loading="eager" />
               </div>
-              <div className="hero__line">
-                <span className="hero__word">production teams</span>
-                <div className="hero__circle">
-                  <img src={circles[2].img} alt="Production Teams" loading="eager" />
-                </div>
-                <span className="hero__word">technical crews</span>
-                <div className="hero__circle">
-                  <img src={circles[3].img} alt="Technical Crews" loading="eager" />
-                </div>
+              <span className="hero__word">artists</span>
+              <div className="hero__circle">
+                <img src={circles[1]?.img} alt="Artists" loading="eager" />
               </div>
-              <div className="hero__line">
-                <span className="hero__word">festivals</span>
-                <div className="hero__circle">
-                  <img src={circles[4].img} alt="Festivals" loading="eager" />
-                </div>
-                <span className="hero__word">live events</span>
-                <div className="hero__circle">
-                  <img src={circles[5].img} alt="Live Events" loading="eager" />
-                </div>
+              <span className="hero__word">production teams</span>
+              <div className="hero__circle">
+                <img src={circles[2]?.img} alt="Production Teams" loading="eager" />
+              </div>
+              <span className="hero__word">technical crews</span>
+              <div className="hero__circle">
+                <img src={circles[3]?.img} alt="Technical Crews" loading="eager" />
+              </div>
+              <span className="hero__word">festivals</span>
+              <div className="hero__circle">
+                <img src={circles[4]?.img} alt="Festivals" loading="eager" />
+              </div>
+              <span className="hero__word">live events</span>
+              <div className="hero__circle">
+                <img src={circles[5]?.img} alt="Live Events" loading="eager" />
               </div>
             </div>
 
-            {/* Row 2 */}
+            {/* Row 2 (Balanced with target circle in dead center) */}
             <div ref={row2Ref} className="hero__row">
-              <div className="hero__line">
-                <span className="hero__word">artists</span>
-                <div className="hero__circle">
-                  <img src={circles[6].img} alt="Artists" loading="eager" />
-                </div>
-                <span className="hero__word">tour managers</span>
-                {/* Target circular portrait where video lands and merges */}
-                <div ref={targetImageRef} className="hero__circle is--target">
-                  <img src={circles[7].img} alt="Tour Managers" loading="eager" />
-                </div>
+              <span className="hero__word">live events</span>
+              <div className="hero__circle">
+                <img src={circles[11]?.img} alt="Live Events" loading="eager" />
               </div>
-              <div className="hero__line">
-                <span className="hero__word">production teams</span>
-                <div className="hero__circle">
-                  <img src={circles[8].img} alt="Production Teams" loading="eager" />
-                </div>
-                <span className="hero__word">technical crews</span>
-                <div className="hero__circle">
-                  <img src={circles[9].img} alt="Technical Crews" loading="eager" />
-                </div>
+              <span className="hero__word">artists</span>
+              <div className="hero__circle">
+                <img src={circles[6]?.img} alt="Artists" loading="eager" />
               </div>
-              <div className="hero__line">
-                <span className="hero__word">festivals</span>
-                <div className="hero__circle">
-                  <img src={circles[10].img} alt="Festivals" loading="eager" />
-                </div>
-                <span className="hero__word">live events</span>
-                <div className="hero__circle">
-                  <img src={circles[11].img} alt="Live Events" loading="eager" />
-                </div>
+              <span className="hero__word">production teams</span>
+              
+              {/* TARGET CENTER CIRCLE (Exact concentric match for contracting video) */}
+              <div ref={centerCircleRef} className="hero__circle hero__circle--target">
+                <img src={circles[8]?.img} alt="Central Circle Target" loading="eager" />
+              </div>
+
+              <span className="hero__word">technical crews</span>
+              <div className="hero__circle">
+                <img src={circles[9]?.img} alt="Technical Crews" loading="eager" />
+              </div>
+              <span className="hero__word">festivals</span>
+              <div className="hero__circle">
+                <img src={circles[10]?.img} alt="Festivals" loading="eager" />
+              </div>
+              <span className="hero__word">tour managers</span>
+              <div className="hero__circle">
+                <img src={circles[7]?.img} alt="Tour Managers" loading="eager" />
               </div>
             </div>
 
             {/* Row 3 */}
             <div ref={row3Ref} className="hero__row">
-              <div className="hero__line">
-                <span className="hero__word">artists</span>
-                <div className="hero__circle">
-                  <img src={circles[12].img} alt="Artists" loading="eager" />
-                </div>
-                <span className="hero__word">tour managers</span>
-                <div className="hero__circle">
-                  <img src={circles[13].img} alt="Tour Managers" loading="eager" />
-                </div>
+              <span className="hero__word">festivals</span>
+              <div className="hero__circle">
+                <img src={circles[12]?.img} alt="Festivals" loading="eager" />
               </div>
-              <div className="hero__line">
-                <span className="hero__word">production teams</span>
-                <div className="hero__circle">
-                  <img src={circles[14].img} alt="Production Teams" loading="eager" />
-                </div>
-                <span className="hero__word">technical crews</span>
-                <div className="hero__circle">
-                  <img src={circles[15].img} alt="Technical Crews" loading="eager" />
-                </div>
+              <span className="hero__word">live events</span>
+              <div className="hero__circle">
+                <img src={circles[13]?.img} alt="Live Events" loading="eager" />
               </div>
-              <div className="hero__line">
-                <span className="hero__word">festivals</span>
-                <div className="hero__circle">
-                  <img src={circles[16].img} alt="Festivals" loading="eager" />
-                </div>
-                <span className="hero__word">live events</span>
-                <div className="hero__circle">
-                  <img src={circles[17].img} alt="Live Events" loading="eager" />
-                </div>
+              <span className="hero__word">artists</span>
+              <div className="hero__circle">
+                <img src={circles[14]?.img} alt="Artists" loading="eager" />
+              </div>
+              <span className="hero__word">tour managers</span>
+              <div className="hero__circle">
+                <img src={circles[15]?.img} alt="Tour Managers" loading="eager" />
+              </div>
+              <span className="hero__word">production teams</span>
+              <div className="hero__circle">
+                <img src={circles[16]?.img} alt="Production Teams" loading="eager" />
+              </div>
+              <span className="hero__word">technical crews</span>
+              <div className="hero__circle">
+                <img src={circles[17]?.img} alt="Technical Crews" loading="eager" />
               </div>
             </div>
 

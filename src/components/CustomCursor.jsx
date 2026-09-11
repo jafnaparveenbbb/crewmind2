@@ -8,18 +8,13 @@ export default function CustomCursor() {
     const cursor = cursorRef.current;
     if (!cursor) return;
 
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
+    // Use GPU-accelerated gsap.quickTo for ultra-smooth 120 FPS cursor tracking
+    const xTo = gsap.quickTo(cursor, "x", { duration: 0.12, ease: "power2.out" });
+    const yTo = gsap.quickTo(cursor, "y", { duration: 0.12, ease: "power2.out" });
 
     const onMouseMove = (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      gsap.to(cursor, {
-        x: mouseX,
-        y: mouseY,
-        duration: 0.15,
-        ease: "power2.out"
-      });
+      xTo(e.clientX);
+      yTo(e.clientY);
     };
 
     const onMouseEnterInteractive = () => {
@@ -30,12 +25,12 @@ export default function CustomCursor() {
       cursor.classList.remove('hovering');
     };
 
-    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
 
-    const interactiveElements = document.querySelectorAll('a, button, input, .team__row, .hero__circle, .cards__item, .slider__img--parent');
+    const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .hero__circle, .cards__item, .mgmt-item, .significo-egg-card, .diff-core-circle');
     interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', onMouseEnterInteractive);
-      el.addEventListener('mouseleave', onMouseLeaveInteractive);
+      el.addEventListener('mouseenter', onMouseEnterInteractive, { passive: true });
+      el.addEventListener('mouseleave', onMouseLeaveInteractive, { passive: true });
     });
 
     return () => {

@@ -15,33 +15,32 @@ export default function IconCards() {
     const cardsList = cardsListRef.current;
     if (!section || !cardsList) return;
 
-    // Theme trigger for light-blue
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top 60%",
-      end: "bottom 40%",
-      onEnter: () => document.body.setAttribute('theme', 'light-blue'),
-      onEnterBack: () => document.body.setAttribute('theme', 'light-blue')
-    });
-
-    // Each card activates as it enters the visible center of the viewport
-    const cardItems = cardsList.querySelectorAll('.cards__item');
-    cardItems.forEach((card, idx) => {
+    const ctx = gsap.context(() => {
+      // Theme trigger for light-blue
       ScrollTrigger.create({
-        trigger: card,
-        start: "top 65%",
-        end: "bottom 35%",
-        onEnter: () => setActiveIndex(idx),
-        onEnterBack: () => setActiveIndex(idx)
+        trigger: section,
+        start: "top 60%",
+        end: "bottom 40%",
+        onEnter: () => document.body.setAttribute('theme', 'light-blue'),
+        onEnterBack: () => document.body.setAttribute('theme', 'light-blue'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
-    });
+
+      // Each card activates as it enters the visible center of the viewport
+      const cardItems = cardsList.querySelectorAll('.cards__item');
+      cardItems.forEach((card, idx) => {
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top 65%",
+          end: "bottom 35%",
+          onEnter: () => setActiveIndex(idx),
+          onEnterBack: () => setActiveIndex(idx)
+        });
+      });
+    }, section);
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.vars.trigger === section || (cardItems && Array.from(cardItems).includes(t.vars.trigger))) {
-          t.kill();
-        }
-      });
+      ctx.revert();
     };
   }, []);
 
