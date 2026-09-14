@@ -233,7 +233,6 @@ export default function WhatMakesUsDifferent() {
                         <IconComp className="diff-core-circle__icon" strokeWidth={1.75} />
                       </div>
                       <h3 className="diff-core-circle__title">{item.title}</h3>
-                      <p className="diff-core-circle__desc">{item.desc}</p>
                     </div>
                   </div>
                 );

@@ -40,7 +40,7 @@ export default function HeroScroll({ isLoaded = true }) {
       const playVideo = () => {
         const p = videoElement.play();
         if (p && p.catch) {
-          p.catch(() => {});
+          p.catch(() => { });
         }
       };
       playVideo();
@@ -53,10 +53,13 @@ export default function HeroScroll({ isLoaded = true }) {
     const getTargetCoordinates = () => {
       const defaultRadius = isMobile ? 22 : 36;
       if (!centerCircle || !stickyFrame) {
+        const cX = window.innerWidth / 2;
+        const cY = window.innerHeight / 2;
         return {
-          clipX: window.innerWidth / 2,
-          clipY: window.innerHeight / 2,
-          radius: defaultRadius
+          clipX: cX,
+          clipY: cY,
+          radius: defaultRadius,
+          startRadius: Math.ceil(Math.hypot(cX, cY)) + 10
         };
       }
 
@@ -73,9 +76,17 @@ export default function HeroScroll({ isLoaded = true }) {
       const targetRect = centerCircle.getBoundingClientRect();
       const stickyRect = stickyFrame.getBoundingClientRect();
 
-      const clipX = Math.round(targetRect.left + targetRect.width / 2 - stickyRect.left);
-      const clipY = Math.round(targetRect.top + targetRect.height / 2 - stickyRect.top);
-      const radius = Math.round(targetRect.width / 2) || defaultRadius;
+      // Measure un-transformed base layout radius of target circle to prevent scale distortion
+      const baseRadius = Math.round((centerCircle.offsetWidth || 72) / 2) || defaultRadius;
+
+      const clipX = Math.round((targetRect.left - stickyRect.left) + targetRect.width / 2);
+      const clipY = Math.round((targetRect.top - stickyRect.top) + targetRect.height / 2);
+      const radius = baseRadius;
+
+      // Exact diagonal distance to furthest viewport corner + 10px buffer
+      const maxDx = Math.max(clipX, window.innerWidth - clipX);
+      const maxDy = Math.max(clipY, window.innerHeight - clipY);
+      const startRadius = Math.ceil(Math.hypot(maxDx, maxDy)) + 10;
 
       // Restore
       gsap.set(rowsParent, { scale: savedScale, transformOrigin: savedOrigin });
@@ -83,14 +94,14 @@ export default function HeroScroll({ isLoaded = true }) {
       gsap.set(row2, { x: savedX2 });
       gsap.set(row3, { x: savedX3 });
 
-      return { clipX, clipY, radius };
+      return { clipX, clipY, radius, startRadius };
     };
 
-    let { clipX, clipY, radius } = getTargetCoordinates();
+    let { clipX, clipY, radius, startRadius } = getTargetCoordinates();
 
-    // 1. Initial State: Video is 100% Fullscreen, centered right on the target coordinates
+    // 1. Initial State: Video starts at EXACT viewport boundary (0% wasted offscreen radius)
     gsap.set(videoBox, {
-      clipPath: `circle(150vmax at ${clipX}px ${clipY}px)`,
+      clipPath: `circle(${startRadius}px at ${clipX}px ${clipY}px)`,
       opacity: 1,
       zIndex: 15
     });
@@ -109,7 +120,7 @@ export default function HeroScroll({ isLoaded = true }) {
 
     const shiftAmount = isMobile ? (window.innerWidth * 0.45) : (window.innerWidth * 0.28);
 
-    // Master ScrollTrigger Pinned Timeline (Pinned across 400vh scroll with smooth 1.2s scrub damping)
+    // Master ScrollTrigger Pinned Timeline
     const masterTl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
@@ -117,7 +128,7 @@ export default function HeroScroll({ isLoaded = true }) {
         end: "bottom bottom",
         pin: stickyFrame,
         pinSpacing: false,
-        scrub: 1.8,
+        scrub: 1.2,
         invalidateOnRefresh: true,
         onLeave: () => document.body.setAttribute('theme', 'white'),
         onEnterBack: () => document.body.setAttribute('theme', 'black'),
@@ -126,6 +137,7 @@ export default function HeroScroll({ isLoaded = true }) {
           clipX = updated.clipX;
           clipY = updated.clipY;
           radius = updated.radius;
+          startRadius = updated.startRadius;
           gsap.set(rowsParent, { transformOrigin: `${clipX}px ${clipY}px` });
         }
       }
@@ -136,8 +148,8 @@ export default function HeroScroll({ isLoaded = true }) {
       masterTl.to(navRef.current, {
         opacity: 0,
         y: -20,
-        duration: 1.2,
-        ease: "power2.out"
+        duration: 1.5,
+        ease: "none"
       }, 0.0);
     }
 
@@ -146,25 +158,29 @@ export default function HeroScroll({ isLoaded = true }) {
         opacity: 0,
         y: -15,
         duration: 1.5,
-        ease: "power2.out"
+        ease: "none"
       }, 0.0);
     }
 
-    // Step 2: Luxurious, gradual zoom-out of video from Fullscreen directly to center circle
-    masterTl.to(videoBox, {
-      clipPath: () => `circle(${radius}px at ${clipX}px ${clipY}px)`,
-      duration: 5.4,
-      ease: "power2.inOut"
-    }, 0.0);
+    // Step 2: Immediate 1:1 visual level-by-level contraction from corners down to target circle size
+    masterTl.fromTo(videoBox,
+      { clipPath: `circle(${startRadius}px at ${clipX}px ${clipY}px)` },
+      {
+        clipPath: `circle(${radius}px at ${clipX}px ${clipY}px)`,
+        duration: 8.0,
+        ease: "none"
+      },
+      0.0
+    );
 
-    // Step 3: Typography zooms out in parallel from enlarged size (5.6x -> 1.0x) anchored on the target circle
+    // Step 3: Typography zooms out in 1:1 lockstep parallel from enlarged size (5.6x -> 1.0x)
     masterTl.to(rowsParent, {
       scale: 1.0,
-      duration: 5.2,
-      ease: "power2.out"
+      duration: 8.0,
+      ease: "none"
     }, 0.0);
 
-    // Fade in all circle images with subtle stagger during the zoom-out
+    // Fade in all circle images progressively during the zoom-out
     const circleImgs = rowsParent.querySelectorAll('.hero__circle img');
     if (circleImgs.length > 0) {
       masterTl.fromTo(circleImgs, {
@@ -173,42 +189,41 @@ export default function HeroScroll({ isLoaded = true }) {
       }, {
         opacity: 1,
         scale: 1.05,
-        duration: 2.8,
+        duration: 3.5,
         stagger: {
           each: 0.08,
           from: "center"
         },
-        ease: "power1.out"
-      }, 0.5);
+        ease: "none"
+      }, 0.8);
     }
 
-    // Step 4: Seamless Hand-off - Video dissolves cleanly into the perfectly aligned Central Circle Image
+    // Step 4: Seamless Hand-off - Video dissolves ONLY AFTER it has completely reached the exact target circle size
     masterTl.to(videoBox, {
       opacity: 0,
-      duration: 0.8,
-      ease: "power1.in"
-    }, 4.8);
+      duration: 1.2,
+      ease: "none"
+    }, 8.0);
 
-    // Step 5: Horizontal gliding of rows starts AFTER video has completely settled into the circle
+    // Step 5: Horizontal gliding of rows starts AFTER video has completely dissolved into the target image
     masterTl
-      .to(row1, { x: `+=${shiftAmount}px`, ease: "none", duration: 3.8 }, 5.6)
-      .to(row2, { x: `-=${shiftAmount}px`, ease: "none", duration: 3.8 }, 5.6)
-      .to(row3, { x: `+=${shiftAmount}px`, ease: "none", duration: 3.8 }, 5.6);
+      .to(row1, { x: `+=${shiftAmount}px`, ease: "none", duration: 4.5 }, 9.2)
+      .to(row2, { x: `-=${shiftAmount}px`, ease: "none", duration: 4.5 }, 9.2)
+      .to(row3, { x: `+=${shiftAmount}px`, ease: "none", duration: 4.5 }, 9.2);
 
-    // Step 6: THE ICONIC SIGNIFICIO EXIT ZOOM-OUT TRANSITION INTO NEXT SECTION
-    // Pull back entire typography field into 3D perspective as Next Section reveals
+    // Step 6: THE ICONIC SIGNIFICIO EXIT ZOOM-OUT TRANSITION DIRECTLY INTO ABOUT SECTION
     masterTl.to(rowsParent, {
-      scale: isMobile ? 0.80 : 0.72,
+      scale: isMobile ? 0.82 : 0.75,
       opacity: 0,
-      duration: 1.8,
-      ease: "power2.inOut"
-    }, 8.6);
+      duration: 2.0,
+      ease: "none"
+    }, 13.7);
 
     masterTl.to(stickyFrame, {
       autoAlpha: 0,
-      duration: 1.0,
-      ease: "power1.inOut"
-    }, 9.2);
+      duration: 1.5,
+      ease: "none"
+    }, 14.2);
 
     const refreshLayout = () => {
       const updated = getTargetCoordinates();

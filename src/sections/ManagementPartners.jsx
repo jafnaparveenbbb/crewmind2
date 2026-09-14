@@ -82,9 +82,9 @@ export default function ManagementPartners() {
         ScrollTrigger.create({
           trigger: section,
           start: "top top",
-          end: "+=280%",
+          end: "+=450%",
           pin: true,
-          scrub: 1.2,
+          scrub: 1.5,
           anticipatePin: 1,
           onUpdate: (self) => {
             const progress = self.progress;

@@ -45,7 +45,7 @@ export default function ClosingCTA() {
           <div className="cta__row">
 
             {/* Title & Description */}
-            <div style={{ maxWidth: '48rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div className="cta__left">
               <div className="section-title">
                 <h3 className="f-64">
                   Strong productions <br />

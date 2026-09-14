@@ -970,7 +970,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
    ========================================================================== */
 
 .home-sticky {
-  height: 400vh;
+  height: 600vh;
   position: relative;
   width: 100%;
   background-color: var(--navy);
@@ -2686,20 +2686,36 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 #cta {
   background-color: var(--significo-white);
   color: var(--significo-black);
-  padding-block: clamp(5rem, 9vw, 9rem);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: clamp(4rem, 8vh, 7rem);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .cta {
   display: flex;
   flex-direction: column;
-  gap: clamp(2.5rem, 4vw, 4rem);
+  justify-content: center;
+  gap: clamp(2.5rem, 4vw, 4.5rem);
+  width: 100%;
 }
 
 .cta__row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  gap: 2rem;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 5rem);
+  width: 100%;
+}
+
+.cta__left {
+  max-width: 52rem;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.2rem, 2vh, 1.8rem);
 }
 
 #cta,
@@ -2711,7 +2727,32 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   color: #000000 !important;
 }
 
+#cta .section-title h3 {
+  font-family: 'Staatliches', sans-serif !important;
+  font-size: clamp(3rem, 5.5vw, 6rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: 0.02em;
+  color: #000000 !important;
+  margin: 0;
+}
+
+#cta .section-descr p {
+  font-family: 'Manrope', sans-serif !important;
+  font-size: clamp(1.05rem, 1.35vw, 1.4rem);
+  font-weight: 500;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.85) !important;
+  max-width: 44rem;
+  margin: 0;
+}
+
 @media screen and (max-width: 768px) {
+  #cta {
+    min-height: 100vh;
+    padding-block: clamp(3rem, 6vh, 5rem);
+  }
+
   .cta__row {
     flex-direction: column-reverse;
     align-items: flex-start;
@@ -2809,6 +2850,15 @@ footer,
   overflow: hidden;
   position: relative;
   width: 100%;
+  font-family: 'Manrope', sans-serif !important;
+}
+
+footer h1,
+footer h2,
+footer h3,
+footer h4,
+.footer__heading {
+  font-family: 'Staatliches', sans-serif !important;
 }
 
 .footer__container {
@@ -2848,10 +2898,10 @@ footer,
   width: 100%;
 }
 
-/* Monospace Section Labels */
+/* Manrope Section Labels */
 .footer__label {
-  font-family: 'Space Mono', monospace;
-  font-size: clamp(0.78rem, 0.85vw, 0.88rem);
+  font-family: 'Manrope', sans-serif !important;
+  font-size: clamp(0.8rem, 0.88vw, 0.92rem);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -3021,8 +3071,8 @@ footer,
 
 .footer__email-text {
   color: #ffffff;
-  font-family: 'Space Mono', monospace;
-  font-size: clamp(0.82rem, 0.9vw, 0.9rem);
+  font-family: 'Manrope', sans-serif !important;
+  font-size: clamp(0.85rem, 0.95vw, 0.96rem);
   font-weight: 600;
   letter-spacing: -0.01em;
 }
