@@ -28,9 +28,9 @@ export default function WhatMakesUsDifferent() {
         trigger: section,
         start: "top 60%",
         end: "bottom 40%",
-        onEnter: () => document.body.setAttribute('theme', 'tan'),
-        onEnterBack: () => document.body.setAttribute('theme', 'tan'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'salmon')
+        onEnter: () => document.body.setAttribute('theme', 'yellow'),
+        onEnterBack: () => document.body.setAttribute('theme', 'yellow'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'peach')
       });
 
       const mm = gsap.matchMedia();
@@ -190,16 +190,16 @@ export default function WhatMakesUsDifferent() {
   ];
 
   return (
-    <section 
-      ref={sectionRef} 
-      className="section ovals-diff-section" 
-      this-theme="tan" 
+    <section
+      ref={sectionRef}
+      className="section ovals-diff-section"
+      this-theme="tan"
       id="what-makes-us-different"
     >
       <div ref={stickyRef} className="ovals-diff__sticky">
         <div className="container">
           <div className="ovals-diff__layout">
-            
+
             {/* Left Column: Heading & CTA */}
             <div ref={leftRef} className="ovals-diff__left">
               <div className="ovals-diff__tag">

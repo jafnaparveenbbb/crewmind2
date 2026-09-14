@@ -36,9 +36,9 @@ export default function ManagementPartners() {
         trigger: section,
         start: "top 60%",
         end: "bottom 30%",
-        onEnter: () => document.body.setAttribute('theme', 'salmon'),
-        onEnterBack: () => document.body.setAttribute('theme', 'salmon'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'light-purple')
+        onEnter: () => document.body.setAttribute('theme', 'peach'),
+        onEnterBack: () => document.body.setAttribute('theme', 'peach'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'light-teal')
       });
 
       // 2. Entrance reveal
@@ -82,9 +82,9 @@ export default function ManagementPartners() {
         ScrollTrigger.create({
           trigger: section,
           start: "top top",
-          end: "+=160%",
+          end: "+=280%",
           pin: true,
-          scrub: 0.8,
+          scrub: 1.2,
           anticipatePin: 1,
           onUpdate: (self) => {
             const progress = self.progress;
@@ -126,7 +126,7 @@ export default function ManagementPartners() {
     >
       <div className="container">
         <div className="mgmt-grid">
-          
+
           {/* Left Column: Title, Description, Button */}
           <div ref={leftColRef} className="mgmt-left">
             <h2 className="mgmt-title">

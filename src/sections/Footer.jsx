@@ -29,9 +29,9 @@ export default function Footer() {
         trigger: footer,
         start: "top 80%",
         end: "bottom bottom",
-        onEnter: () => document.body.setAttribute('theme', 'footer-mob'),
-        onEnterBack: () => document.body.setAttribute('theme', 'footer-mob'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'footer-cta')
+        onEnter: () => document.body.setAttribute('theme', 'footer'),
+        onEnterBack: () => document.body.setAttribute('theme', 'footer'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
 
       // 1. Entrance animation for contact form and info blocks
@@ -57,19 +57,18 @@ export default function Footer() {
         );
       }
 
-      // 2. Footer wordmark rising reveal animation
+      // 2. Footer wordmark rising reveal animation (Exact Significo wall-to-wall rising reveal)
       if (wordmark) {
         gsap.fromTo(wordmark,
-          { y: 40, opacity: 0 },
+          { yPercent: 100 },
           {
-            y: 0,
-            opacity: 1,
-            duration: 0.85,
-            ease: "power2.out",
+            yPercent: 0,
+            ease: "none",
             scrollTrigger: {
-              trigger: wordmark,
-              start: "top 90%",
-              toggleActions: "play none none none"
+              trigger: footer,
+              start: "top 40%",
+              end: "bottom bottom",
+              scrub: 1.0
             }
           }
         );
@@ -200,7 +199,7 @@ export default function Footer() {
 
             {/* Right Column: Business Inquiries & Stay In Touch */}
             <div className="footer__info-col">
-              
+
               {/* Business Inquiries */}
               <div className="footer__info-block">
                 <span className="footer__label">( BUSINESS INQUIRIES )</span>
@@ -262,12 +261,12 @@ export default function Footer() {
           </div>
 
           {/* Editorial Wordmark: Exact Official CREWMIND Logo */}
-          <div ref={wordmarkRef} className="footer__wordmark-wrap">
-            <div className="footer__wordmark">
+          <div className="footer__wordmark-wrap">
+            <div ref={wordmarkRef} className="footer__wordmark">
               <img
                 src={mainLogo}
                 srcSet={`${mainLogo} 1x, ${mainLogo2x} 2x`}
-                alt="CREWMIND"
+                alt="crewmind."
                 className="footer__wordmark-logo"
                 loading="lazy"
               />

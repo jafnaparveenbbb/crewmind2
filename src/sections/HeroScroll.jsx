@@ -106,7 +106,7 @@ export default function HeroScroll({ isLoaded = true }) {
         end: "bottom bottom",
         pin: stickyFrame,
         pinSpacing: false,
-        scrub: 1.2,
+        scrub: 1.8,
         invalidateOnRefresh: true,
         onLeave: () => document.body.setAttribute('theme', 'white'),
         onEnterBack: () => document.body.setAttribute('theme', 'black'),
@@ -248,7 +248,6 @@ export default function HeroScroll({ isLoaded = true }) {
             playsInline
             preload="auto"
             crossOrigin="anonymous"
-            poster={ASSETS.hero.placeholderPc}
           >
             <source src={ASSETS.hero.videoDesktop} type="video/mp4" />
           </video>
@@ -297,7 +296,7 @@ export default function HeroScroll({ isLoaded = true }) {
                 <img src={circles[6]?.img} alt="Artists" loading="eager" />
               </div>
               <span className="hero__word">production teams</span>
-              
+
               {/* TARGET CENTER CIRCLE (Exact concentric match for contracting video) */}
               <div ref={centerCircleRef} className="hero__circle hero__circle--target">
                 <img src={circles[8]?.img} alt="Central Circle Target" loading="eager" />

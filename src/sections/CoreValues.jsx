@@ -26,9 +26,9 @@ export default function CoreValues() {
         trigger: section,
         start: "top 50%",
         end: "bottom 50%",
-        onEnter: () => document.body.setAttribute('theme', 'light-purple'),
-        onEnterBack: () => document.body.setAttribute('theme', 'light-purple'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'white')
+        onEnter: () => document.body.setAttribute('theme', 'light-teal'),
+        onEnterBack: () => document.body.setAttribute('theme', 'light-teal'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'orange')
       });
 
       const mm = gsap.matchMedia();
@@ -46,15 +46,15 @@ export default function CoreValues() {
           }
         });
 
-        tl.fromTo(col1, 
-          { yPercent: 25 }, 
-          { yPercent: -50, ease: "none" }, 
+        tl.fromTo(col1,
+          { yPercent: 25 },
+          { yPercent: -50, ease: "none" },
           0
         );
 
-        tl.fromTo(col2, 
-          { yPercent: -45 }, 
-          { yPercent: 30, ease: "none" }, 
+        tl.fromTo(col2,
+          { yPercent: -45 },
+          { yPercent: 30, ease: "none" },
           0
         );
 
@@ -84,7 +84,7 @@ export default function CoreValues() {
           return -(totalWidth - viewportWidth + 24);
         };
 
-        gsap.fromTo(stream, 
+        gsap.fromTo(stream,
           { x: 0 },
           {
             x: getDistance,
@@ -123,27 +123,22 @@ export default function CoreValues() {
   }, []);
 
   return (
-    <section 
-      ref={sectionRef} 
-      className="section significo-about-stats" 
-      this-theme="light-purple" 
+    <section
+      ref={sectionRef}
+      className="section significo-about-stats"
+      this-theme="light-purple"
       id="industry-changing"
     >
       <div ref={stickyRef} className="significo-about-stats__sticky">
         <div className="container">
           <div className="significo-about-stats__layout">
-            
-            {/* Left Side: Tag, Heading & Paragraph */}
+
+            {/* Left Side: Heading & Paragraph */}
             <div ref={leftRef} className="significo-about-stats__left">
-              <div className="core-values__tag">
-                <span className="core-values__dot"></span>
-                <span className="f-14 is--btn caps">THE INDUSTRY IS CHANGING</span>
-              </div>
-              
               <h2 className="core-values__heading">
                 THE INDUSTRY IS<br />CHANGING
               </h2>
-              
+
               <p className="core-values__subparagraph">
                 The live entertainment industry is increasingly recognising the importance of psychological wellbeing, not just for individuals, but for team performance and retention.
               </p>
@@ -152,10 +147,10 @@ export default function CoreValues() {
             {/* Right Side: Stadium Stream */}
             <div className="significo-about-stats__right">
               <div ref={streamRef} className="significo-about-stats__stream">
-                
+
                 {/* Column 1 (Left Stream) */}
                 <div ref={col1Ref} className="significo-about-stats__col is--col-1">
-                  
+
                   {/* Card 1: Better Crew Retention */}
                   <div className="significo-egg-card is--card-1">
                     <div className="significo-egg-card__content">
@@ -184,7 +179,7 @@ export default function CoreValues() {
 
                 {/* Column 2 (Right Stream) */}
                 <div ref={col2Ref} className="significo-about-stats__col is--col-2">
-                  
+
                   {/* Card 2: Stronger Team Resilience */}
                   <div className="significo-egg-card is--card-2">
                     <div className="significo-egg-card__content">

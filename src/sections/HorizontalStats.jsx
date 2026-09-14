@@ -25,9 +25,9 @@ export default function HorizontalStats() {
         trigger: container,
         start: "top 50%",
         end: "bottom 50%",
-        onEnter: () => document.body.setAttribute('theme', 'white'),
-        onEnterBack: () => document.body.setAttribute('theme', 'white'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'light-blue')
+        onEnter: () => document.body.setAttribute('theme', 'orange'),
+        onEnterBack: () => document.body.setAttribute('theme', 'orange'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'light-teal')
       });
 
       // Horizontal scrub calculation
@@ -46,7 +46,7 @@ export default function HorizontalStats() {
         start: "top top",
         end: "bottom bottom",
         animation: horizTween,
-        scrub: 0.8,
+        scrub: 1.5,
         invalidateOnRefresh: true
       });
 
