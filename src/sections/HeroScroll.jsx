@@ -35,7 +35,18 @@ export default function HeroScroll({ isLoaded = true }) {
     if (!container || !stickyFrame || !videoBox || !rowsParent) return;
 
     if (videoElement) {
-      videoElement.play().catch(() => { });
+      videoElement.muted = true;
+      videoElement.playsInline = true;
+      const playVideo = () => {
+        const p = videoElement.play();
+        if (p && p.catch) {
+          p.catch(() => {});
+        }
+      };
+      playVideo();
+      videoElement.addEventListener('canplay', playVideo);
+      videoElement.addEventListener('loadeddata', playVideo);
+      videoElement.addEventListener('loadedmetadata', playVideo);
     }
 
     // Precise geometric calculation of center circle coordinates & radius relative to sticky frame
@@ -242,12 +253,12 @@ export default function HeroScroll({ isLoaded = true }) {
         <div ref={videoBoxRef} className="hero__video-box">
           <video
             ref={videoElementRef}
+            poster={ASSETS.hero.poster}
             muted
             autoPlay
             loop
             playsInline
             preload="auto"
-            crossOrigin="anonymous"
           >
             <source src={ASSETS.hero.videoDesktop} type="video/mp4" />
           </video>

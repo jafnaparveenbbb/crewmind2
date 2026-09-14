@@ -2,6 +2,7 @@
 
 // Videos & Placeholders
 import heroVideo from '../assets/significo/videos/herovideo.mp4';
+import heroPoster from '../assets/significo/hero/hero-poster.jpg';
 
 // Horizontal Stats Parallax Images (Active items)
 import horiz07 from '../assets/significo/horizontal/horizontal-07.webp';
@@ -42,6 +43,7 @@ export const ASSETS = {
   crew: [crewimg8, crewimg2, crewimg3, crewimg4, crewimg5, crewimg6, crewming7, crewimg1],
   hero: {
     videoDesktop: heroVideo,
+    poster: heroPoster,
     circles: [
       { name: "creative", img: crewimg8 },
       { name: "inclusive", img: crewimg2 },
