@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Smile, Zap, Rocket, ShieldCheck } from 'lucide-react';
+import { Shield, Zap, Users, HeartPulse } from 'lucide-react';
 import MagneticButton from '../components/MagneticButton';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -23,14 +23,14 @@ export default function WhatMakesUsDifferent() {
     if (!section || !left || !grid) return;
 
     const ctx = gsap.context(() => {
-      // Theme trigger for tan
+      // Theme trigger for white
       ScrollTrigger.create({
         trigger: section,
         start: "top 60%",
         end: "bottom 40%",
-        onEnter: () => document.body.setAttribute('theme', 'tan'),
-        onEnterBack: () => document.body.setAttribute('theme', 'tan'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'salmon')
+        onEnter: () => document.body.setAttribute('theme', 'white'),
+        onEnterBack: () => document.body.setAttribute('theme', 'white'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'navy')
       });
 
       const mm = gsap.matchMedia();
@@ -42,8 +42,8 @@ export default function WhatMakesUsDifferent() {
         gsap.from(left.children, {
           opacity: 0,
           y: 35,
-          duration: 1.0,
-          stagger: 0.12,
+          duration: 0.8,
+          stagger: 0.1,
           ease: "power2.out",
           scrollTrigger: {
             trigger: section,
@@ -57,12 +57,12 @@ export default function WhatMakesUsDifferent() {
           opacity: 0,
           scale: 0.88,
           y: 40,
-          duration: 1.0,
-          stagger: 0.1,
+          duration: 0.8,
+          stagger: 0.08,
           ease: "power2.out",
           scrollTrigger: {
-            trigger: grid,
-            start: "top 80%",
+            trigger: section,
+            start: "top 75%",
             toggleActions: "play none none reverse"
           }
         });
@@ -112,39 +112,37 @@ export default function WhatMakesUsDifferent() {
         }
       });
 
-      // MOBILE (< 768px): Horizontal Moving Card Track
+      // MOBILE (< 768px): Horizontal Moving Card Track matching HorizontalStats
       mm.add("(max-width: 767px)", () => {
         const cards = [card1Ref.current, card2Ref.current, card3Ref.current, card4Ref.current].filter(Boolean);
         gsap.set(cards, { clearProps: "all" });
         gsap.set(grid, { clearProps: "all", x: 0 });
 
-        const getDistance = () => {
-          const totalWidth = grid.scrollWidth;
-          const viewportWidth = window.innerWidth;
-          return -(totalWidth - viewportWidth + 36);
+        const getScrollWidth = () => {
+          return -(grid.scrollWidth - window.innerWidth + 40);
         };
 
-        gsap.fromTo(grid,
-          { x: 0 },
-          {
-            x: getDistance,
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              start: "top top",
-              end: "bottom bottom",
-              scrub: 0.8,
-              invalidateOnRefresh: true
-            }
-          }
-        );
+        const horizTween = gsap.to(grid, {
+          x: getScrollWidth,
+          ease: "none",
+          force3D: true
+        });
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top top",
+          end: "bottom bottom",
+          animation: horizTween,
+          scrub: 0.5,
+          invalidateOnRefresh: true
+        });
 
         if (left) {
           gsap.from(left.children, {
             opacity: 0,
             y: 20,
-            duration: 0.8,
-            stagger: 0.1,
+            duration: 0.6,
+            stagger: 0.08,
             ease: "power2.out",
             scrollTrigger: {
               trigger: section,
@@ -165,41 +163,41 @@ export default function WhatMakesUsDifferent() {
   const itemsData = [
     {
       ref: card1Ref,
-      icon: Smile,
-      title: "PRESENT DURING TOURS AND PRODUCTIONS",
-      desc: "Providing real-time psychological support embedded directly into live tour routes and active production schedules."
+      icon: Shield,
+      title: "Present During Tours & Productions",
+      desc: "Proactive psychological presence for touring crews wherever live shows travel."
     },
     {
       ref: card2Ref,
       icon: Zap,
-      title: "AVAILABLE IN HIGH PRESSURE MOMENTS",
-      desc: "Immediate, on-demand grounding and crisis prevention during peak performance and high-stress show days."
+      title: "Available In High-Pressure Moments",
+      desc: "Real-time support during demanding show days and grueling turnarounds."
     },
     {
       ref: card3Ref,
-      icon: Rocket,
-      title: "EMBEDDED WITHIN THE TEAM ENVIRONMENT",
-      desc: "Fostering deep trust with crew and artists as an integrated, everyday presence across all departments."
+      icon: Users,
+      title: "Embedded Within Team Environment",
+      desc: "Integrated naturally into daily backstage rhythm to foster organic trust."
     },
     {
       ref: card4Ref,
-      icon: ShieldCheck,
-      title: "FOCUSED ON PREVENTION, NOT JUST INTERVENTION",
-      desc: "Equipping teams with sustainable mental resilience tools and early identification before burnout takes hold."
+      icon: HeartPulse,
+      title: "Focused On Prevention First",
+      desc: "Stopping burnout, chronic stress, and exhaustion before emergencies emerge."
     }
   ];
 
   return (
-    <section 
-      ref={sectionRef} 
-      className="section ovals-diff-section" 
-      this-theme="tan" 
+    <section
+      ref={sectionRef}
+      className="section ovals-diff-section"
+      this-theme="white"
       id="what-makes-us-different"
     >
       <div ref={stickyRef} className="ovals-diff__sticky">
         <div className="container">
           <div className="ovals-diff__layout">
-            
+
             {/* Left Column: Heading & CTA */}
             <div ref={leftRef} className="ovals-diff__left">
               <div className="ovals-diff__tag">
@@ -229,11 +227,13 @@ export default function WhatMakesUsDifferent() {
                 return (
                   <div key={idx} ref={item.ref} className="diff-core-circle">
                     <div className="diff-core-circle__inner">
-                      <div className="diff-core-circle__icon-wrap">
-                        <IconComp className="diff-core-circle__icon" strokeWidth={1.75} />
-                      </div>
+                      {IconComp && (
+                        <div className="diff-core-circle__icon-wrap">
+                          <IconComp className="diff-core-circle__icon" strokeWidth={1.8} />
+                        </div>
+                      )}
                       <h3 className="diff-core-circle__title">{item.title}</h3>
-                      <p className="diff-core-circle__desc">{item.desc}</p>
+                      {item.desc && <p className="diff-core-circle__desc">{item.desc}</p>}
                     </div>
                   </div>
                 );

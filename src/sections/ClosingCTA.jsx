@@ -17,9 +17,9 @@ export default function ClosingCTA() {
         trigger: section,
         start: "top 50%",
         end: "bottom 50%",
-        onEnter: () => document.body.setAttribute('theme', 'footer-cta'),
-        onEnterBack: () => document.body.setAttribute('theme', 'footer-cta'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'tan')
+        onEnter: () => document.body.setAttribute('theme', 'white'),
+        onEnterBack: () => document.body.setAttribute('theme', 'white'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
     }, section);
 
@@ -33,19 +33,19 @@ export default function ClosingCTA() {
   };
 
   return (
-    <section 
-      id="cta" 
-      ref={sectionRef} 
-      className="section" 
-      this-theme="footer-cta"
+    <section
+      id="cta"
+      ref={sectionRef}
+      className="section"
+      this-theme="white"
     >
       <div className="container">
         <div className="cta">
-          
+
           <div className="cta__row">
-            
+
             {/* Title & Description */}
-            <div style={{ maxWidth: '48rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div className="cta__text-wrap">
               <div className="section-title">
                 <h3 className="f-64">
                   Strong productions <br />
@@ -78,9 +78,9 @@ export default function ClosingCTA() {
                 </div>
                 <div className="cta__scroll--inner">
                   <svg width="100%" height="100%" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 0.703124C16 9.53968 8.83656 16.7031 0 16.7031" stroke="currentColor" strokeWidth="2.5"/>
-                    <path d="M16 0.703124C16 9.53968 23.1634 16.7031 32 16.7031" stroke="currentColor" strokeWidth="2.5"/>
-                    <path d="M16 0.703125L16 37.2746" stroke="currentColor" strokeWidth="2.5"/>
+                    <path d="M16 0.703124C16 9.53968 8.83656 16.7031 0 16.7031" stroke="currentColor" strokeWidth="2.5" />
+                    <path d="M16 0.703124C16 9.53968 23.1634 16.7031 32 16.7031" stroke="currentColor" strokeWidth="2.5" />
+                    <path d="M16 0.703125L16 37.2746" stroke="currentColor" strokeWidth="2.5" />
                   </svg>
                 </div>
               </div>

@@ -27,7 +27,7 @@ export default function CustomCursor() {
 
     window.addEventListener('mousemove', onMouseMove, { passive: true });
 
-    const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .hero__circle, .cards__item, .mgmt-item, .significo-egg-card, .diff-core-circle');
+    const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .hero__circle, .cards__item, .mgmt-card, .zero-g-card, .significo-egg-card, .diff-core-circle');
     interactiveElements.forEach(el => {
       el.addEventListener('mouseenter', onMouseEnterInteractive, { passive: true });
       el.addEventListener('mouseleave', onMouseLeaveInteractive, { passive: true });

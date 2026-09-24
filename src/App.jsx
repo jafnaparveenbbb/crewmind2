@@ -31,12 +31,16 @@ export default function App() {
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-    // 2. Initialize Lenis Smooth Scrolling
+    // 2. Initialize Lenis Smooth Scrolling with responsive, faster scroll speed
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.85,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
       smoothWheel: true,
-      smoothTouch: false
+      wheelMultiplier: 1.25,
+      touchMultiplier: 2.2,
+      infinite: false
     });
     lenisRef.current = lenis;
     lenis.scrollTo(0, { immediate: true });
@@ -55,7 +59,7 @@ export default function App() {
         document.body.classList.remove('at-top');
       } else {
         document.body.classList.add('at-top');
-        document.body.setAttribute('theme', 'black');
+        document.body.setAttribute('theme', 'navy');
       }
 
       // Hide scroll indicator arrow when scrolled past Hero
@@ -117,25 +121,25 @@ export default function App() {
         {/* 2. About / Meet Crewmind (Theme: White #FFFFFF) */}
         <AboutSection />
 
-        {/* 3. Services / Live Productions Support (Theme: Light-Blue #E8EBF7) */}
+        {/* 3. Services / Live Productions Support (Theme: White #FFFFFF) */}
         <IconCards />
 
         {/* 4. Horizontal Stats / Impact in Numbers (Theme: White #FFFFFF) */}
         <HorizontalStats />
 
-        {/* 5. The Industry Is Changing / Core Values (Theme: Light-Purple #F0EEF8) */}
+        {/* 5. The Industry Is Changing / Core Values (Theme: White #FFFFFF) */}
         <CoreValues />
 
-        {/* 6. Why Management Teams Partner With Us (Theme: Salmon #FFEFEA) */}
+        {/* 6. Why Management Teams Partner With Us (Theme: White #FFFFFF) */}
         <ManagementPartners />
 
-        {/* 7. What Makes Us Different (Theme: Tan #F5EFEB) */}
+        {/* 7. What Makes Us Different (Theme: White #FFFFFF) */}
         <WhatMakesUsDifferent />
 
-        {/* 8. Closing CTA (Theme: Footer-CTA #00063D) */}
+        {/* 8. Closing CTA (Theme: White #FFFFFF) */}
         <ClosingCTA />
 
-        {/* 9. Grand Footer (Theme: Footer-Mob #00063D) */}
+        {/* 9. Grand Footer (Theme: Black #000000) */}
         <Footer />
       </main>
     </div>

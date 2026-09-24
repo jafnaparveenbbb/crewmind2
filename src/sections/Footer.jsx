@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import mainLogo from '../assets/significo/misc/main-logo.png';
-import mainLogo2x from '../assets/significo/misc/main-logo-2x.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,7 +29,7 @@ export default function Footer() {
         end: "bottom bottom",
         onEnter: () => document.body.setAttribute('theme', 'footer-mob'),
         onEnterBack: () => document.body.setAttribute('theme', 'footer-mob'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'footer-cta')
+        onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
 
       // 1. Entrance animation for contact form and info blocks
@@ -57,22 +55,37 @@ export default function Footer() {
         );
       }
 
-      // 2. Footer wordmark rising reveal animation
+      // 2. Footer wordmark animated rising reveal & parallax scrub
       if (wordmark) {
-        gsap.fromTo(wordmark,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.85,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: wordmark,
-              start: "top 90%",
-              toggleActions: "play none none none"
+        const letters = wordmark.querySelectorAll('.footer__wordmark-letter');
+        if (letters && letters.length > 0) {
+          gsap.fromTo(letters,
+            { yPercent: 100, opacity: 0 },
+            {
+              yPercent: 0,
+              opacity: 1,
+              stagger: 0.04,
+              duration: 0.9,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: wordmark,
+                start: "top 92%",
+                toggleActions: "play none none none"
+              }
             }
+          );
+        }
+
+        gsap.to(wordmark, {
+          y: -15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: footer,
+            start: "top bottom",
+            end: "bottom bottom",
+            scrub: 0.8
           }
-        );
+        });
       }
 
       // 3. Bottom legal links & copyright reveal
@@ -200,7 +213,7 @@ export default function Footer() {
 
             {/* Right Column: Business Inquiries & Stay In Touch */}
             <div className="footer__info-col">
-              
+
               {/* Business Inquiries */}
               <div className="footer__info-block">
                 <span className="footer__label">( BUSINESS INQUIRIES )</span>
@@ -261,16 +274,14 @@ export default function Footer() {
 
           </div>
 
-          {/* Editorial Wordmark: Exact Official CREWMIND Logo */}
+          {/* Massive Animated CREWMIND Brand Wordmark */}
           <div ref={wordmarkRef} className="footer__wordmark-wrap">
-            <div className="footer__wordmark">
-              <img
-                src={mainLogo}
-                srcSet={`${mainLogo} 1x, ${mainLogo2x} 2x`}
-                alt="CREWMIND"
-                className="footer__wordmark-logo"
-                loading="lazy"
-              />
+            <div className="footer__wordmark" aria-label="CREWMIND">
+              {"CREWMIND".split("").map((letter, idx) => (
+                <span key={idx} className="footer__wordmark-letter">
+                  {letter}
+                </span>
+              ))}
             </div>
           </div>
 

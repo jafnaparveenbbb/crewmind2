@@ -20,14 +20,15 @@ export default function HorizontalStats() {
     if (!container || !list) return;
 
     const ctx = gsap.context(() => {
-      // Theme trigger for white
+      // Theme trigger for navy (#00063D) background
       ScrollTrigger.create({
         trigger: container,
         start: "top 50%",
         end: "bottom 50%",
-        onEnter: () => document.body.setAttribute('theme', 'white'),
-        onEnterBack: () => document.body.setAttribute('theme', 'white'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'light-blue')
+        onEnter: () => document.body.setAttribute('theme', 'navy'),
+        onEnterBack: () => document.body.setAttribute('theme', 'navy'),
+        onLeave: () => document.body.setAttribute('theme', 'white'),
+        onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
 
       // Horizontal scrub calculation
@@ -106,7 +107,7 @@ export default function HorizontalStats() {
     <section
       ref={containerRef}
       className="section horizontal"
-      this-theme="white"
+      this-theme="navy"
       id="impact"
     >
       <div className="horizontal__sticky">
@@ -208,7 +209,7 @@ export default function HorizontalStats() {
 
         {/* Floating Bottom Button */}
         <div className="horizontal__btn--parent">
-          <MagneticButton buttonStyle="black" href="#contact">
+          <MagneticButton buttonStyle="white" href="#contact">
             Partner with us
           </MagneticButton>
         </div>
