@@ -276,9 +276,9 @@ export default function Footer() {
 
           {/* Massive Animated CREWMIND Brand Wordmark */}
           <div ref={wordmarkRef} className="footer__wordmark-wrap">
-            <div className="footer__wordmark" aria-label="CREWMIND">
-              {"CREWMIND".split("").map((letter, idx) => (
-                <span key={idx} className="footer__wordmark-letter">
+            <div className="footer__wordmark" aria-label="crewmind.">
+              {"crewmind.".split("").map((letter, idx) => (
+                <span key={idx} className={`footer__wordmark-letter ${letter === '.' ? 'is--dot' : ''}`}>
                   {letter}
                 </span>
               ))}

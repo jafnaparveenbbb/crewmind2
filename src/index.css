@@ -484,7 +484,6 @@ footer p,
   .zero-g-word,
   .horizontal__content h3,
   .horizontal__content .f-140,
-  .footer__wordmark-letter,
   .burger__item,
   .f-140,
   .f-128,
@@ -3753,7 +3752,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 
 #cta {
   background-color: #ffffff !important;
-  color: #000000 !important;
+  color: #00063D !important;
   height: 100vh;
   height: 100dvh;
   min-height: 100vh;
@@ -3805,7 +3804,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 }
 
 #cta .section-title h3 {
-  color: #000000 !important;
+  color: #00063D !important;
   font-family: 'Staatliches', sans-serif;
   font-size: clamp(2.8rem, 4.8vw, 5.5rem);
   font-weight: 400;
@@ -3816,8 +3815,8 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 }
 
 #cta .section-descr p {
-  color: #000000 !important;
-  opacity: 0.85;
+  color: #00063D !important;
+  opacity: 0.88;
   font-family: 'Manrope', sans-serif;
   font-size: clamp(0.95rem, 1.15vw, 1.25rem);
   font-weight: 500;
@@ -3926,6 +3925,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     margin: 0 auto !important;
     text-transform: uppercase !important;
     font-family: 'Staatliches', sans-serif !important;
+    color: #00063D !important;
   }
 
   #cta .section-descr {
@@ -3942,6 +3942,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     max-width: 330px !important;
     margin: 0 auto !important;
     font-family: 'Manrope', sans-serif !important;
+    color: #00063D !important;
   }
 
   /* Centered Book a Call button */
@@ -3981,7 +3982,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #000000;
+  color: #00063D;
   flex-shrink: 0;
 }
 
@@ -3992,7 +3993,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 }
 
 .cta__scroll--text text {
-  fill: #000000 !important;
+  fill: #00063D !important;
 }
 
 .cta__scroll--inner {
@@ -4002,7 +4003,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 }
 
 .cta__scroll--inner svg path {
-  stroke: #000000 !important;
+  stroke: #00063D !important;
 }
 
 @keyframes rotating {
@@ -4336,33 +4337,38 @@ footer,
 /* Massive Animated CREWMIND Brand Wordmark (Significo Style) */
 .footer__wordmark-wrap {
   width: 100%;
-  margin-top: clamp(4rem, 7vw, 7rem);
-  margin-bottom: clamp(1rem, 2vw, 2rem);
+  margin-top: clamp(2.5rem, 4.5vw, 5rem);
+  margin-bottom: clamp(1rem, 2vw, 1.8rem);
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
   user-select: none;
   padding-block: 0.5rem;
+  box-sizing: border-box;
 }
 
 .footer__wordmark {
   width: 100%;
+  max-width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   text-align: center;
-  overflow: hidden;
+  overflow: visible;
+  box-sizing: border-box;
 }
 
 .footer__wordmark-letter {
-  font-family: 'Staatliches', sans-serif;
-  font-size: clamp(4.5rem, 14.5vw, 16.5rem);
-  font-weight: 400;
-  line-height: 0.82;
+  font-family: 'Manrope', 'Satoshi', sans-serif !important;
+  font-size: clamp(2.8rem, 7.2vw, 8.6rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
   color: #FFFFFF;
-  text-transform: uppercase;
+  text-transform: lowercase;
   display: inline-block;
+  flex-shrink: 0;
   will-change: transform, opacity;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
   cursor: default;
@@ -4371,6 +4377,10 @@ footer,
 .footer__wordmark-letter:hover {
   transform: translateY(-8px) scale(1.05);
   color: #C2DBF8;
+}
+
+.footer__wordmark-letter.is--dot {
+  font-weight: 800;
 }
 
 /* Divider & Legal Row */
@@ -4423,11 +4433,12 @@ footer,
   }
 
   .footer__wordmark-wrap {
-    margin-top: clamp(2.5rem, 5vw, 4rem);
+    margin-top: clamp(2rem, 4vw, 3.5rem);
   }
 
   .footer__wordmark-letter {
-    font-size: clamp(3.8rem, 14vw, 8.5rem);
+    font-size: clamp(2rem, 6.8vw, 4.8rem);
+    line-height: 0.95;
   }
 }
 
@@ -4508,8 +4519,12 @@ footer,
   }
 
   .footer__wordmark-letter {
-    font-size: clamp(48px, 15vw, 84px) !important;
-    line-height: 0.85 !important;
+    font-family: 'Manrope', 'Satoshi', sans-serif !important;
+    font-size: clamp(22px, 7.2vw, 40px) !important;
+    font-weight: 800 !important;
+    line-height: 0.95 !important;
+    letter-spacing: -0.03em !important;
+    text-transform: lowercase !important;
   }
 
   .footer__bottom-row {
