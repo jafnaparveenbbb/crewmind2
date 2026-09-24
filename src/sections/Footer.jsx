@@ -127,7 +127,7 @@ export default function Footer() {
   };
 
   return (
-    <footer ref={footerRef} className="section footer-section" this-theme="footer-mob" id="contact">
+    <footer ref={footerRef} className="section footer-section" this-theme="footer-mob" id="footer">
       <div className="footer__container">
         <div className="footer">
 
@@ -135,7 +135,7 @@ export default function Footer() {
           <div className="footer__contact-grid">
 
             {/* Left Column: Contact Form */}
-            <div className="footer__contact-col">
+            <div id="contact" className="footer__contact-col">
               <span className="footer__label">( CONTACT US )</span>
 
               {submitted ? (

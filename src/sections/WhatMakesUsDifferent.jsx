@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Shield, Zap, Users, HeartPulse } from 'lucide-react';
 import MagneticButton from '../components/MagneticButton';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -23,14 +22,14 @@ export default function WhatMakesUsDifferent() {
     if (!section || !left || !grid) return;
 
     const ctx = gsap.context(() => {
-      // Theme trigger for white
+      // Keep theme white - no color transition animation between sections
       ScrollTrigger.create({
         trigger: section,
         start: "top 60%",
         end: "bottom 40%",
         onEnter: () => document.body.setAttribute('theme', 'white'),
         onEnterBack: () => document.body.setAttribute('theme', 'white'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'navy')
+        onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
 
       const mm = gsap.matchMedia();
@@ -163,27 +162,19 @@ export default function WhatMakesUsDifferent() {
   const itemsData = [
     {
       ref: card1Ref,
-      icon: Shield,
-      title: "Present During Tours & Productions",
-      desc: "Proactive psychological presence for touring crews wherever live shows travel."
+      title: "Present During Tours & Productions"
     },
     {
       ref: card2Ref,
-      icon: Zap,
-      title: "Available In High-Pressure Moments",
-      desc: "Real-time support during demanding show days and grueling turnarounds."
+      title: "Available In High-Pressure Moments"
     },
     {
       ref: card3Ref,
-      icon: Users,
-      title: "Embedded Within Team Environment",
-      desc: "Integrated naturally into daily backstage rhythm to foster organic trust."
+      title: "Embedded Within Team Environment"
     },
     {
       ref: card4Ref,
-      icon: HeartPulse,
-      title: "Focused On Prevention First",
-      desc: "Stopping burnout, chronic stress, and exhaustion before emergencies emerge."
+      title: "Focused On Prevention First"
     }
   ];
 
@@ -206,7 +197,7 @@ export default function WhatMakesUsDifferent() {
               </div>
 
               <h2 className="ovals-diff__heading">
-                WE WORK BEFORE<br />SOMEONE ASKS<br />FOR HELP.
+                WE WORK BEFORE<br />SOMEONE ASKS FOR HELP.
               </h2>
 
               <p className="ovals-diff__subpara">
@@ -222,22 +213,13 @@ export default function WhatMakesUsDifferent() {
 
             {/* Right Column: 2x2 Large Touching Circles */}
             <div ref={gridRef} className="ovals-diff__grid">
-              {itemsData.map((item, idx) => {
-                const IconComp = item.icon;
-                return (
-                  <div key={idx} ref={item.ref} className="diff-core-circle">
-                    <div className="diff-core-circle__inner">
-                      {IconComp && (
-                        <div className="diff-core-circle__icon-wrap">
-                          <IconComp className="diff-core-circle__icon" strokeWidth={1.8} />
-                        </div>
-                      )}
-                      <h3 className="diff-core-circle__title">{item.title}</h3>
-                      {item.desc && <p className="diff-core-circle__desc">{item.desc}</p>}
-                    </div>
+              {itemsData.map((item, idx) => (
+                <div key={idx} ref={item.ref} className="diff-core-circle">
+                  <div className="diff-core-circle__inner">
+                    <h3 className="diff-core-circle__title">{item.title}</h3>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
 
           </div>

@@ -5,7 +5,7 @@ export default function ScrollArrow({ onClick, isVisible = true }) {
     <div 
       className={`scroll-arrow__sticky ${isVisible ? '' : 'hide'}`}
       onClick={onClick}
-      title="Scroll to next section"
+      title="Scroll to footer"
     >
       <div className="scroll-arrow">
         <svg width="20" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">

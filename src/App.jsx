@@ -96,9 +96,11 @@ export default function App() {
   };
 
   const handleScrollArrowClick = () => {
-    const nextSection = document.getElementById('about');
-    if (nextSection && lenisRef.current) {
-      lenisRef.current.scrollTo(nextSection, { duration: 1.2 });
+    const footer = document.getElementById('footer') || document.querySelector('footer');
+    if (footer && lenisRef.current) {
+      lenisRef.current.scrollTo(footer, { duration: 1.8 });
+    } else if (footer) {
+      footer.scrollIntoView({ behavior: 'smooth' });
     }
   };
 

@@ -106,8 +106,8 @@ export default function IconCards() {
                 onMouseEnter={() => setActiveIndex(idx)}
               >
                 <div className="cards__content">
-                  <div className="f-20">{card.title}</div>
-                  <p className="f-14" style={{ marginTop: '0.5rem', lineHeight: '1.55', opacity: 0.85 }}>
+                  <div className="f-20 cards__item-title">{card.title}</div>
+                  <p className="f-14 cards__item-desc">
                     {card.text}
                   </p>
                 </div>

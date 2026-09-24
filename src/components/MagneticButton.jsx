@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 
 export default function MagneticButton({ 
@@ -13,6 +13,14 @@ export default function MagneticButton({
   const btnRef = useRef(null);
   const text1Ref = useRef(null);
   const text2Ref = useRef(null);
+
+  useEffect(() => {
+    // Ensure the duplicate animated text is always initialized 100% out of view
+    if (text2Ref.current) {
+      const chars2 = text2Ref.current.querySelectorAll('.char');
+      gsap.set(chars2, { yPercent: 100 });
+    }
+  }, [children]);
 
   const handleMouseEnter = () => {
     if (!text1Ref.current || !text2Ref.current) return;
@@ -55,10 +63,10 @@ export default function MagneticButton({
       {...props}
     >
       <div className="btn__text--parent">
-        <div ref={text1Ref} className="btn__text">
+        <div ref={text1Ref} className="btn__text btn__text--primary">
           <div className="f-14 is--btn">{renderChars(children)}</div>
         </div>
-        <div ref={text2Ref} className="btn__text">
+        <div ref={text2Ref} className="btn__text btn__text--secondary" aria-hidden="true">
           <div className="f-14 is--btn">{renderChars(children)}</div>
         </div>
       </div>

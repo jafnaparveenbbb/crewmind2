@@ -102,6 +102,7 @@ export default function HeroScroll({ isLoaded = true }) {
     gsap.set([row1, row2, row3, row4].filter(Boolean), { x: 0 });
 
     if (heroBottom) gsap.set(heroBottom, { opacity: 1, y: 0 });
+    if (navRef.current) gsap.set(navRef.current, { opacity: 1, y: 0 });
 
     const shiftAmount = isMob ? (window.innerWidth * 0.45) : (window.innerWidth * 0.28);
 
