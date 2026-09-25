@@ -139,15 +139,15 @@ export default function AboutSection() {
   const pillarsData = [
     {
       ref: card1Ref,
-      title: "Women-Led UAE Initiative"
+      title: <>Women-Led<br />Uae Initiative</>
     },
     {
       ref: card2Ref,
-      title: "MHP India Alliance"
+      title: <>Mhp India<br />Alliance</>
     },
     {
       ref: card3Ref,
-      title: "Built For The Live Stage"
+      title: <>Built For The<br />Live Stage</>
     }
   ];
 

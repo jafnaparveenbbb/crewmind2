@@ -39,7 +39,7 @@ export default function App() {
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1.25,
-      touchMultiplier: 2.2,
+      touchMultiplier: 1.15,
       infinite: false
     });
     lenisRef.current = lenis;
