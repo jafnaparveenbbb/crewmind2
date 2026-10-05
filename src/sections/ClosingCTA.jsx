@@ -13,14 +13,83 @@ export default function ClosingCTA() {
     if (!section) return;
 
     const ctx = gsap.context(() => {
+      // 1. Theme trigger
       ScrollTrigger.create({
         trigger: section,
-        start: "top 50%",
-        end: "bottom 50%",
+        start: "top 60%",
+        end: "bottom 40%",
         onEnter: () => document.body.setAttribute('theme', 'white'),
         onEnterBack: () => document.body.setAttribute('theme', 'white'),
         onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
+
+      // 2. Smooth Section Entry Animation
+      const textWrap = section.querySelector('.cta__text-wrap');
+      const scrollBadge = section.querySelector('.cta__scroll--parent');
+      const ctaBtn = section.querySelector('.cta__btn');
+
+      if (textWrap) {
+        gsap.fromTo(textWrap.children,
+          {
+            opacity: 0,
+            y: 45
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            stagger: 0.14,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 75%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      }
+
+      if (scrollBadge) {
+        gsap.fromTo(scrollBadge,
+          {
+            opacity: 0,
+            scale: 0.75,
+            rotate: -60
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            duration: 1.1,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 72%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      }
+
+      if (ctaBtn) {
+        gsap.fromTo(ctaBtn,
+          {
+            opacity: 0,
+            y: 35
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 68%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      }
     }, section);
 
     return () => {

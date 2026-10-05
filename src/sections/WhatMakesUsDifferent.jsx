@@ -1,19 +1,34 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticButton from '../components/MagneticButton';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const DIFFERENCE_POINTS = [
+  {
+    id: 1,
+    title: "Present During Tours & Productions"
+  },
+  {
+    id: 2,
+    title: "Available In High-Pressure Moments"
+  },
+  {
+    id: 3,
+    title: "Embedded Within Team Environment"
+  },
+  {
+    id: 4,
+    title: "Focused On Prevention First"
+  }
+];
+
 export default function WhatMakesUsDifferent() {
   const sectionRef = useRef(null);
-  const stickyRef = useRef(null);
   const leftRef = useRef(null);
   const gridRef = useRef(null);
-  const card1Ref = useRef(null);
-  const card2Ref = useRef(null);
-  const card3Ref = useRef(null);
-  const card4Ref = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -22,7 +37,7 @@ export default function WhatMakesUsDifferent() {
     if (!section || !left || !grid) return;
 
     const ctx = gsap.context(() => {
-      // Keep theme white - no color transition animation between sections
+      // 1. Theme trigger: Keep theme white
       ScrollTrigger.create({
         trigger: section,
         start: "top 60%",
@@ -32,124 +47,88 @@ export default function WhatMakesUsDifferent() {
         onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
 
-      const mm = gsap.matchMedia();
+      // 2. Respect reduced-motion preferences
+      const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
 
-      // DESKTOP (>= 768px): 2x2 Grid & Floating Animations
-      mm.add("(min-width: 768px)", () => {
-        gsap.set(grid, { clearProps: "x,transform" });
-
-        gsap.from(left.children, {
-          opacity: 0,
-          y: 35,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 75%",
-            toggleActions: "play none none reverse"
-          }
-        });
-
-        const cards = [card1Ref.current, card2Ref.current, card3Ref.current, card4Ref.current].filter(Boolean);
-        gsap.from(cards, {
-          opacity: 0,
-          scale: 0.88,
-          y: 40,
-          duration: 0.8,
-          stagger: 0.08,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 75%",
-            toggleActions: "play none none reverse"
-          }
-        });
-
-        if (card1Ref.current) {
-          gsap.to(card1Ref.current, {
-            y: -10,
-            x: 2,
-            duration: 4.2,
-            ease: "sine.inOut",
-            repeat: -1,
-            yoyo: true
-          });
-        }
-        if (card2Ref.current) {
-          gsap.to(card2Ref.current, {
-            y: 10,
-            x: -2,
-            duration: 4.8,
-            delay: -1.5,
-            ease: "sine.inOut",
-            repeat: -1,
-            yoyo: true
-          });
-        }
-        if (card3Ref.current) {
-          gsap.to(card3Ref.current, {
-            y: -8,
-            x: -2,
-            duration: 5.0,
-            delay: -2.5,
-            ease: "sine.inOut",
-            repeat: -1,
-            yoyo: true
-          });
-        }
-        if (card4Ref.current) {
-          gsap.to(card4Ref.current, {
-            y: 9,
-            x: 2,
-            duration: 4.5,
-            delay: -0.8,
-            ease: "sine.inOut",
-            repeat: -1,
-            yoyo: true
-          });
+      // 3. Subtle one-shot entrance reveal on scroll into view
+      const masterTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top 75%",
+          toggleActions: "play none none reverse"
         }
       });
 
-      // MOBILE (< 768px): Horizontal Moving Card Track matching HorizontalStats
-      mm.add("(max-width: 767px)", () => {
-        const cards = [card1Ref.current, card2Ref.current, card3Ref.current, card4Ref.current].filter(Boolean);
-        gsap.set(cards, { clearProps: "all" });
-        gsap.set(grid, { clearProps: "all", x: 0 });
+      // Left narrative entrance
+      masterTl.fromTo(
+        left.children,
+        { opacity: 0, y: 26 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.65,
+          stagger: 0.08,
+          ease: "power2.out"
+        }
+      );
 
-        const getScrollWidth = () => {
-          return -(grid.scrollWidth - window.innerWidth + 40);
-        };
+      // Bubbles grid entrance
+      masterTl.fromTo(
+        grid,
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.65,
+          ease: "power2.out",
+          clearProps: "transform,opacity"
+        },
+        "-=0.3"
+      );
 
-        const horizTween = gsap.to(grid, {
-          x: getScrollWidth,
-          ease: "none",
-          force3D: true
-        });
+      // 4. Responsive ScrollTrigger using GSAP matchMedia
+      const mm = gsap.matchMedia();
 
+      // Desktop pinning & scroll-controlled sequential progression (min-width: 992px)
+      mm.add("(min-width: 992px)", () => {
         ScrollTrigger.create({
           trigger: section,
           start: "top top",
           end: "bottom bottom",
-          animation: horizTween,
-          scrub: 0.5,
-          invalidateOnRefresh: true
-        });
-
-        if (left) {
-          gsap.from(left.children, {
-            opacity: 0,
-            y: 20,
-            duration: 0.6,
-            stagger: 0.08,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 85%",
-              toggleActions: "play none none reverse"
+          scrub: true,
+          onUpdate: (self) => {
+            const p = self.progress;
+            let idx = 0;
+            if (p >= 0.75) {
+              idx = 3;
+            } else if (p >= 0.50) {
+              idx = 2;
+            } else if (p >= 0.25) {
+              idx = 1;
+            } else {
+              idx = 0;
             }
+            setActiveIndex((prev) => (prev !== idx ? idx : prev));
+          },
+          onLeaveBack: () => setActiveIndex(0),
+          onLeave: () => setActiveIndex(3),
+          onEnterBack: () => setActiveIndex(3)
+        });
+      });
+
+      // Tablet and Mobile: Activate as each card enters viewport center (matching IconCards)
+      mm.add("(max-width: 991px)", () => {
+        const cards = grid.querySelectorAll('.diff-principle-card');
+        cards.forEach((card, idx) => {
+          ScrollTrigger.create({
+            trigger: card,
+            start: "top 70%",
+            end: "bottom 30%",
+            onEnter: () => setActiveIndex(idx),
+            onEnterBack: () => setActiveIndex(idx)
           });
-        }
+        });
       });
 
     }, section);
@@ -159,25 +138,6 @@ export default function WhatMakesUsDifferent() {
     };
   }, []);
 
-  const itemsData = [
-    {
-      ref: card1Ref,
-      title: "Present During Tours & Productions"
-    },
-    {
-      ref: card2Ref,
-      title: "Available In High-Pressure Moments"
-    },
-    {
-      ref: card3Ref,
-      title: "Embedded Within Team Environment"
-    },
-    {
-      ref: card4Ref,
-      title: "Focused On Prevention First"
-    }
-  ];
-
   return (
     <section
       ref={sectionRef}
@@ -185,7 +145,7 @@ export default function WhatMakesUsDifferent() {
       this-theme="white"
       id="what-makes-us-different"
     >
-      <div ref={stickyRef} className="ovals-diff__sticky">
+      <div className="ovals-diff__sticky">
         <div className="container">
           <div className="ovals-diff__layout">
 
@@ -211,12 +171,19 @@ export default function WhatMakesUsDifferent() {
               </div>
             </div>
 
-            {/* Right Column: 2x2 Large Touching Circles */}
-            <div ref={gridRef} className="ovals-diff__grid">
-              {itemsData.map((item, idx) => (
-                <div key={idx} ref={item.ref} className="diff-core-circle">
-                  <div className="diff-core-circle__inner">
-                    <h3 className="diff-core-circle__title">{item.title}</h3>
+            {/* Right Column: 2x2 Circular Bubbles Grid */}
+            <div ref={gridRef} className="ovals-diff__grid diff-principles-grid">
+              {DIFFERENCE_POINTS.map((item, idx) => (
+                <div
+                  key={item.id}
+                  className={`diff-principle-card diff-core-circle ${activeIndex === idx ? 'active' : ''}`}
+                  onClick={() => setActiveIndex(idx)}
+                  onMouseEnter={() => setActiveIndex(idx)}
+                >
+                  <div className="diff-principle-card__inner">
+                    <h3 className="diff-principle-card__title">
+                      {item.title}
+                    </h3>
                   </div>
                 </div>
               ))}

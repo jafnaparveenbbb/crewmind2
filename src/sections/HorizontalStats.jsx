@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import MagneticButton from '../components/MagneticButton';
-import { ASSETS, CREW_IMAGES } from '../utils/assets';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,7 +31,7 @@ export default function HorizontalStats() {
 
       // Horizontal scrub calculation
       const getScrollWidth = () => {
-        return -(list.scrollWidth - window.innerWidth + 80);
+        return -(list.scrollWidth - window.innerWidth);
       };
 
       const horizTween = gsap.to(list, {
@@ -49,23 +47,6 @@ export default function HorizontalStats() {
         animation: horizTween,
         scrub: 0.8,
         invalidateOnRefresh: true
-      });
-
-      // Subtle floating parallax for bubble images
-      const imgs = container.querySelectorAll('.horizontal__img');
-      const parallaxSpeeds = [16, -14, 18, -16, 14, -18];
-      imgs.forEach((img, idx) => {
-        const speed = parallaxSpeeds[idx % parallaxSpeeds.length];
-        gsap.to(img, {
-          yPercent: speed,
-          ease: "none",
-          scrollTrigger: {
-            trigger: container,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 0.8
-          }
-        });
       });
 
       // Counter animations triggered on horizontal container animation
@@ -92,7 +73,7 @@ export default function HorizontalStats() {
 
       animateCounter(num1Ref, 63, false, "%");
       animateCounter(num2Ref, 66, false, "%");
-      animateCounter(num3Ref, 11, false, "%");
+      animateCounter(num3Ref, 11.4, true, "%");
 
     }, container);
 
@@ -100,8 +81,6 @@ export default function HorizontalStats() {
       ctx.revert();
     };
   }, []);
-
-  const imgs = CREW_IMAGES || ASSETS.horizontal;
 
   return (
     <section
@@ -123,95 +102,54 @@ export default function HorizontalStats() {
             </div>
           </div>
 
-          {/* Slide 2: 63% (crewimg1 & crewimg2) */}
+          {/* Slide 2: 63% */}
           <div className="horizontal__item">
-            <div className="horizontal__layout">
-              <div className="horizontal__imgs-wrap">
-                <div className="horizontal__img bubble--top">
-                  <img src={imgs[0]} alt="Crew 1" loading="eager" />
-                </div>
-                <div className="horizontal__img bubble--bottom">
-                  <img src={imgs[1]} alt="Crew 2" loading="eager" />
-                </div>
-              </div>
-              <div className="horizontal__content">
-                <div ref={num1Ref} className="f-140">63%</div>
-                <div className="f-40">
-                  Music industry professionals
-                  <br />
-                  experience depression.
-                </div>
+            <div className="horizontal__content">
+              <div ref={num1Ref} className="f-140">63%</div>
+              <div className="f-40">
+                Music industry professionals
+                <br />
+                experience depression.
               </div>
             </div>
           </div>
 
-          {/* Slide 3: 66% (crewimg3 & crewimg4) */}
+          {/* Slide 3: 66% */}
           <div className="horizontal__item">
-            <div className="horizontal__layout">
-              <div className="horizontal__imgs-wrap">
-                <div className="horizontal__img bubble--top">
-                  <img src={imgs[2]} alt="Crew 3" loading="eager" />
-                </div>
-                <div className="horizontal__img bubble--bottom">
-                  <img src={imgs[3]} alt="Crew 4" loading="eager" />
-                </div>
-              </div>
-              <div className="horizontal__content">
-                <div ref={num2Ref} className="f-140">66%</div>
-                <div className="f-40">
-                  Report significant
-                  <br />
-                  anxiety symptoms.
-                </div>
+            <div className="horizontal__content">
+              <div ref={num2Ref} className="f-140">66%</div>
+              <div className="f-40">
+                Report significant
+                <br />
+                anxiety symptoms.
               </div>
             </div>
           </div>
 
-          {/* Slide 4: 11% (crewimg5) */}
+          {/* Slide 4: 11.4% */}
           <div className="horizontal__item">
-            <div className="horizontal__layout">
-              <div className="horizontal__imgs-wrap single-bubble">
-                <div className="horizontal__img bubble--single">
-                  <img src={imgs[4]} alt="Crew 5" loading="eager" />
-                </div>
-              </div>
-              <div className="horizontal__content">
-                <div ref={num3Ref} className="f-140">11%</div>
-                <div className="f-40">
-                  Experienced suicidal thoughts
-                  <br />
-                  in the last year.
-                </div>
+            <div className="horizontal__content">
+              <div ref={num3Ref} className="f-140">11.4%</div>
+              <div className="f-40">
+                Experienced suicidal thoughts
+                <br />
+                in the last year.
               </div>
             </div>
           </div>
 
-          {/* Slide 5: 01 IN 6 (crewimg6) */}
+          {/* Slide 5: 1 in 6 */}
           <div className="horizontal__item">
-            <div className="horizontal__layout">
-              <div className="horizontal__imgs-wrap single-bubble">
-                <div className="horizontal__img bubble--single">
-                  <img src={imgs[5]} alt="Crew 6" loading="eager" />
-                </div>
-              </div>
-              <div className="horizontal__content">
-                <div ref={num4Ref} className="f-140">01 IN 6</div>
-                <div className="f-40">
-                  Lost a colleague
-                  <br />
-                  to suicide.
-                </div>
+            <div className="horizontal__content">
+              <div ref={num4Ref} className="f-140">1 in 6</div>
+              <div className="f-40">
+                Lost a colleague
+                <br />
+                to suicide.
               </div>
             </div>
           </div>
 
-        </div>
-
-        {/* Floating Bottom Button */}
-        <div className="horizontal__btn--parent">
-          <MagneticButton buttonStyle="white" href="#contact">
-            Partner with us
-          </MagneticButton>
         </div>
       </div>
     </section>

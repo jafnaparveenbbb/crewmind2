@@ -82,11 +82,7 @@ export default function IconCards() {
             <div className="section-heading">
               <div className="section-title">
                 <h2 className="f-64">
-                  WE DESIGNED
-                  <br />
-                  SUPPORT FOR LIVE
-                  <br />
-                  PRODUCTIONS
+                  We design support for live productions
                 </h2>
               </div>
             </div>

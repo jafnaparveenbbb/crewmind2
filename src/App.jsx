@@ -43,6 +43,7 @@ export default function App() {
       infinite: false
     });
     lenisRef.current = lenis;
+    window.__lenis = lenis;
     lenis.scrollTo(0, { immediate: true });
 
     // Connect Lenis to GSAP ScrollTrigger

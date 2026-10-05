@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import mainLogo from '../assets/significo/misc/main-logo.png';
+import mainLogo2x from '../assets/significo/misc/main-logo-2x.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,7 +24,7 @@ export default function Footer() {
     if (!footer) return;
 
     const ctx = gsap.context(() => {
-      // Theme trigger for footer-mob
+      // Theme trigger for footer-mob theme
       ScrollTrigger.create({
         trigger: footer,
         start: "top 80%",
@@ -32,74 +34,18 @@ export default function Footer() {
         onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
 
-      // 1. Entrance animation for contact form and info blocks
-      const leftCol = footer.querySelector('.footer__contact-col');
-      const rightCol = footer.querySelector('.footer__info-col');
-      const bottomRow = footer.querySelector('.footer__bottom-row');
-
-      if (leftCol && rightCol) {
-        gsap.fromTo([leftCol, rightCol],
-          { y: 30, opacity: 0 },
+      // Wordmark rising entrance animation
+      if (wordmark) {
+        gsap.fromTo(wordmark,
+          { y: 35, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            stagger: 0.1,
-            duration: 0.8,
+            duration: 0.85,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: footer,
-              start: "top 75%",
-              toggleActions: "play none none none"
-            }
-          }
-        );
-      }
-
-      // 2. Footer wordmark animated rising reveal & parallax scrub
-      if (wordmark) {
-        const letters = wordmark.querySelectorAll('.footer__wordmark-letter');
-        if (letters && letters.length > 0) {
-          gsap.fromTo(letters,
-            { yPercent: 100, opacity: 0 },
-            {
-              yPercent: 0,
-              opacity: 1,
-              stagger: 0.04,
-              duration: 0.9,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: wordmark,
-                start: "top 92%",
-                toggleActions: "play none none none"
-              }
-            }
-          );
-        }
-
-        gsap.to(wordmark, {
-          y: -15,
-          ease: "none",
-          scrollTrigger: {
-            trigger: footer,
-            start: "top bottom",
-            end: "bottom bottom",
-            scrub: 0.8
-          }
-        });
-      }
-
-      // 3. Bottom legal links & copyright reveal
-      if (bottomRow) {
-        gsap.fromTo(bottomRow,
-          { y: 15, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.7,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: bottomRow,
-              start: "top 98%",
+              trigger: wordmark,
+              start: "top 95%",
               toggleActions: "play none none none"
             }
           }
@@ -126,181 +72,194 @@ export default function Footer() {
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <footer ref={footerRef} className="section footer-section" this-theme="footer-mob" id="footer">
-      <div className="footer__container">
-        <div className="footer">
+      <div className="container">
+        
+        {/* Top 2-Column Content Grid */}
+        <div className="footer__grid">
 
-          {/* Top Row: Contact Form Left (1.25fr) & Business Inquiries Right (0.75fr) */}
-          <div className="footer__contact-grid">
+          {/* Left Column: Contact Form & Back-to-Top Button */}
+          <div id="contact" className="footer__col-left">
+            <span className="footer__label">( CONTACT US )</span>
 
-            {/* Left Column: Contact Form */}
-            <div id="contact" className="footer__contact-col">
-              <span className="footer__label">( CONTACT US )</span>
-
-              {submitted ? (
-                <div className="footer__form-success">
-                  Thank you! Your message has been received. Our team will get in touch shortly.
+            {submitted ? (
+              <div className="footer__form-success">
+                Thank you! Your message has been received. Our team will get in touch shortly.
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="footer__form">
+                <div className="footer__form-row">
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
+                    className="footer__form-input"
+                  />
+                  <input
+                    type="text"
+                    name="secondName"
+                    placeholder="Second Name"
+                    value={formData.secondName}
+                    onChange={handleChange}
+                    className="footer__form-input"
+                  />
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="footer__form">
-                  <div className="footer__form-row">
-                    <input
-                      type="text"
-                      name="firstName"
-                      placeholder="First Name"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      required
-                      className="footer__form-input"
-                    />
-                    <input
-                      type="text"
-                      name="secondName"
-                      placeholder="Second Name"
-                      value={formData.secondName}
-                      onChange={handleChange}
-                      className="footer__form-input"
-                    />
-                  </div>
 
-                  <div className="footer__form-row">
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="E-mail"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="footer__form-input"
-                    />
-                    <input
-                      type="tel"
-                      name="phone"
-                      placeholder="Phone Number"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="footer__form-input"
-                    />
-                  </div>
+                <div className="footer__form-row">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="E-mail"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="footer__form-input"
+                  />
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone Number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="footer__form-input"
+                  />
+                </div>
 
-                  <div className="footer__form-full">
-                    <textarea
-                      name="message"
-                      placeholder="Message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows="4"
-                      required
-                      className="footer__form-textarea"
-                    ></textarea>
-                  </div>
+                <div className="footer__form-full">
+                  <textarea
+                    name="message"
+                    placeholder="Message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows="4"
+                    className="footer__form-textarea"
+                  ></textarea>
+                </div>
 
-                  <div className="footer__form-btn-wrap">
-                    <button type="submit" className="footer__submit-pill" aria-label="Submit message">
-                      <span className="footer__submit-text">Submit</span>
-                      <span className="footer__submit-arrow" aria-hidden="true">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                          <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                      </span>
-                    </button>
-                  </div>
-                </form>
-              )}
-            </div>
+                <div className="footer__form-actions">
+                  <button
+                    type="button"
+                    onClick={scrollToTop}
+                    className="footer__back-to-top"
+                    aria-label="Back to top"
+                    title="Back to top"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="12" y1="19" x2="12" y2="5"></line>
+                      <polyline points="5 12 12 5 19 12"></polyline>
+                    </svg>
+                  </button>
 
-            {/* Right Column: Business Inquiries & Stay In Touch */}
-            <div className="footer__info-col">
-
-              {/* Business Inquiries */}
-              <div className="footer__info-block">
-                <span className="footer__label">( BUSINESS INQUIRIES )</span>
-                <p className="footer__location-text">
-                  Dubai, United Arab Emirates
-                </p>
-                <a
-                  href="mailto:crewmind2026@gmail.com"
-                  className="footer__email-capsule"
-                  aria-label="Email crewmind2026@gmail.com"
-                >
-                  <span className="footer__email-text">crewmind2026@gmail.com</span>
-                  <span className="footer__email-arrow" aria-hidden="true">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <button type="submit" className="footer__submit-btn" aria-label="Submit message">
+                    <span>Submit</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
-                  </span>
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+
+          {/* Right Column: Business Inquiries & Stay in Touch */}
+          <div className="footer__col-right">
+
+            {/* Business Inquiries */}
+            <div className="footer__info-group">
+              <span className="footer__label">( BUSINESS INQUIRIES )</span>
+              <p className="footer__location">
+                Dubai, United Arab Emirates
+              </p>
+              <a
+                href="mailto:crewmind2026@gmail.com"
+                className="footer__email-btn"
+                aria-label="Email crewmind2026@gmail.com"
+              >
+                <span>crewmind2026@gmail.com</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+
+            {/* Stay in Touch */}
+            <div className="footer__info-group footer__info-group--social">
+              <span className="footer__label">( STAY IN TOUCH )</span>
+              <div className="footer__socials">
+                <a
+                  href="https://www.instagram.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="footer__social-btn"
+                  aria-label="Instagram"
+                  title="Instagram"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
+                <a
+                  href="https://www.linkedin.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="footer__social-btn"
+                  aria-label="LinkedIn"
+                  title="LinkedIn"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                  </svg>
                 </a>
               </div>
-
-              {/* Stay in Touch */}
-              <div className="footer__info-block footer__info-stay">
-                <span className="footer__label">( STAY IN TOUCH )</span>
-                <div className="footer__social-group">
-                  <a
-                    href="https://www.instagram.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="footer__social-square"
-                    aria-label="Instagram"
-                    title="Instagram"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
-                  </a>
-                  <a
-                    href="https://www.linkedin.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="footer__social-square"
-                    aria-label="LinkedIn"
-                    title="LinkedIn"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                      <rect x="2" y="9" width="4" height="12"></rect>
-                      <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
             </div>
 
-          </div>
-
-          {/* Massive Animated CREWMIND Brand Wordmark */}
-          <div ref={wordmarkRef} className="footer__wordmark-wrap">
-            <div className="footer__wordmark" aria-label="crewmind.">
-              {"crewmind.".split("").map((letter, idx) => (
-                <span key={idx} className={`footer__wordmark-letter ${letter === '.' ? 'is--dot' : ''}`}>
-                  {letter}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Thin Horizontal Divider */}
-          <div className="footer__divider"></div>
-
-          {/* Bottom Row: Legal Links & Copyright */}
-          <div className="footer__bottom-row">
-            <div className="footer__legal-links">
-              <a href="#privacypolicy" className="footer__legal-item">Privacy Policy</a>
-              <a href="#terms-of-use" className="footer__legal-item">Terms of Use</a>
-            </div>
-
-            <div className="footer__copyright">
-              © {new Date().getFullYear()} Crewmind. All rights reserved.
-            </div>
           </div>
 
         </div>
+
+        {/* Bold CREWMIND Wordmark Below the Footer Content */}
+        <div ref={wordmarkRef} className="footer__wordmark-wrap">
+          <div className="footer__wordmark" aria-label="crewmind.">
+            <img
+              src={mainLogo}
+              srcSet={`${mainLogo} 1x, ${mainLogo2x} 2x`}
+              alt="crewmind."
+              className="footer__wordmark-logo"
+              draggable="false"
+            />
+          </div>
+        </div>
+
+        {/* Subtle Horizontal Divider */}
+        <div className="footer__divider" role="separator"></div>
+
+        {/* Bottom Row: Legal Links & Copyright */}
+        <div className="footer__bottom-row">
+          <div className="footer__legal-links">
+            <a href="#privacypolicy" className="footer__legal-item">Privacy Policy</a>
+            <a href="#terms-of-use" className="footer__legal-item">Terms of Use</a>
+          </div>
+
+          <div className="footer__copyright">
+            © 2026 Crewmind. All rights reserved.
+          </div>
+        </div>
+
       </div>
     </footer>
   );

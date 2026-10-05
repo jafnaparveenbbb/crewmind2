@@ -54,9 +54,11 @@ export default function ManagementPartners() {
         onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
 
-      // 2. Master Entrance & Reverse Timeline (Bi-directional on scroll)
+      // 2. Subtle Entrance Reveal (Non-looping, respects reduced-motion)
+      const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+
       const cardWraps = grid.querySelectorAll('.zero-g-card-wrap');
-      const allWords = grid.querySelectorAll('.zero-g-word');
 
       const masterTl = gsap.timeline({
         scrollTrigger: {
@@ -66,81 +68,37 @@ export default function ManagementPartners() {
         }
       });
 
-      // Header text entrance
+      // Header entrance
       if (header) {
         masterTl.fromTo(
           header.children,
-          { opacity: 0, y: 40 },
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.75,
-            stagger: 0.12,
-            ease: "power3.out"
+            duration: 0.65,
+            stagger: 0.08,
+            ease: "power2.out"
           }
         );
       }
 
-      // Card wrappers entrance (handles entrance & reverse cleanly without resetting inner tilt)
+      // Subtle, clean card stagger entrance (runs once on scroll into view, no looping)
       masterTl.fromTo(
         cardWraps,
         {
           opacity: 0,
-          y: 60,
-          scale: 0.9
+          y: 28
         },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.9,
+          duration: 0.6,
           stagger: 0.07,
-          ease: "elastic.out(1.1, 0.45)"
+          ease: "power2.out"
         },
-        "-=0.4"
+        "-=0.3"
       );
-
-      // Individual bouncy words entrance
-      masterTl.fromTo(
-        allWords,
-        {
-          opacity: 0,
-          y: 22,
-          scale: 0.85
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.7,
-          stagger: 0.02,
-          ease: "back.out(2)"
-        },
-        "-=0.7"
-      );
-
-      // 3. Continuous Zero-Gravity Ambient Floating & Tilt on INNER cards
-      const innerCards = grid.querySelectorAll('.zero-g-card');
-      innerCards.forEach((card, i) => {
-        const floatDelay = i * 0.15;
-        const floatDuration = 2.4 + (i % 3) * 0.4;
-        const baseTilt = i % 2 === 0 ? -2.5 : 2.5;
-        const targetTilt = i % 2 === 0 ? 2.0 : -2.0;
-
-        // Set initial zero-gravity natural tilt
-        gsap.set(card, { rotateZ: baseTilt });
-
-        // Continuous weightless float & tilt oscillation
-        gsap.to(card, {
-          y: 8,
-          rotateZ: targetTilt,
-          duration: floatDuration,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: floatDelay
-        });
-      });
 
     }, section);
 
@@ -167,7 +125,7 @@ export default function ManagementPartners() {
           </h2>
         </div>
 
-        {/* 6 Aligned Topics in a Neat Symmetrical 3x2 Grid (Zero Gravity Bouncy Words) */}
+        {/* 6 Aligned Topics in a Clean Symmetrical 3x2 Grid (Static, Easy to Scan) */}
         <div ref={gridRef} className="zero-g-grid">
           {MGMT_TOPICS.map((topic, idx) => (
             <div key={topic.id} className="zero-g-card-wrap">
@@ -178,12 +136,7 @@ export default function ManagementPartners() {
                 <div className="zero-g-card__inner">
                   <span className="zero-g-card__orb" />
                   <h3 className="zero-g-card__title">
-                    {topic.title.split(" ").map((word, wIdx) => (
-                      <span key={wIdx} className="zero-g-word">
-                        {word}
-                        <span className="zero-g-space">&nbsp;</span>
-                      </span>
-                    ))}
+                    {topic.title}
                   </h3>
                 </div>
               </div>

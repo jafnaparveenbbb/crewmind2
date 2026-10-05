@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Users, ShieldCheck, Workflow, BatteryCharging } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,23 +15,27 @@ export default function CoreValues() {
 
   const coreCards = [
     {
+      index: "01",
       title: <>Better Crew<br />Retention</>,
-      Icon: Users,
+      desc: "Preserving experienced touring talent and reducing season-to-season turnover.",
       cardClass: "is--card-1"
     },
     {
+      index: "02",
       title: <>Stronger Team<br />Resilience</>,
-      Icon: ShieldCheck,
+      desc: "Empowering touring crews to navigate high-pressure live environments together.",
       cardClass: "is--card-2"
     },
     {
-      title: <>Improved Operational<br />Stability</>,
-      Icon: Workflow,
+      index: "03",
+      title: <>Operational<br />Stability</>,
+      desc: "Minimising show-critical disruptions through proactive backstage care.",
       cardClass: "is--card-3"
     },
     {
+      index: "04",
       title: <>Reduced Burnout<br />Risk</>,
-      Icon: BatteryCharging,
+      desc: "Identifying exhaustion early to sustain long-term stamina and performance.",
       cardClass: "is--card-4"
     }
   ];
@@ -45,7 +48,7 @@ export default function CoreValues() {
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      // Theme trigger for white
+      // 1. Theme trigger for white
       ScrollTrigger.create({
         trigger: section,
         start: "top 50%",
@@ -57,7 +60,7 @@ export default function CoreValues() {
 
       const mm = gsap.matchMedia();
 
-      // DESKTOP (>= 768px): Counter-Parallax Stream
+      // DESKTOP (>= 768px): Counter-Parallax Stream Scroll Animation
       mm.add("(min-width: 768px)", () => {
         if (!col1 || !col2 || !stream) return;
         gsap.set(stream, { clearProps: "x,transform" });
@@ -67,19 +70,21 @@ export default function CoreValues() {
             trigger: section,
             start: "top top",
             end: "bottom bottom",
-            scrub: 0.6
+            scrub: 0.8
           }
         });
 
+        // Column 1 glides upwards as you scroll
         tl.fromTo(col1,
-          { yPercent: 25 },
-          { yPercent: -50, ease: "none" },
+          { yPercent: 18 },
+          { yPercent: -42, ease: "none" },
           0
         );
 
+        // Column 2 glides downwards as you scroll
         tl.fromTo(col2,
-          { yPercent: -45 },
-          { yPercent: 30, ease: "none" },
+          { yPercent: -35 },
+          { yPercent: 20, ease: "none" },
           0
         );
 
@@ -163,15 +168,15 @@ export default function CoreValues() {
             <div ref={leftRef} className="significo-about-stats__left">
               <div className="core-values__tag">
                 <span className="core-values__dot"></span>
-                <span className="f-14 is--btn caps">THE INDUSTRY IS CHANGING</span>
+                <span className="f-14 is--btn caps">A CULTURE SHIFT</span>
               </div>
 
               <h2 className="core-values__heading">
-                THE INDUSTRY IS<br />CHANGING
+                THE INDUSTRY<br />IS<br />CHANGING
               </h2>
 
               <p className="core-values__subparagraph">
-                The live entertainment industry is increasingly recognising the importance of psychological wellbeing, not just for individuals, but for team performance and retention.
+                Live productions are moving away from the culture of unaddressed strain. Prioritising backstage psychological care creates healthier touring environments where both people and productions thrive long-term.
               </p>
             </div>
 
@@ -185,24 +190,18 @@ export default function CoreValues() {
                   {/* Card 1: Better Crew Retention */}
                   <div className="significo-egg-card is--card-1">
                     <div className="significo-egg-card__content">
-                      <div className="capsule-icon-circle">
-                        <Users className="capsule-icon" />
-                      </div>
-                      <h3 className="capsule-topic-heading">
-                        Better Crew<br />Retention
-                      </h3>
+                      <span className="capsule-index">{coreCards[0].index}</span>
+                      <h3 className="capsule-topic-heading">{coreCards[0].title}</h3>
+                      <p className="capsule-topic-desc">{coreCards[0].desc}</p>
                     </div>
                   </div>
 
-                  {/* Card 3: Improved Operational Stability */}
+                  {/* Card 3: Operational Stability */}
                   <div className="significo-egg-card is--card-3">
                     <div className="significo-egg-card__content">
-                      <div className="capsule-icon-circle">
-                        <Workflow className="capsule-icon" />
-                      </div>
-                      <h3 className="capsule-topic-heading">
-                        Improved Operational<br />Stability
-                      </h3>
+                      <span className="capsule-index">{coreCards[2].index}</span>
+                      <h3 className="capsule-topic-heading">{coreCards[2].title}</h3>
+                      <p className="capsule-topic-desc">{coreCards[2].desc}</p>
                     </div>
                   </div>
                 </div>
@@ -212,24 +211,18 @@ export default function CoreValues() {
                   {/* Card 2: Stronger Team Resilience */}
                   <div className="significo-egg-card is--card-2">
                     <div className="significo-egg-card__content">
-                      <div className="capsule-icon-circle">
-                        <ShieldCheck className="capsule-icon" />
-                      </div>
-                      <h3 className="capsule-topic-heading">
-                        Stronger Team<br />Resilience
-                      </h3>
+                      <span className="capsule-index">{coreCards[1].index}</span>
+                      <h3 className="capsule-topic-heading">{coreCards[1].title}</h3>
+                      <p className="capsule-topic-desc">{coreCards[1].desc}</p>
                     </div>
                   </div>
 
                   {/* Card 4: Reduced Burnout Risk */}
                   <div className="significo-egg-card is--card-4">
                     <div className="significo-egg-card__content">
-                      <div className="capsule-icon-circle">
-                        <BatteryCharging className="capsule-icon" />
-                      </div>
-                      <h3 className="capsule-topic-heading">
-                        Reduced Burnout<br />Risk
-                      </h3>
+                      <span className="capsule-index">{coreCards[3].index}</span>
+                      <h3 className="capsule-topic-heading">{coreCards[3].title}</h3>
+                      <p className="capsule-topic-desc">{coreCards[3].desc}</p>
                     </div>
                   </div>
                 </div>
@@ -241,10 +234,9 @@ export default function CoreValues() {
                 {coreCards.map((card, idx) => (
                   <div key={idx} className={`significo-egg-card ${card.cardClass}`}>
                     <div className="significo-egg-card__content">
-                      <div className="capsule-icon-circle">
-                        <card.Icon className="capsule-icon" />
-                      </div>
+                      <span className="capsule-index">{card.index}</span>
                       <h3 className="capsule-topic-heading">{card.title}</h3>
+                      <p className="capsule-topic-desc">{card.desc}</p>
                     </div>
                   </div>
                 ))}
