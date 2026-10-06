@@ -15,25 +15,21 @@ export default function CoreValues() {
 
   const coreCards = [
     {
-      index: "01",
       title: <>Better Crew<br />Retention</>,
       desc: "Preserving experienced touring talent and reducing season-to-season turnover.",
       cardClass: "is--card-1"
     },
     {
-      index: "02",
       title: <>Stronger Team<br />Resilience</>,
       desc: "Empowering touring crews to navigate high-pressure live environments together.",
       cardClass: "is--card-2"
     },
     {
-      index: "03",
       title: <>Operational<br />Stability</>,
       desc: "Minimising show-critical disruptions through proactive backstage care.",
       cardClass: "is--card-3"
     },
     {
-      index: "04",
       title: <>Reduced Burnout<br />Risk</>,
       desc: "Identifying exhaustion early to sustain long-term stamina and performance.",
       cardClass: "is--card-4"
@@ -190,7 +186,6 @@ export default function CoreValues() {
                   {/* Card 1: Better Crew Retention */}
                   <div className="significo-egg-card is--card-1">
                     <div className="significo-egg-card__content">
-                      <span className="capsule-index">{coreCards[0].index}</span>
                       <h3 className="capsule-topic-heading">{coreCards[0].title}</h3>
                       <p className="capsule-topic-desc">{coreCards[0].desc}</p>
                     </div>
@@ -199,7 +194,6 @@ export default function CoreValues() {
                   {/* Card 3: Operational Stability */}
                   <div className="significo-egg-card is--card-3">
                     <div className="significo-egg-card__content">
-                      <span className="capsule-index">{coreCards[2].index}</span>
                       <h3 className="capsule-topic-heading">{coreCards[2].title}</h3>
                       <p className="capsule-topic-desc">{coreCards[2].desc}</p>
                     </div>
@@ -211,7 +205,6 @@ export default function CoreValues() {
                   {/* Card 2: Stronger Team Resilience */}
                   <div className="significo-egg-card is--card-2">
                     <div className="significo-egg-card__content">
-                      <span className="capsule-index">{coreCards[1].index}</span>
                       <h3 className="capsule-topic-heading">{coreCards[1].title}</h3>
                       <p className="capsule-topic-desc">{coreCards[1].desc}</p>
                     </div>
@@ -220,7 +213,6 @@ export default function CoreValues() {
                   {/* Card 4: Reduced Burnout Risk */}
                   <div className="significo-egg-card is--card-4">
                     <div className="significo-egg-card__content">
-                      <span className="capsule-index">{coreCards[3].index}</span>
                       <h3 className="capsule-topic-heading">{coreCards[3].title}</h3>
                       <p className="capsule-topic-desc">{coreCards[3].desc}</p>
                     </div>
@@ -234,7 +226,6 @@ export default function CoreValues() {
                 {coreCards.map((card, idx) => (
                   <div key={idx} className={`significo-egg-card ${card.cardClass}`}>
                     <div className="significo-egg-card__content">
-                      <span className="capsule-index">{card.index}</span>
                       <h3 className="capsule-topic-heading">{card.title}</h3>
                       <p className="capsule-topic-desc">{card.desc}</p>
                     </div>
