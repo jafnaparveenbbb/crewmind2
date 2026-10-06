@@ -168,7 +168,7 @@ export default function CoreValues() {
               </div>
 
               <h2 className="core-values__heading">
-                THE INDUSTRY<br />IS<br />CHANGING
+                THE INDUSTRY<br />IS CHANGING
               </h2>
 
               <p className="core-values__subparagraph">

@@ -117,8 +117,8 @@ export default function WhatMakesUsDifferent() {
         });
       });
 
-      // Tablet and Mobile: Activate as each card enters viewport center (matching IconCards)
-      mm.add("(max-width: 991px)", () => {
+      // Tablet (768px - 991px): 2x2 grid with scroll activate
+      mm.add("(min-width: 768px) and (max-width: 991px)", () => {
         const cards = grid.querySelectorAll('.diff-principle-card');
         cards.forEach((card, idx) => {
           ScrollTrigger.create({
@@ -129,6 +129,11 @@ export default function WhatMakesUsDifferent() {
             onEnterBack: () => setActiveIndex(idx)
           });
         });
+      });
+
+      // Mobile (< 768px): Native responsive horizontal carousel without height/pinning traps
+      mm.add("(max-width: 767px)", () => {
+        gsap.set(grid, { clearProps: "all", x: 0 });
       });
 
     }, section);

@@ -29,82 +29,78 @@ export default function AboutSection() {
         onLeaveBack: () => document.body.setAttribute('theme', 'navy')
       });
 
-      // 2. Section Entry: Label & Heading Masked Rise-Up Animation
-      if (labelRef.current) {
-        gsap.fromTo(labelRef.current,
-          { opacity: 0, y: -20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.85,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 72%",
-              toggleActions: "play none none reverse"
+      const mm = gsap.matchMedia();
+
+      // DESKTOP (>= 768px): Keep full kinetic reveal and word scrub animation
+      mm.add("(min-width: 768px)", () => {
+        // Section Entry: Label & Heading Masked Rise-Up Animation
+        if (labelRef.current) {
+          gsap.fromTo(labelRef.current,
+            { opacity: 0, y: -20 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.85,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: section,
+                start: "top 72%",
+                toggleActions: "play none none reverse"
+              }
             }
-          }
-        );
-      }
+          );
+        }
 
-      const headingLines = [headingLine1Ref.current, headingLine2Ref.current].filter(Boolean);
-      if (headingLines.length > 0) {
-        gsap.fromTo(headingLines,
-          {
-            yPercent: 120,
-            opacity: 0
-          },
-          {
-            yPercent: 0,
-            opacity: 1,
-            duration: 1.1,
-            stagger: 0.15,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 70%",
-              toggleActions: "play none none reverse"
+        const headingLines = [headingLine1Ref.current, headingLine2Ref.current].filter(Boolean);
+        if (headingLines.length > 0) {
+          gsap.fromTo(headingLines,
+            {
+              yPercent: 120,
+              opacity: 0
+            },
+            {
+              yPercent: 0,
+              opacity: 1,
+              duration: 1.1,
+              stagger: 0.15,
+              ease: "power4.out",
+              scrollTrigger: {
+                trigger: section,
+                start: "top 70%",
+                toggleActions: "play none none reverse"
+              }
             }
-          }
-        );
-      }
+          );
+        }
 
-      // 3. Kinetic Word-by-Word Scroll Scrubbing for Paragraph
-      if (wordsWrapRef.current) {
-        const words = wordsWrapRef.current.querySelectorAll('.about__word');
-        gsap.fromTo(words,
-          {
-            opacity: 0.15,
-            y: 4
-          },
-          {
-            opacity: 1,
-            y: 0,
-            stagger: 0.05,
-            ease: "none",
-            scrollTrigger: {
-              trigger: wordsWrapRef.current,
-              start: "top 78%",
-              end: "bottom 50%",
-              scrub: 0.8
+        // Kinetic Word-by-Word Scroll Scrubbing for Paragraph
+        if (wordsWrapRef.current) {
+          const words = wordsWrapRef.current.querySelectorAll('.about__word');
+          gsap.fromTo(words,
+            {
+              opacity: 0.15,
+              y: 4
+            },
+            {
+              opacity: 1,
+              y: 0,
+              stagger: 0.05,
+              ease: "none",
+              scrollTrigger: {
+                trigger: wordsWrapRef.current,
+                start: "top 78%",
+                end: "bottom 50%",
+                scrub: 0.8
+              }
             }
-          }
-        );
-      }
+          );
+        }
 
-      // 4. Subtle entrance animation for the three bubbles (replays every time user scrolls into section)
-      const bubbleItems = section.querySelectorAll('.about-pillar-item');
-      const pillarsGrid = pillarsGridRef.current || section.querySelector('.about__pillars-grid');
+        // Subtle entrance animation for the three bubbles on desktop
+        const bubbleItems = section.querySelectorAll('.about-pillar-item');
+        const pillarsGrid = pillarsGridRef.current || section.querySelector('.about__pillars-grid');
 
-      if (bubbleItems.length > 0 && pillarsGrid) {
-        const prefersReducedMotion = typeof window !== 'undefined' &&
-          window.matchMedia &&
-          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        if (prefersReducedMotion) {
-          gsap.set(bubbleItems, { opacity: 1, y: 0, clearProps: "transform" });
-        } else {
-          // Set initial hidden starting state
+        if (bubbleItems.length > 0 && pillarsGrid) {
           gsap.set(bubbleItems, { opacity: 0, y: 12 });
 
           let bubbleTween = null;
@@ -122,7 +118,6 @@ export default function AboutSection() {
               bubbleTween.kill();
               bubbleTween = null;
             }
-            // Ensure the bubbles reset to their hidden starting state before each replay
             gsap.set(bubbleItems, { opacity: 0, y: 12 });
 
             bubbleTween = gsap.to(bubbleItems, {
@@ -152,7 +147,26 @@ export default function AboutSection() {
             playBubbleEntrance();
           }
         }
-      }
+      });
+
+      // MOBILE (< 768px): No text animation scrub; all text & elements 100% visible immediately
+      mm.add("(max-width: 767px)", () => {
+        if (labelRef.current) {
+          gsap.set(labelRef.current, { opacity: 1, y: 0, clearProps: "all" });
+        }
+        const headingLines = [headingLine1Ref.current, headingLine2Ref.current].filter(Boolean);
+        if (headingLines.length > 0) {
+          gsap.set(headingLines, { yPercent: 0, opacity: 1, clearProps: "all" });
+        }
+        if (wordsWrapRef.current) {
+          const words = wordsWrapRef.current.querySelectorAll('.about__word');
+          gsap.set(words, { opacity: 1, y: 0, clearProps: "all" });
+        }
+        const bubbleItems = section.querySelectorAll('.about-pillar-item');
+        if (bubbleItems.length > 0) {
+          gsap.set(bubbleItems, { opacity: 1, y: 0, clearProps: "all" });
+        }
+      });
 
     }, section);
 
