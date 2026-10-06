@@ -3,7 +3,7 @@ const fs = require('fs');
 let css = fs.readFileSync('src/index.css', 'utf8');
 
 const updatedDiffCSS = `/* ==========================================================================
-   WHAT MAKES US DIFFERENT (Significo Core Values 2x2 Circle Grid Layout)
+   WHAT MAKES US DIFFERENT (Crewmind Core Values 2x2 Circle Grid Layout)
    ========================================================================== */
 
 .ovals-diff-section {

@@ -14,7 +14,7 @@ const updatedSectionCSS = `/* ==================================================
    THE INDUSTRY IS CHANGING / CORE VALUES (Pinned Stadium Stream)
    ========================================================================== */
 
-.significo-about-stats {
+.crewmind-about-stats {
   position: relative;
   width: 100%;
   height: 300vh;
@@ -25,7 +25,7 @@ const updatedSectionCSS = `/* ==================================================
   transition: background-color var(--bg-timing), color var(--bg-timing);
 }
 
-.significo-about-stats__sticky {
+.crewmind-about-stats__sticky {
   position: sticky;
   top: 0;
   height: 100vh;
@@ -35,7 +35,7 @@ const updatedSectionCSS = `/* ==================================================
   align-items: center;
 }
 
-.significo-about-stats__layout {
+.crewmind-about-stats__layout {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -45,7 +45,7 @@ const updatedSectionCSS = `/* ==================================================
 }
 
 /* Compact Left Content Column (Black Typography on White BG) */
-.significo-about-stats__left {
+.crewmind-about-stats__left {
   max-width: clamp(18rem, 26vw, 30rem);
   display: flex;
   flex-direction: column;
@@ -97,7 +97,7 @@ const updatedSectionCSS = `/* ==================================================
 }
 
 /* Right Stream Rotated at -15deg */
-.significo-about-stats__right {
+.crewmind-about-stats__right {
   position: absolute;
   top: 50%;
   right: calc(-2vw);
@@ -107,7 +107,7 @@ const updatedSectionCSS = `/* ==================================================
   z-index: 4;
 }
 
-.significo-about-stats__stream {
+.crewmind-about-stats__stream {
   display: flex;
   gap: clamp(1.8rem, 2.8vw, 3.5rem);
   justify-content: center;
@@ -115,7 +115,7 @@ const updatedSectionCSS = `/* ==================================================
   width: 100%;
 }
 
-.significo-about-stats__col {
+.crewmind-about-stats__col {
   display: flex;
   flex-direction: column;
   gap: clamp(2.2rem, 3.8vh, 4.5rem);
@@ -123,7 +123,7 @@ const updatedSectionCSS = `/* ==================================================
 }
 
 /* Stadium Egg Capsule Cards - White background with Black border, Yellow inside circle, Black text */
-.significo-egg-card {
+.crewmind-egg-card {
   width: clamp(19rem, 23vw, 28rem);
   height: clamp(36rem, 60vh, 46rem);
   border-radius: 9999px;
@@ -141,14 +141,14 @@ const updatedSectionCSS = `/* ==================================================
   flex-shrink: 0;
 }
 
-.significo-egg-card:hover {
+.crewmind-egg-card:hover {
   transform: scale(1.03);
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.16);
   border-color: var(--black);
 }
 
 /* Capsule Card Content: Centered Layout with Yellow Icon Circle Above Topic Heading */
-.significo-egg-card__content {
+.crewmind-egg-card__content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -174,7 +174,7 @@ const updatedSectionCSS = `/* ==================================================
   flex-shrink: 0;
 }
 
-.significo-egg-card:hover .capsule-icon-circle {
+.crewmind-egg-card:hover .capsule-icon-circle {
   transform: translateY(-4px) scale(1.08);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
 }
@@ -199,7 +199,7 @@ const updatedSectionCSS = `/* ==================================================
   margin: 0 auto;
 }`;
 
-const startIdx = css.indexOf('.significo-about-stats {');
+const startIdx = css.indexOf('.crewmind-about-stats {');
 const endIdx = css.indexOf('@media screen and (max-width: 991px)');
 
 if (startIdx !== -1 && endIdx !== -1) {

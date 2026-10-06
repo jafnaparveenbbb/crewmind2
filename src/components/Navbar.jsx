@@ -1,5 +1,5 @@
 import React from 'react';
-import mainLogo from '../assets/significo/misc/main-logo.png';
+import mainLogo from '../assets/crewmind/misc/main-logo.png';
 
 export default function Navbar({ className = "" }) {
   const scrollToTop = (e) => {

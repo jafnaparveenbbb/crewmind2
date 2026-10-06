@@ -199,7 +199,7 @@ export default function HeroScroll({ isLoaded = true }) {
       masterTl.to(row4, { x: `-=${shiftAmount}px`, ease: "none", duration: 3.8 }, 5.6);
     }
 
-    // Step 6: THE ICONIC SIGNIFICIO EXIT ZOOM-OUT TRANSITION INTO NEXT SECTION
+    // Step 6: THE ICONIC CREWMIND EXIT ZOOM-OUT TRANSITION INTO NEXT SECTION
     // Pull back entire typography field into 3D perspective as Next Section reveals
     masterTl.to(rowsParent, {
       scale: isMobile ? 0.92 : 0.85,

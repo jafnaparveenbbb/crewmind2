@@ -106,7 +106,7 @@ export default function App() {
   };
 
   return (
-    <div className="significo-app">
+    <div className="crewmind-app">
       {/* Custom Cursor */}
       <CustomCursor />
 

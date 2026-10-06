@@ -3,7 +3,7 @@ const fs = require('fs');
 let css = fs.readFileSync('src/index.css', 'utf8');
 
 const updatedEggStyles = `/* Stadium Egg Capsule Cards - Navy Blue (#00063D) background, White inside circle, White text */
-.significo-egg-card {
+.crewmind-egg-card {
   width: clamp(19rem, 23vw, 28rem);
   height: clamp(36rem, 60vh, 46rem);
   border-radius: 9999px;
@@ -21,13 +21,13 @@ const updatedEggStyles = `/* Stadium Egg Capsule Cards - Navy Blue (#00063D) bac
   flex-shrink: 0;
 }
 
-.significo-egg-card:hover {
+.crewmind-egg-card:hover {
   transform: scale(1.03);
   box-shadow: 0 35px 85px rgba(0, 6, 61, 0.45);
 }
 
 /* Capsule Card Content: Centered Layout with Icon Circle Above Topic Heading */
-.significo-egg-card__content {
+.crewmind-egg-card__content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,7 +53,7 @@ const updatedEggStyles = `/* Stadium Egg Capsule Cards - Navy Blue (#00063D) bac
   flex-shrink: 0;
 }
 
-.significo-egg-card:hover .capsule-icon-circle {
+.crewmind-egg-card:hover .capsule-icon-circle {
   transform: translateY(-4px) scale(1.08);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
 }
@@ -78,7 +78,7 @@ const updatedEggStyles = `/* Stadium Egg Capsule Cards - Navy Blue (#00063D) bac
   margin: 0 auto;
 }`;
 
-const startIdx = css.indexOf('.significo-egg-card');
+const startIdx = css.indexOf('.crewmind-egg-card');
 const endIdx = css.indexOf('@media screen and (max-width: 991px)');
 
 if (startIdx !== -1 && endIdx !== -1) {

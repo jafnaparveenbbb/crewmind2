@@ -3,7 +3,7 @@ const fs = require('fs');
 let css = fs.readFileSync('src/index.css', 'utf8');
 
 const perfectCircleCSS = `/* ==========================================================================
-   WHAT MAKES US DIFFERENT (Significo Core Values 2x2 Perfect Circle Grid)
+   WHAT MAKES US DIFFERENT (Crewmind Core Values 2x2 Perfect Circle Grid)
    ========================================================================== */
 
 .ovals-diff-section {

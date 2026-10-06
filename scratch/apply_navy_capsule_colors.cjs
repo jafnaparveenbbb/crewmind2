@@ -4,19 +4,19 @@ const path = require('path');
 const indexCssPath = path.join(__dirname, '..', 'src', 'index.css');
 
 let css = fs.readFileSync(indexCssPath, 'utf8');
-const startTag = '/* ==========================================================================\r\n   SIGNIFICO ABOUT STATS / EGG SLIDE STATS';
-const startTagLF = '/* ==========================================================================\n   SIGNIFICO ABOUT STATS / EGG SLIDE STATS';
+const startTag = '/* ==========================================================================\r\n   CREWMIND ABOUT STATS / EGG SLIDE STATS';
+const startTagLF = '/* ==========================================================================\n   CREWMIND ABOUT STATS / EGG SLIDE STATS';
 const startTagAlt = '/* ==========================================================================\r\n   CORE VALUES / THE INDUSTRY IS CHANGING';
 const startTagAltLF = '/* ==========================================================================\n   CORE VALUES / THE INDUSTRY IS CHANGING';
 
 const endTag = '/* ==========================================================================\r\n   WHAT MAKES US DIFFERENT (Centered Header + Alternating Perfect Circle Cards)';
 const endTagLF = '/* ==========================================================================\n   WHAT MAKES US DIFFERENT (Centered Header + Alternating Perfect Circle Cards)';
 
-const newSignificoAboutStatsCss = `/* ==========================================================================
-   SIGNIFICO ABOUT STATS / EGG SLIDE STATS (300vh Pinned Stadium Stream)
+const newCrewmindAboutStatsCss = `/* ==========================================================================
+   CREWMIND ABOUT STATS / EGG SLIDE STATS (300vh Pinned Stadium Stream)
    ========================================================================== */
 
-.significo-about-stats {
+.crewmind-about-stats {
   position: relative;
   width: 100%;
   height: 300vh;
@@ -26,7 +26,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
   box-sizing: border-box;
 }
 
-.significo-about-stats__sticky {
+.crewmind-about-stats__sticky {
   position: sticky;
   top: 0;
   height: 100vh;
@@ -36,7 +36,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
   align-items: center;
 }
 
-.significo-about-stats__layout {
+.crewmind-about-stats__layout {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -46,7 +46,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
 }
 
 /* Compact Left Content Column (HEX #00063D Palette) */
-.significo-about-stats__left {
+.crewmind-about-stats__left {
   max-width: clamp(18rem, 26vw, 30rem);
   display: flex;
   flex-direction: column;
@@ -98,7 +98,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
 }
 
 /* Right Stream Rotated at -15deg */
-.significo-about-stats__right {
+.crewmind-about-stats__right {
   position: absolute;
   top: 50%;
   right: calc(-2vw);
@@ -108,13 +108,13 @@ const newSignificoAboutStatsCss = `/* ==========================================
   pointer-events: all;
 }
 
-.significo-about-stats__stream {
+.crewmind-about-stats__stream {
   display: flex;
   align-items: center;
   gap: clamp(1.8rem, 2.8vw, 3.8rem);
 }
 
-.significo-about-stats__col {
+.crewmind-about-stats__col {
   display: flex;
   flex-direction: column;
   gap: clamp(2.5rem, 4.5vh, 5rem);
@@ -122,7 +122,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
 }
 
 /* Stadium Egg Capsule Cards - HEX: #00063D border, White inside, #00063D text */
-.significo-egg-card {
+.crewmind-egg-card {
   width: clamp(19rem, 23vw, 28rem);
   height: clamp(36rem, 60vh, 46rem);
   border-radius: 9999px;
@@ -140,14 +140,14 @@ const newSignificoAboutStatsCss = `/* ==========================================
   flex-shrink: 0;
 }
 
-.significo-egg-card:hover {
+.crewmind-egg-card:hover {
   transform: scale(1.03);
   box-shadow: 0 30px 70px rgba(0, 6, 61, 0.16);
   border-color: #00063D;
 }
 
 /* Topic Text Centered Inside White Stadium Capsule with #00063D Text */
-.significo-egg-card__text {
+.crewmind-egg-card__text {
   flex: 1;
   display: flex;
   align-items: center;
@@ -172,22 +172,22 @@ const newSignificoAboutStatsCss = `/* ==========================================
 }
 
 @media screen and (max-width: 991px) {
-  .significo-about-stats {
+  .crewmind-about-stats {
     height: auto;
   }
 
-  .significo-about-stats__sticky {
+  .crewmind-about-stats__sticky {
     position: static;
     height: auto;
     padding-block: 5rem;
   }
 
-  .significo-about-stats__layout {
+  .crewmind-about-stats__layout {
     flex-direction: column;
     gap: 4rem;
   }
 
-  .significo-about-stats__left {
+  .crewmind-about-stats__left {
     max-width: 100%;
     align-items: center;
     text-align: center;
@@ -201,7 +201,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
     text-align: center;
   }
 
-  .significo-about-stats__right {
+  .crewmind-about-stats__right {
     position: static;
     transform: none;
     width: 100%;
@@ -210,12 +210,12 @@ const newSignificoAboutStatsCss = `/* ==========================================
     margin-top: 2rem;
   }
 
-  .significo-about-stats__stream {
+  .crewmind-about-stats__stream {
     flex-direction: column;
     gap: 2.5rem;
   }
 
-  .significo-egg-card {
+  .crewmind-egg-card {
     width: clamp(18rem, 75vw, 22rem);
     height: clamp(34rem, 50vh, 42rem);
     transform: rotate(-10deg);
@@ -233,7 +233,7 @@ let endIdx = css.indexOf(endTag);
 if (endIdx === -1) endIdx = css.indexOf(endTagLF);
 
 if (startIdx !== -1 && endIdx !== -1) {
-  const updatedCss = css.substring(0, startIdx) + newSignificoAboutStatsCss + css.substring(endIdx);
+  const updatedCss = css.substring(0, startIdx) + newCrewmindAboutStatsCss + css.substring(endIdx);
   fs.writeFileSync(indexCssPath, updatedCss, 'utf8');
   console.log('index.css updated with #00063D border, white inside capsule, and #00063D text!');
 } else {

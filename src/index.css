@@ -1,11 +1,11 @@
 /* ==========================================================================
-   SIGNIFICO / CREWMIND DESIGN SYSTEM & CORE STYLESHEET
+   CREWMIND DESIGN SYSTEM & CORE STYLESHEET
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Staatliches&family=Space+Mono:wght@400;700&display=swap');
 
 :root {
-  /* Dynamic viewport rem ratio matching Significo */
+  /* Dynamic viewport rem ratio matching Crewmind */
   font-size: 1vw;
   --cw: 1440;
   --to-rem: calc(var(--cw) * 1rem);
@@ -29,7 +29,7 @@
   --primary-navy: #00063D;
   --body-text: #00063D;
 
-  /* Curated Theme Color Palette Matching Significo */
+  /* Curated Theme Color Palette */
   --light-blue: #D8E8F5;
   --light-purple: #EAE6F8;
   --salmon: #F8ECE6;
@@ -1540,7 +1540,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     box-shadow: 0 0 20px rgba(0, 6, 61, 0.6) !important;
   }
 
-  /* Top Navbar inside Hero Banner (Significo Sizing & Alignment) */
+  /* Top Navbar inside Hero Banner (Crewmind Sizing & Alignment) */
   .hero-nav-layer {
     position: absolute !important;
     top: 0 !important;
@@ -1645,7 +1645,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     display: inline-block !important;
   }
 
-  /* Bottom Subsentence inside Hero Banner (Significo Sizing & Alignment) */
+  /* Bottom Subsentence inside Hero Banner (Crewmind Sizing & Alignment) */
   .hero__bottom {
     position: absolute !important;
     bottom: max(20px, calc(env(safe-area-inset-bottom) + 16px)) !important;
@@ -2611,7 +2611,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
    THE INDUSTRY IS CHANGING / CORE VALUES (CAPSULE STREAM)
    ========================================================================== */
 
-.significo-about-stats {
+.crewmind-about-stats {
   position: relative;
   width: 100%;
   height: 220vh;
@@ -2624,13 +2624,13 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   box-sizing: border-box;
 }
 
-.significo-about-stats .container {
+.crewmind-about-stats .container {
   width: min(100% - 48px, 1440px);
   margin-inline: auto;
   height: 100%;
 }
 
-.significo-about-stats__sticky {
+.crewmind-about-stats__sticky {
   position: sticky;
   top: 0;
   height: 100vh;
@@ -2642,7 +2642,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   background-color: #FFFFFF !important;
 }
 
-.significo-about-stats__layout {
+.crewmind-about-stats__layout {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2653,7 +2653,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 }
 
 /* Left Narrative Column */
-.significo-about-stats__left {
+.crewmind-about-stats__left {
   flex: 0 0 clamp(19rem, 27vw, 31rem);
   display: flex;
   flex-direction: column;
@@ -2710,7 +2710,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 }
 
 /* Right Stream Rotated at -14deg */
-.significo-about-stats__right {
+.crewmind-about-stats__right {
   position: absolute;
   top: 50%;
   right: clamp(-2rem, 0vw, 2.5rem);
@@ -2720,7 +2720,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   z-index: 4;
 }
 
-.significo-about-stats__stream {
+.crewmind-about-stats__stream {
   display: flex;
   gap: clamp(1.8rem, 2.8vw, 3.5rem);
   justify-content: center;
@@ -2728,11 +2728,11 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   width: 100%;
 }
 
-.significo-about-stats__mobile-track {
+.crewmind-about-stats__mobile-track {
   display: none;
 }
 
-.significo-about-stats__col {
+.crewmind-about-stats__col {
   display: flex;
   flex-direction: column;
   gap: clamp(2.5rem, 4.2vh, 4.8rem);
@@ -2740,7 +2740,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 }
 
 /* Stadium Egg Capsule Cards */
-.significo-egg-card {
+.crewmind-egg-card {
   width: clamp(19.5rem, 23.5vw, 27.5rem);
   height: clamp(34rem, 58vh, 45rem);
   border-radius: 9999px;
@@ -2759,14 +2759,14 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   cursor: default;
 }
 
-.significo-egg-card:hover {
+.crewmind-egg-card:hover {
   transform: scale(1.025);
   box-shadow: 0 24px 60px rgba(0, 6, 61, 0.12);
   border-color: rgba(0, 6, 61, 0.22);
 }
 
 /* Capsule Card Content */
-.significo-egg-card__content {
+.crewmind-egg-card__content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2818,22 +2818,22 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 
 /* Responsive Tablets (768px - 991px) */
 @media screen and (max-width: 991px) and (min-width: 768px) {
-  .significo-about-stats {
+  .crewmind-about-stats {
     height: 220vh;
   }
 
-  .significo-about-stats__sticky {
+  .crewmind-about-stats__sticky {
     position: sticky;
     top: 0;
     height: 100vh;
   }
 
-  .significo-about-stats__right {
+  .crewmind-about-stats__right {
     width: clamp(34rem, 46vw, 52rem);
     right: calc(-3vw);
   }
 
-  .significo-egg-card {
+  .crewmind-egg-card {
     width: clamp(15rem, 19vw, 21rem);
     height: clamp(28rem, 46vh, 36rem);
     padding: 2.2rem 1.4rem;
@@ -2852,7 +2852,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 
 /* Responsive Mobile (< 768px) */
 @media screen and (max-width: 767px) {
-  .significo-about-stats {
+  .crewmind-about-stats {
     height: 160vh !important;
     position: relative !important;
     padding: 0 !important;
@@ -2860,7 +2860,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     overflow: visible !important;
   }
 
-  .significo-about-stats__sticky {
+  .crewmind-about-stats__sticky {
     position: sticky !important;
     top: 0 !important;
     height: 100vh !important;
@@ -2874,7 +2874,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     box-sizing: border-box !important;
   }
 
-  .significo-about-stats .container {
+  .crewmind-about-stats .container {
     width: 100% !important;
     max-width: 100% !important;
     padding: 0 !important;
@@ -2882,7 +2882,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     height: 100%;
   }
 
-  .significo-about-stats__layout {
+  .crewmind-about-stats__layout {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
@@ -2895,7 +2895,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     box-sizing: border-box !important;
   }
 
-  .significo-about-stats__left {
+  .crewmind-about-stats__left {
     max-width: 100% !important;
     width: 100% !important;
     text-align: left !important;
@@ -2934,7 +2934,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     margin: 0 !important;
   }
 
-  .significo-about-stats__right {
+  .crewmind-about-stats__right {
     position: relative !important;
     top: auto !important;
     right: auto !important;
@@ -2948,11 +2948,11 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     flex-shrink: 0 !important;
   }
 
-  .significo-desktop-stream {
+  .crewmind-desktop-stream {
     display: none !important;
   }
 
-  .significo-about-stats__mobile-track {
+  .crewmind-about-stats__mobile-track {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
@@ -2967,7 +2967,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     flex-shrink: 0 !important;
   }
 
-  .significo-egg-card {
+  .crewmind-egg-card {
     flex: 0 0 clamp(185px, 52vw, 220px) !important;
     width: clamp(185px, 52vw, 220px) !important;
     max-width: 225px !important;
@@ -2988,7 +2988,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     justify-content: center !important;
   }
 
-  .significo-egg-card__content {
+  .crewmind-egg-card__content {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -3039,14 +3039,14 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 
 /* Reduced Motion preference */
 @media (prefers-reduced-motion: reduce) {
-  .significo-about-stats {
+  .crewmind-about-stats {
     height: auto !important;
   }
-  .significo-about-stats__sticky {
+  .crewmind-about-stats__sticky {
     position: static !important;
     height: auto !important;
   }
-  .significo-egg-card {
+  .crewmind-egg-card {
     transition: none !important;
     transform: none !important;
   }

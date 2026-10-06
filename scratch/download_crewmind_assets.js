@@ -3,7 +3,7 @@ const https = require('https');
 const http = require('http');
 const path = require('path');
 
-const baseDir = 'c:\\Users\\BBB\\Desktop\\significo\\src\\assets\\significo';
+const baseDir = 'c:\\Users\\BBB\\Desktop\\crewmind\\src\\assets\\crewmind';
 
 const assetsToDownload = [
   // Videos
@@ -28,7 +28,7 @@ const assetsToDownload = [
     filename: 'hero-placeholder-mob.jpeg',
     url: 'https://cdn.prod.website-files.com/659dbdfd5a080be8d3483164/659dbdfd5a080be8d34831bc_Placeholder%20mob.jpeg'
   },
-  // Circular Hero Portraits (24 total)
+  // Circular Hero Portraits
   {
     folder: 'portraits',
     filename: 'portrait-01.png',
@@ -150,7 +150,7 @@ const assetsToDownload = [
     url: 'https://cdn.prod.website-files.com/659dbdfd5a080be8d3483164/659dbdfd5a080be8d3483188_Ellipse%20845-2.png'
   },
 
-  // Horizontal Stats Images (12 total)
+  // Horizontal Stats Images
   {
     folder: 'horizontal',
     filename: 'horizontal-01.webp',
@@ -212,7 +212,7 @@ const assetsToDownload = [
     url: 'https://cdn.prod.website-files.com/659dbdfd5a080be8d3483164/659dbdfd5a080be8d34831b5_horizontal%20imgs%2012.webp'
   },
 
-  // Case Studies Deck
+  // Case Studies
   {
     folder: 'case-studies',
     filename: 'case-study-01.jpeg',
@@ -269,7 +269,7 @@ const assetsToDownload = [
     url: 'https://cdn.prod.website-files.com/659dbdfd5a080be8d3483190/659dbdfd5a080be8d34832d7_655d4f8bf10226a8c5d06a93_Mara20OCC88zuCC88tok.png'
   },
 
-  // Team Section
+  // Team
   {
     folder: 'team',
     filename: 'team-01-rick.png',
@@ -308,7 +308,7 @@ const assetsToDownload = [
     url: 'https://cdn.prod.website-files.com/659dbdfd5a080be8d3483190/659dbdfd5a080be8d3483253_EmekAltun.jpg'
   },
 
-  // Insights & Articles
+  // Insights
   {
     folder: 'insights',
     filename: 'insight-01.jpg',
@@ -339,6 +339,7 @@ function downloadFile(item) {
     const client = item.url.startsWith('https') ? https : http;
     const req = client.get(item.url, (res) => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        // Handle redirects
         return downloadFile({ ...item, url: res.headers.location }).then(resolve).catch(reject);
       }
       if (res.statusCode !== 200) {
@@ -361,7 +362,7 @@ function downloadFile(item) {
 }
 
 async function downloadAll() {
-  console.log(`Starting download of ${assetsToDownload.length} Significo assets...`);
+  console.log(`Starting download of ${assetsToDownload.length} Crewmind assets...`);
   for (let i = 0; i < assetsToDownload.length; i++) {
     const item = assetsToDownload[i];
     try {

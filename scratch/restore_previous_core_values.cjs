@@ -31,7 +31,7 @@ export default function CoreValues() {
     });
 
     const ctx = gsap.context(() => {
-      // 1. Pinned 300vh Scroll-Driven Counter-Parallax Animation matching Significo.com/about
+      // 1. Pinned 300vh Scroll-Driven Counter-Parallax Animation matching Crewmind.com/about
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -81,16 +81,16 @@ export default function CoreValues() {
   return (
     <section 
       ref={sectionRef} 
-      className="section significo-about-stats" 
+      className="section crewmind-about-stats" 
       this-theme="white" 
       id="industry-changing"
     >
-      <div ref={stickyRef} className="significo-about-stats__sticky">
+      <div ref={stickyRef} className="crewmind-about-stats__sticky">
         <div className="container">
-          <div className="significo-about-stats__layout">
+          <div className="crewmind-about-stats__layout">
             
             {/* Left Side: Compact Tag, Heading & Paragraph */}
-            <div ref={leftRef} className="significo-about-stats__left">
+            <div ref={leftRef} className="crewmind-about-stats__left">
               <div className="core-values__tag">
                 <span className="core-values__dot"></span>
                 <span className="f-14 is--btn caps">THE INDUSTRY IS CHANGING</span>
@@ -106,15 +106,15 @@ export default function CoreValues() {
             </div>
 
             {/* Right Side: Stadium Stream Rotated at -15deg */}
-            <div className="significo-about-stats__right">
-              <div className="significo-about-stats__stream">
+            <div className="crewmind-about-stats__right">
+              <div className="crewmind-about-stats__stream">
                 
                 {/* Column 1 (Left Stream) */}
-                <div ref={col1Ref} className="significo-about-stats__col is--col-1">
+                <div ref={col1Ref} className="crewmind-about-stats__col is--col-1">
                   
                   {/* Card 1: Better Crew Retention */}
-                  <div className="significo-egg-card">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card">
+                    <div className="crewmind-egg-card__content">
                       <div className="capsule-icon-circle">
                         <Users className="capsule-icon" />
                       </div>
@@ -125,8 +125,8 @@ export default function CoreValues() {
                   </div>
 
                   {/* Card 3: Improved Operational Stability */}
-                  <div className="significo-egg-card">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card">
+                    <div className="crewmind-egg-card__content">
                       <div className="capsule-icon-circle">
                         <Workflow className="capsule-icon" />
                       </div>
@@ -139,11 +139,11 @@ export default function CoreValues() {
                 </div>
 
                 {/* Column 2 (Right Stream) */}
-                <div ref={col2Ref} className="significo-about-stats__col is--col-2">
+                <div ref={col2Ref} className="crewmind-about-stats__col is--col-2">
                   
                   {/* Card 2: Stronger Team Resilience */}
-                  <div className="significo-egg-card">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card">
+                    <div className="crewmind-egg-card__content">
                       <div className="capsule-icon-circle">
                         <ShieldCheck className="capsule-icon" />
                       </div>
@@ -154,8 +154,8 @@ export default function CoreValues() {
                   </div>
 
                   {/* Card 4: Reduced Burnout Risk */}
-                  <div className="significo-egg-card">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card">
+                    <div className="crewmind-egg-card__content">
                       <div className="capsule-icon-circle">
                         <BatteryCharging className="capsule-icon" />
                       </div>
@@ -188,7 +188,7 @@ const restoredSectionCSS = `/* =================================================
    THE INDUSTRY IS CHANGING / CORE VALUES (Pinned Stadium Stream)
    ========================================================================== */
 
-.significo-about-stats {
+.crewmind-about-stats {
   position: relative;
   width: 100%;
   height: 300vh;
@@ -199,7 +199,7 @@ const restoredSectionCSS = `/* =================================================
   transition: background-color var(--bg-timing), color var(--bg-timing);
 }
 
-.significo-about-stats__sticky {
+.crewmind-about-stats__sticky {
   position: sticky;
   top: 0;
   height: 100vh;
@@ -209,7 +209,7 @@ const restoredSectionCSS = `/* =================================================
   align-items: center;
 }
 
-.significo-about-stats__layout {
+.crewmind-about-stats__layout {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -219,7 +219,7 @@ const restoredSectionCSS = `/* =================================================
 }
 
 /* Compact Left Content Column (Black Typography on White BG) */
-.significo-about-stats__left {
+.crewmind-about-stats__left {
   max-width: clamp(18rem, 26vw, 30rem);
   display: flex;
   flex-direction: column;
@@ -271,7 +271,7 @@ const restoredSectionCSS = `/* =================================================
 }
 
 /* Right Stream Rotated at -15deg */
-.significo-about-stats__right {
+.crewmind-about-stats__right {
   position: absolute;
   top: 50%;
   right: calc(-2vw);
@@ -281,7 +281,7 @@ const restoredSectionCSS = `/* =================================================
   z-index: 4;
 }
 
-.significo-about-stats__stream {
+.crewmind-about-stats__stream {
   display: flex;
   gap: clamp(1.8rem, 2.8vw, 3.5rem);
   justify-content: center;
@@ -289,7 +289,7 @@ const restoredSectionCSS = `/* =================================================
   width: 100%;
 }
 
-.significo-about-stats__col {
+.crewmind-about-stats__col {
   display: flex;
   flex-direction: column;
   gap: clamp(2.2rem, 3.8vh, 4.5rem);
@@ -297,7 +297,7 @@ const restoredSectionCSS = `/* =================================================
 }
 
 /* Stadium Egg Capsule Cards - White background with Black border, Yellow inside circle, Black text */
-.significo-egg-card {
+.crewmind-egg-card {
   width: clamp(19rem, 23vw, 28rem);
   height: clamp(36rem, 60vh, 46rem);
   border-radius: 9999px;
@@ -315,14 +315,14 @@ const restoredSectionCSS = `/* =================================================
   flex-shrink: 0;
 }
 
-.significo-egg-card:hover {
+.crewmind-egg-card:hover {
   transform: scale(1.03);
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.16);
   border-color: var(--black);
 }
 
 /* Capsule Card Content: Centered Layout with Yellow Icon Circle Above Topic Heading */
-.significo-egg-card__content {
+.crewmind-egg-card__content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -348,7 +348,7 @@ const restoredSectionCSS = `/* =================================================
   flex-shrink: 0;
 }
 
-.significo-egg-card:hover .capsule-icon-circle {
+.crewmind-egg-card:hover .capsule-icon-circle {
   transform: translateY(-4px) scale(1.08);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
 }
@@ -374,22 +374,22 @@ const restoredSectionCSS = `/* =================================================
 }
 
 @media screen and (max-width: 991px) {
-  .significo-about-stats {
+  .crewmind-about-stats {
     height: auto;
   }
 
-  .significo-about-stats__sticky {
+  .crewmind-about-stats__sticky {
     position: static;
     height: auto;
     padding-block: 5rem;
   }
 
-  .significo-about-stats__layout {
+  .crewmind-about-stats__layout {
     flex-direction: column;
     gap: 4rem;
   }
 
-  .significo-about-stats__left {
+  .crewmind-about-stats__left {
     max-width: 100%;
     align-items: center;
     text-align: center;
@@ -403,7 +403,7 @@ const restoredSectionCSS = `/* =================================================
     text-align: center;
   }
 
-  .significo-about-stats__right {
+  .crewmind-about-stats__right {
     position: static;
     transform: none;
     width: 100%;
@@ -412,24 +412,24 @@ const restoredSectionCSS = `/* =================================================
     margin-top: 2rem;
   }
 
-  .significo-about-stats__stream {
+  .crewmind-about-stats__stream {
     flex-direction: column;
     gap: 2rem;
   }
 
-  .significo-about-stats__col {
+  .crewmind-about-stats__col {
     transform: none !important;
     gap: 2rem;
   }
 
-  .significo-egg-card {
+  .crewmind-egg-card {
     width: clamp(18rem, 75vw, 22rem);
     height: clamp(34rem, 50vh, 42rem);
     transform: rotate(-10deg);
   }
 }`;
 
-const startIdx = css.indexOf('.significo-about-stats');
+const startIdx = css.indexOf('.crewmind-about-stats');
 const endIdx = css.indexOf('/* ==========================================================================\n   WHAT MAKES US DIFFERENT');
 
 if (startIdx !== -1 && endIdx !== -1) {

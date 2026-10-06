@@ -24,7 +24,7 @@ export default function CoreValues() {
     const col2 = col2Ref.current;
     if (!section || !leftCol || !col1 || !col2) return;
 
-    // Theme trigger for white (matching Significo /about aesthetic)
+    // Theme trigger for white (matching Crewmind /about aesthetic)
     const stTheme = ScrollTrigger.create({
       trigger: section,
       start: "top 60%",
@@ -49,7 +49,7 @@ export default function CoreValues() {
       });
 
       // Capsule cards entrance stagger
-      const capsules = section.querySelectorAll('.significo-capsule');
+      const capsules = section.querySelectorAll('.crewmind-capsule');
       gsap.from(capsules, {
         opacity: 0,
         y: 60,
@@ -64,7 +64,7 @@ export default function CoreValues() {
         }
       });
 
-      // Signature Significo Dual-Column Counter-Parallax Scrub
+      // Signature Crewmind Dual-Column Counter-Parallax Scrub
       gsap.to(col1, {
         y: -70,
         ease: "none",
@@ -153,30 +153,30 @@ export default function CoreValues() {
             </div>
           </div>
 
-          {/* Right Column: 2 Parallax Columns of Significo Tilted Stadium Capsules */}
+          {/* Right Column: 2 Parallax Columns of Crewmind Tilted Stadium Capsules */}
           <div className="core-values__right">
-            <div className="significo-capsules-stream">
+            <div className="crewmind-capsules-stream">
               
               {/* Column 1 (Left Stream) */}
-              <div ref={col1Ref} className="significo-capsules-col is--col-1">
+              <div ref={col1Ref} className="crewmind-capsules-col is--col-1">
                 {column1Data.map((item, idx) => (
                   <div 
                     key={idx} 
-                    className={\`significo-capsule is--circle-\${item.circlePos}\`}
+                    className={\`crewmind-capsule is--circle-\${item.circlePos}\`}
                   >
                     {item.circlePos === 'top' && (
-                      <div className="significo-capsule__disc">
-                        <span className="significo-capsule__num">{item.num}</span>
+                      <div className="crewmind-capsule__disc">
+                        <span className="crewmind-capsule__num">{item.num}</span>
                       </div>
                     )}
 
-                    <div className="significo-capsule__topic-box">
-                      <h3 className="significo-capsule__topic">{item.title}</h3>
+                    <div className="crewmind-capsule__topic-box">
+                      <h3 className="crewmind-capsule__topic">{item.title}</h3>
                     </div>
 
                     {item.circlePos === 'bottom' && (
-                      <div className="significo-capsule__disc">
-                        <span className="significo-capsule__num">{item.num}</span>
+                      <div className="crewmind-capsule__disc">
+                        <span className="crewmind-capsule__num">{item.num}</span>
                       </div>
                     )}
                   </div>
@@ -184,25 +184,25 @@ export default function CoreValues() {
               </div>
 
               {/* Column 2 (Right Stream - Offset) */}
-              <div ref={col2Ref} className="significo-capsules-col is--col-2">
+              <div ref={col2Ref} className="crewmind-capsules-col is--col-2">
                 {column2Data.map((item, idx) => (
                   <div 
                     key={idx} 
-                    className={\`significo-capsule is--circle-\${item.circlePos}\`}
+                    className={\`crewmind-capsule is--circle-\${item.circlePos}\`}
                   >
                     {item.circlePos === 'top' && (
-                      <div className="significo-capsule__disc">
-                        <span className="significo-capsule__num">{item.num}</span>
+                      <div className="crewmind-capsule__disc">
+                        <span className="crewmind-capsule__num">{item.num}</span>
                       </div>
                     )}
 
-                    <div className="significo-capsule__topic-box">
-                      <h3 className="significo-capsule__topic">{item.title}</h3>
+                    <div className="crewmind-capsule__topic-box">
+                      <h3 className="crewmind-capsule__topic">{item.title}</h3>
                     </div>
 
                     {item.circlePos === 'bottom' && (
-                      <div className="significo-capsule__disc">
-                        <span className="significo-capsule__num">{item.num}</span>
+                      <div className="crewmind-capsule__disc">
+                        <span className="crewmind-capsule__num">{item.num}</span>
                       </div>
                     )}
                   </div>
@@ -221,7 +221,7 @@ export default function CoreValues() {
 `;
 
 fs.writeFileSync(coreValuesPath, coreValuesContent, 'utf8');
-console.log('CoreValues.jsx updated with Significo stadium capsule cards and dual parallax stream!');
+console.log('CoreValues.jsx updated with Crewmind stadium capsule cards and dual parallax stream!');
 
 let css = fs.readFileSync(indexCssPath, 'utf8');
 const startTag = '/* ==========================================================================\r\n   CORE VALUES / THE INDUSTRY IS CHANGING';
@@ -230,7 +230,7 @@ const endTag = '/* =============================================================
 const endTagLF = '/* ==========================================================================\n   WHAT MAKES US DIFFERENT (Centered Header + Alternating Perfect Circle Cards)';
 
 const newCoreValuesCss = `/* ==========================================================================
-   CORE VALUES / THE INDUSTRY IS CHANGING (Significo Stadium Capsule Stream)
+   CORE VALUES / THE INDUSTRY IS CHANGING (Crewmind Stadium Capsule Stream)
    ========================================================================== */
 
 .core-values-section {
@@ -323,7 +323,7 @@ const newCoreValuesCss = `/* ===================================================
 }
 
 /* 2-Column Parallax Stadium Capsules Stream */
-.significo-capsules-stream {
+.crewmind-capsules-stream {
   display: flex;
   align-items: flex-start;
   gap: clamp(1.5rem, 3vw, 3.5rem);
@@ -331,7 +331,7 @@ const newCoreValuesCss = `/* ===================================================
   max-width: clamp(34rem, 42vw, 48rem);
 }
 
-.significo-capsules-col {
+.crewmind-capsules-col {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -339,12 +339,12 @@ const newCoreValuesCss = `/* ===================================================
   will-change: transform;
 }
 
-.significo-capsules-col.is--col-2 {
+.crewmind-capsules-col.is--col-2 {
   margin-top: clamp(3rem, 6vh, 6.5rem);
 }
 
-/* Authentic Significo Stadium / Pill Capsule Structure */
-.significo-capsule {
+/* Authentic Crewmind Stadium / Pill Capsule Structure */
+.crewmind-capsule {
   width: 100%;
   max-width: clamp(15rem, 18.5vw, 21.5rem);
   height: clamp(25rem, 33vh, 32rem);
@@ -364,13 +364,13 @@ const newCoreValuesCss = `/* ===================================================
   position: relative;
 }
 
-.significo-capsule:hover {
+.crewmind-capsule:hover {
   transform: rotate(-14deg) translateY(-8px) scale(1.02);
   box-shadow: 0 30px 65px rgba(0, 0, 0, 0.12);
 }
 
 /* Large Circular Disc with Soft Yellow Fill (matching Image 2) */
-.significo-capsule__disc {
+.crewmind-capsule__disc {
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
@@ -382,7 +382,7 @@ const newCoreValuesCss = `/* ===================================================
   box-sizing: border-box;
 }
 
-.significo-capsule__num {
+.crewmind-capsule__num {
   font-family: 'Manrope', sans-serif;
   font-size: clamp(3rem, 4.5vw, 5.2rem);
   font-weight: 400;
@@ -394,7 +394,7 @@ const newCoreValuesCss = `/* ===================================================
 }
 
 /* Focused Topic Headline Box (subpara removed so topic is mainly prominent) */
-.significo-capsule__topic-box {
+.crewmind-capsule__topic-box {
   flex: 1;
   display: flex;
   align-items: center;
@@ -405,7 +405,7 @@ const newCoreValuesCss = `/* ===================================================
   box-sizing: border-box;
 }
 
-.significo-capsule__topic {
+.crewmind-capsule__topic {
   font-family: 'Manrope', sans-serif;
   font-size: clamp(1.15rem, 1.45vw, 1.7rem);
   font-weight: 600;
@@ -445,14 +445,14 @@ const newCoreValuesCss = `/* ===================================================
     justify-content: center;
   }
 
-  .significo-capsules-stream {
+  .crewmind-capsules-stream {
     max-width: 32rem;
     gap: 1.8rem;
   }
 }
 
 @media screen and (max-width: 580px) {
-  .significo-capsules-stream {
+  .crewmind-capsules-stream {
     flex-direction: column;
     align-items: center;
     max-width: 18rem;
@@ -460,11 +460,11 @@ const newCoreValuesCss = `/* ===================================================
     gap: 2.5rem;
   }
 
-  .significo-capsules-col.is--col-2 {
+  .crewmind-capsules-col.is--col-2 {
     margin-top: 0;
   }
 
-  .significo-capsule {
+  .crewmind-capsule {
     height: 24rem;
   }
 }
@@ -479,7 +479,7 @@ if (endIdx === -1) endIdx = css.indexOf(endTagLF);
 if (startIdx !== -1 && endIdx !== -1) {
   const updatedCss = css.substring(0, startIdx) + newCoreValuesCss + css.substring(endIdx);
   fs.writeFileSync(indexCssPath, updatedCss, 'utf8');
-  console.log('index.css updated with Significo stadium capsule styles!');
+  console.log('index.css updated with Crewmind stadium capsule styles!');
 } else {
   console.error('Could not find start or end tags in index.css: startIdx=' + startIdx + ', endIdx=' + endIdx);
 }

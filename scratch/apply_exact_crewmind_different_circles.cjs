@@ -179,7 +179,7 @@ export default function WhatMakesUsDifferent() {
             </div>
           </div>
 
-          {/* Right Column: 2x2 Large Touching Circles Matching Significo Reference */}
+          {/* Right Column: 2x2 Large Touching Circles Matching Crewmind Reference */}
           <div ref={gridRef} className="ovals-diff__grid">
             {itemsData.map((item, idx) => {
               const IconComp = item.icon;
@@ -211,7 +211,7 @@ console.log('Successfully updated WhatMakesUsDifferent.jsx with large floating c
 let css = fs.readFileSync('src/index.css', 'utf8');
 
 const updatedDiffCSS = `/* ==========================================================================
-   WHAT MAKES US DIFFERENT (Significo Core Values 2x2 Circle Grid Layout)
+   WHAT MAKES US DIFFERENT (Crewmind Core Values 2x2 Circle Grid Layout)
    ========================================================================== */
 
 .ovals-diff-section {
@@ -293,7 +293,7 @@ const updatedDiffCSS = `/* =====================================================
   margin-top: 0.5rem;
 }
 
-/* 2x2 Large Touching Circles Grid matching Significo Reference */
+/* 2x2 Large Touching Circles Grid matching Crewmind Reference */
 .ovals-diff__grid {
   flex: 1;
   display: grid;

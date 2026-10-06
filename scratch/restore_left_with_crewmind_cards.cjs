@@ -33,7 +33,7 @@ export default function CoreValues() {
     });
 
     const ctx = gsap.context(() => {
-      // 1. Pinned 300vh Scroll-Driven Counter-Parallax Animation matching Significo.com/about
+      // 1. Pinned 300vh Scroll-Driven Counter-Parallax Animation matching Crewmind.com/about
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -83,16 +83,16 @@ export default function CoreValues() {
   return (
     <section 
       ref={sectionRef} 
-      className="section significo-about-stats" 
+      className="section crewmind-about-stats" 
       this-theme="white" 
       id="industry-changing"
     >
-      <div ref={stickyRef} className="significo-about-stats__sticky">
+      <div ref={stickyRef} className="crewmind-about-stats__sticky">
         <div className="container">
-          <div className="significo-about-stats__layout">
+          <div className="crewmind-about-stats__layout">
             
             {/* Left Side: Original Tag, Heading & Paragraph */}
-            <div ref={leftRef} className="significo-about-stats__left">
+            <div ref={leftRef} className="crewmind-about-stats__left">
               <div className="core-values__tag">
                 <span className="core-values__dot"></span>
                 <span className="f-14 is--btn caps">THE INDUSTRY IS CHANGING</span>
@@ -108,54 +108,54 @@ export default function CoreValues() {
             </div>
 
             {/* Right Side: Giant Angled Stadium Egg Stream (Rotated -15deg) with User Content */}
-            <div className="significo-about-stats__right">
-              <div className="significo-about-stats__stream">
+            <div className="crewmind-about-stats__right">
+              <div className="crewmind-about-stats__stream">
                 
                 {/* Column 1 (Left Stream) */}
-                <div ref={col1Ref} className="significo-about-stats__col is--col-1">
+                <div ref={col1Ref} className="crewmind-about-stats__col is--col-1">
                   
                   {/* Card 1: 01 / Circle at Top */}
-                  <div className="significo-egg-card is--top-circle">
-                    <div className="significo-egg-card__circle">
-                      <span className="significo-egg-card__number">01</span>
+                  <div className="crewmind-egg-card is--top-circle">
+                    <div className="crewmind-egg-card__circle">
+                      <span className="crewmind-egg-card__number">01</span>
                     </div>
-                    <div className="significo-egg-card__text">
+                    <div className="crewmind-egg-card__text">
                       Better Crew Retention
                     </div>
                   </div>
 
                   {/* Card 3: 03 / Circle at Bottom */}
-                  <div className="significo-egg-card is--bottom-circle">
-                    <div className="significo-egg-card__text">
+                  <div className="crewmind-egg-card is--bottom-circle">
+                    <div className="crewmind-egg-card__text">
                       Improved Operational Stability
                     </div>
-                    <div className="significo-egg-card__circle">
-                      <span className="significo-egg-card__number">03</span>
+                    <div className="crewmind-egg-card__circle">
+                      <span className="crewmind-egg-card__number">03</span>
                     </div>
                   </div>
 
                 </div>
 
                 {/* Column 2 (Right Stream) */}
-                <div ref={col2Ref} className="significo-about-stats__col is--col-2">
+                <div ref={col2Ref} className="crewmind-about-stats__col is--col-2">
                   
                   {/* Card 2: 02 / Circle at Top */}
-                  <div className="significo-egg-card is--top-circle">
-                    <div className="significo-egg-card__circle">
-                      <span className="significo-egg-card__number">02</span>
+                  <div className="crewmind-egg-card is--top-circle">
+                    <div className="crewmind-egg-card__circle">
+                      <span className="crewmind-egg-card__number">02</span>
                     </div>
-                    <div className="significo-egg-card__text">
+                    <div className="crewmind-egg-card__text">
                       Stronger Team Resilience
                     </div>
                   </div>
 
                   {/* Card 4: 04 / Circle at Bottom */}
-                  <div className="significo-egg-card is--bottom-circle">
-                    <div className="significo-egg-card__text">
+                  <div className="crewmind-egg-card is--bottom-circle">
+                    <div className="crewmind-egg-card__text">
                       Reduced Burnout Risk
                     </div>
-                    <div className="significo-egg-card__circle">
-                      <span className="significo-egg-card__number">04</span>
+                    <div className="crewmind-egg-card__circle">
+                      <span className="crewmind-egg-card__number">04</span>
                     </div>
                   </div>
 
@@ -173,22 +173,22 @@ export default function CoreValues() {
 `;
 
 fs.writeFileSync(coreValuesPath, coreValuesContent, 'utf8');
-console.log('CoreValues.jsx updated with original left side content + Significo card size & animations!');
+console.log('CoreValues.jsx updated with original left side content + Crewmind card size & animations!');
 
 let css = fs.readFileSync(indexCssPath, 'utf8');
 const startTag = '/* ==========================================================================\r\n   CORE VALUES / THE INDUSTRY IS CHANGING';
 const startTagLF = '/* ==========================================================================\n   CORE VALUES / THE INDUSTRY IS CHANGING';
-const startTagAlt = '/* ==========================================================================\r\n   SIGNIFICO ABOUT STATS / EGG SLIDE STATS';
-const startTagAltLF = '/* ==========================================================================\n   SIGNIFICO ABOUT STATS / EGG SLIDE STATS';
+const startTagAlt = '/* ==========================================================================\r\n   CREWMIND ABOUT STATS / EGG SLIDE STATS';
+const startTagAltLF = '/* ==========================================================================\n   CREWMIND ABOUT STATS / EGG SLIDE STATS';
 
 const endTag = '/* ==========================================================================\r\n   WHAT MAKES US DIFFERENT (Centered Header + Alternating Perfect Circle Cards)';
 const endTagLF = '/* ==========================================================================\n   WHAT MAKES US DIFFERENT (Centered Header + Alternating Perfect Circle Cards)';
 
-const newSignificoAboutStatsCss = `/* ==========================================================================
-   SIGNIFICO ABOUT STATS / EGG SLIDE STATS (300vh Pinned Stadium Stream)
+const newCrewmindAboutStatsCss = `/* ==========================================================================
+   CREWMIND ABOUT STATS / EGG SLIDE STATS (300vh Pinned Stadium Stream)
    ========================================================================== */
 
-.significo-about-stats {
+.crewmind-about-stats {
   position: relative;
   width: 100%;
   height: 300vh;
@@ -198,7 +198,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
   box-sizing: border-box;
 }
 
-.significo-about-stats__sticky {
+.crewmind-about-stats__sticky {
   position: sticky;
   top: 0;
   height: 100vh;
@@ -208,7 +208,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
   align-items: center;
 }
 
-.significo-about-stats__layout {
+.crewmind-about-stats__layout {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -218,7 +218,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
 }
 
 /* Original Left Content Column */
-.significo-about-stats__left {
+.crewmind-about-stats__left {
   max-width: clamp(24rem, 34vw, 38rem);
   display: flex;
   flex-direction: column;
@@ -270,7 +270,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
 }
 
 /* Right Stream Rotated at -15deg */
-.significo-about-stats__right {
+.crewmind-about-stats__right {
   position: absolute;
   top: 50%;
   right: calc(-8vw);
@@ -280,21 +280,21 @@ const newSignificoAboutStatsCss = `/* ==========================================
   pointer-events: all;
 }
 
-.significo-about-stats__stream {
+.crewmind-about-stats__stream {
   display: flex;
   align-items: center;
   gap: clamp(2rem, 3.5vw, 4.5rem);
 }
 
-.significo-about-stats__col {
+.crewmind-about-stats__col {
   display: flex;
   flex-direction: column;
   gap: clamp(3rem, 5.5vh, 6rem);
   will-change: transform;
 }
 
-/* Authentic Massive Significo Stadium / Egg Capsule Cards */
-.significo-egg-card {
+/* Authentic Massive Crewmind Stadium / Egg Capsule Cards */
+.crewmind-egg-card {
   width: clamp(22rem, 27vw, 33rem);
   height: clamp(45rem, 74vh, 58rem);
   border-radius: 9999px;
@@ -311,13 +311,13 @@ const newSignificoAboutStatsCss = `/* ==========================================
   flex-shrink: 0;
 }
 
-.significo-egg-card:hover {
+.crewmind-egg-card:hover {
   transform: scale(1.02);
   box-shadow: 0 35px 80px rgba(0, 0, 0, 0.1);
 }
 
 /* Giant Yellow Circular Disc matching Image */
-.significo-egg-card__circle {
+.crewmind-egg-card__circle {
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
@@ -329,7 +329,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
   box-sizing: border-box;
 }
 
-.significo-egg-card__number {
+.crewmind-egg-card__number {
   font-family: 'Manrope', sans-serif;
   font-size: clamp(5rem, 7.8vw, 9.2rem);
   font-weight: 400;
@@ -341,7 +341,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
 }
 
 /* Topic text inside the capsule */
-.significo-egg-card__text {
+.crewmind-egg-card__text {
   flex: 1;
   display: flex;
   align-items: center;
@@ -359,22 +359,22 @@ const newSignificoAboutStatsCss = `/* ==========================================
 }
 
 @media screen and (max-width: 991px) {
-  .significo-about-stats {
+  .crewmind-about-stats {
     height: auto;
   }
 
-  .significo-about-stats__sticky {
+  .crewmind-about-stats__sticky {
     position: static;
     height: auto;
     padding-block: 5rem;
   }
 
-  .significo-about-stats__layout {
+  .crewmind-about-stats__layout {
     flex-direction: column;
     gap: 4rem;
   }
 
-  .significo-about-stats__left {
+  .crewmind-about-stats__left {
     max-width: 100%;
     align-items: center;
     text-align: center;
@@ -388,7 +388,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
     text-align: center;
   }
 
-  .significo-about-stats__right {
+  .crewmind-about-stats__right {
     position: static;
     transform: none;
     width: 100%;
@@ -397,12 +397,12 @@ const newSignificoAboutStatsCss = `/* ==========================================
     margin-top: 2rem;
   }
 
-  .significo-about-stats__stream {
+  .crewmind-about-stats__stream {
     flex-direction: column;
     gap: 2.5rem;
   }
 
-  .significo-egg-card {
+  .crewmind-egg-card {
     width: clamp(18rem, 75vw, 24rem);
     height: clamp(36rem, 55vh, 44rem);
     transform: rotate(-10deg);
@@ -420,7 +420,7 @@ let endIdx = css.indexOf(endTag);
 if (endIdx === -1) endIdx = css.indexOf(endTagLF);
 
 if (startIdx !== -1 && endIdx !== -1) {
-  const updatedCss = css.substring(0, startIdx) + newSignificoAboutStatsCss + css.substring(endIdx);
+  const updatedCss = css.substring(0, startIdx) + newCrewmindAboutStatsCss + css.substring(endIdx);
   fs.writeFileSync(indexCssPath, updatedCss, 'utf8');
   console.log('index.css updated!');
 } else {

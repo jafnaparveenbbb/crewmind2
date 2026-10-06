@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-// 1. Update index.css to remove all padding on .horizontal and .significo-about-stats
+// 1. Update index.css to remove all padding on .horizontal and .crewmind-about-stats
 let css = fs.readFileSync('src/index.css', 'utf8');
 
 css = css.replace(
@@ -15,8 +15,8 @@ css = css.replace(
 );
 
 css = css.replace(
-  /\.significo-about-stats\s*\{[\s\S]*?height:\s*300vh;[\s\S]*?background-color:\s*var\(--white\);/,
-  `.significo-about-stats {
+  /\.crewmind-about-stats\s*\{[\s\S]*?height:\s*300vh;[\s\S]*?background-color:\s*var\(--white\);/,
+  `.crewmind-about-stats {
   position: relative;
   width: 100%;
   height: 300vh;
@@ -27,7 +27,7 @@ css = css.replace(
 );
 
 fs.writeFileSync('src/index.css', css, 'utf8');
-console.log('Successfully updated index.css to remove padding from .horizontal and .significo-about-stats!');
+console.log('Successfully updated index.css to remove padding from .horizontal and .crewmind-about-stats!');
 
 // 2. Update HorizontalStats.jsx to ensure theme boundary is tight
 let horizJsx = fs.readFileSync('src/sections/HorizontalStats.jsx', 'utf8');

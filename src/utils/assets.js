@@ -1,83 +1,83 @@
-// Local Significo Assets Registry
+// Local Crewmind Assets Registry
 
 // Videos & Placeholders
-import heroVideo from '../assets/significo/videos/herovideo.mp4';
-import heroVideoMob from '../assets/significo/videos/herovideo.mp4';
-import heroPlaceholderPc from '../assets/significo/hero/hero-placeholder-pc.png';
-import heroPlaceholderMob from '../assets/significo/hero/hero-placeholder-mob.jpeg';
+import heroVideo from '../assets/crewmind/videos/herovideo.mp4';
+import heroVideoMob from '../assets/crewmind/videos/herovideo.mp4';
+import heroPlaceholderPc from '../assets/crewmind/hero/hero-placeholder-pc.png';
+import heroPlaceholderMob from '../assets/crewmind/hero/hero-placeholder-mob.jpeg';
 
 // Portraits (24 circular portrait photos for the first typographic field)
-import portrait01 from '../assets/significo/portraits/portrait-01.png';
-import portrait02 from '../assets/significo/portraits/portrait-02.png';
-import portrait03 from '../assets/significo/portraits/portrait-03.png';
-import portrait04 from '../assets/significo/portraits/portrait-04.png';
-import portrait05 from '../assets/significo/portraits/portrait-05.png';
-import portrait06 from '../assets/significo/portraits/portrait-06.png';
-import portrait07 from '../assets/significo/portraits/portrait-07.png';
-import portrait08 from '../assets/significo/portraits/portrait-08.png';
-import portrait09 from '../assets/significo/portraits/portrait-09.png';
-import portrait10 from '../assets/significo/portraits/portrait-10.png';
-import portrait11 from '../assets/significo/portraits/portrait-11.png';
-import portrait12 from '../assets/significo/portraits/portrait-12.png';
-import portrait13 from '../assets/significo/portraits/portrait-13.png';
-import portrait14 from '../assets/significo/portraits/portrait-14.png';
-import portrait15 from '../assets/significo/portraits/portrait-15.png';
-import portrait16 from '../assets/significo/portraits/portrait-16.png';
-import portrait17 from '../assets/significo/portraits/portrait-17.png';
-import portrait18 from '../assets/significo/portraits/portrait-18.png';
-import portrait19 from '../assets/significo/portraits/portrait-19.png';
-import portrait20 from '../assets/significo/portraits/portrait-20.png';
-import portrait21 from '../assets/significo/portraits/portrait-21.png';
-import portrait22 from '../assets/significo/portraits/portrait-22.png';
-import portrait23 from '../assets/significo/portraits/portrait-23.png';
-import portrait24 from '../assets/significo/portraits/portrait-24.png';
+import portrait01 from '../assets/crewmind/portraits/portrait-01.png';
+import portrait02 from '../assets/crewmind/portraits/portrait-02.png';
+import portrait03 from '../assets/crewmind/portraits/portrait-03.png';
+import portrait04 from '../assets/crewmind/portraits/portrait-04.png';
+import portrait05 from '../assets/crewmind/portraits/portrait-05.png';
+import portrait06 from '../assets/crewmind/portraits/portrait-06.png';
+import portrait07 from '../assets/crewmind/portraits/portrait-07.png';
+import portrait08 from '../assets/crewmind/portraits/portrait-08.png';
+import portrait09 from '../assets/crewmind/portraits/portrait-09.png';
+import portrait10 from '../assets/crewmind/portraits/portrait-10.png';
+import portrait11 from '../assets/crewmind/portraits/portrait-11.png';
+import portrait12 from '../assets/crewmind/portraits/portrait-12.png';
+import portrait13 from '../assets/crewmind/portraits/portrait-13.png';
+import portrait14 from '../assets/crewmind/portraits/portrait-14.png';
+import portrait15 from '../assets/crewmind/portraits/portrait-15.png';
+import portrait16 from '../assets/crewmind/portraits/portrait-16.png';
+import portrait17 from '../assets/crewmind/portraits/portrait-17.png';
+import portrait18 from '../assets/crewmind/portraits/portrait-18.png';
+import portrait19 from '../assets/crewmind/portraits/portrait-19.png';
+import portrait20 from '../assets/crewmind/portraits/portrait-20.png';
+import portrait21 from '../assets/crewmind/portraits/portrait-21.png';
+import portrait22 from '../assets/crewmind/portraits/portrait-22.png';
+import portrait23 from '../assets/crewmind/portraits/portrait-23.png';
+import portrait24 from '../assets/crewmind/portraits/portrait-24.png';
 
 // Horizontal Stats Parallax Images (12 items)
-import horiz01 from '../assets/significo/horizontal/horizontal-01.webp';
-import horiz02 from '../assets/significo/horizontal/horizontal-02.webp';
-import horiz03 from '../assets/significo/horizontal/horizontal-03.webp';
-import horiz04 from '../assets/significo/horizontal/horizontal-04.webp';
-import horiz05 from '../assets/significo/horizontal/horizontal-05.webp';
-import horiz06 from '../assets/significo/horizontal/horizontal-06.webp';
-import horiz07 from '../assets/significo/horizontal/horizontal-07.webp';
-import horiz08 from '../assets/significo/horizontal/horizontal-08.webp';
-import horiz09 from '../assets/significo/horizontal/horizontal-09.webp';
-import horiz10 from '../assets/significo/horizontal/horizontal-10.webp';
-import horiz11 from '../assets/significo/horizontal/horizontal-11.webp';
-import horiz12 from '../assets/significo/horizontal/horizontal-12.webp';
+import horiz01 from '../assets/crewmind/horizontal/horizontal-01.webp';
+import horiz02 from '../assets/crewmind/horizontal/horizontal-02.webp';
+import horiz03 from '../assets/crewmind/horizontal/horizontal-03.webp';
+import horiz04 from '../assets/crewmind/horizontal/horizontal-04.webp';
+import horiz05 from '../assets/crewmind/horizontal/horizontal-05.webp';
+import horiz06 from '../assets/crewmind/horizontal/horizontal-06.webp';
+import horiz07 from '../assets/crewmind/horizontal/horizontal-07.webp';
+import horiz08 from '../assets/crewmind/horizontal/horizontal-08.webp';
+import horiz09 from '../assets/crewmind/horizontal/horizontal-09.webp';
+import horiz10 from '../assets/crewmind/horizontal/horizontal-10.webp';
+import horiz11 from '../assets/crewmind/horizontal/horizontal-11.webp';
+import horiz12 from '../assets/crewmind/horizontal/horizontal-12.webp';
 
 // Case Studies & Contributor Avatars
-import caseStudy01 from '../assets/significo/case-studies/case-study-01.jpeg';
-import caseStudy02 from '../assets/significo/case-studies/case-study-02.jpg';
-import caseStudy03 from '../assets/significo/case-studies/case-study-03.png';
+import caseStudy01 from '../assets/crewmind/case-studies/case-study-01.jpeg';
+import caseStudy02 from '../assets/crewmind/case-studies/case-study-02.jpg';
+import caseStudy03 from '../assets/crewmind/case-studies/case-study-03.png';
 
-import teamAdrian from '../assets/significo/case-studies/team-adrian.png';
-import teamVictor from '../assets/significo/case-studies/team-victor.png';
-import teamFenn from '../assets/significo/case-studies/team-fenn.png';
-import teamHimanshu from '../assets/significo/case-studies/team-himanshu.png';
-import teamCarlos from '../assets/significo/case-studies/team-carlos.png';
-import teamDamiano from '../assets/significo/case-studies/team-damiano.png';
-import teamLaura from '../assets/significo/case-studies/team-laura.png';
-import teamMara from '../assets/significo/case-studies/team-mara.png';
+import teamAdrian from '../assets/crewmind/case-studies/team-adrian.png';
+import teamVictor from '../assets/crewmind/case-studies/team-victor.png';
+import teamFenn from '../assets/crewmind/case-studies/team-fenn.png';
+import teamHimanshu from '../assets/crewmind/case-studies/team-himanshu.png';
+import teamCarlos from '../assets/crewmind/case-studies/team-carlos.png';
+import teamDamiano from '../assets/crewmind/case-studies/team-damiano.png';
+import teamLaura from '../assets/crewmind/case-studies/team-laura.png';
+import teamMara from '../assets/crewmind/case-studies/team-mara.png';
 
 // Team Section Avatars
-import teamRickLg from '../assets/significo/team/team-01-rick.png';
-import teamChrisLg from '../assets/significo/team/team-02-chris.png';
-import teamCarolineLg from '../assets/significo/team/team-03-caroline.png';
-import teamVictorLg from '../assets/significo/team/team-04-victor.png';
-import teamAdrianLg from '../assets/significo/team/team-05-adrian.png';
+import teamRickLg from '../assets/crewmind/team/team-01-rick.png';
+import teamChrisLg from '../assets/crewmind/team/team-02-chris.png';
+import teamCarolineLg from '../assets/crewmind/team/team-03-caroline.png';
+import teamVictorLg from '../assets/crewmind/team/team-04-victor.png';
+import teamAdrianLg from '../assets/crewmind/team/team-05-adrian.png';
 
 // Testimonial Avatars
-import testimonialMiranda from '../assets/significo/testimonials/testimonial-miranda.jpeg';
-import testimonialEmek from '../assets/significo/testimonials/testimonial-emek.jpg';
+import testimonialMiranda from '../assets/crewmind/testimonials/testimonial-miranda.jpeg';
+import testimonialEmek from '../assets/crewmind/testimonials/testimonial-emek.jpg';
 
 // Insights & Articles Images
-import insight01 from '../assets/significo/insights/insight-01.jpg';
-import insight02 from '../assets/significo/insights/insight-02.png';
+import insight01 from '../assets/crewmind/insights/insight-01.jpg';
+import insight02 from '../assets/crewmind/insights/insight-02.png';
 
 // Misc
-import scrollUpSvg from '../assets/significo/misc/scroll-up.svg';
-import mainLogo from '../assets/significo/misc/main-logo.png';
+import scrollUpSvg from '../assets/crewmind/misc/scroll-up.svg';
+import mainLogo from '../assets/crewmind/misc/main-logo.png';
 
 // Crew Images (Exclusively crewimg1 through crewimg8)
 import crewimg1 from '../assets/crew/crewimg1.jpeg';
@@ -197,14 +197,14 @@ export const ASSETS = {
   ],
   testimonials: [
     {
-      quote: "Working with the Significo team has been such a pleasure! We took on a significant project to rebuild our entire platform and the team approached the project with our best interests in mind. They continue to prioritize the end user experience and offer amazing expertise in all of the areas we lack internally. I would personally be lost without this team, their ability to problem solve, their openness to feedback and desire to build the product like it is their own.",
+      quote: "Working with the Crewmind team has been such a pleasure! We took on a significant project to rebuild our entire platform and the team approached the project with our best interests in mind. They continue to prioritize the end user experience and offer amazing expertise in all of the areas we lack internally. I would personally be lost without this team, their ability to problem solve, their openness to feedback and desire to build the product like it is their own.",
       name: "Miranda Ernst",
       role: "Product Manager",
       company: "HealthCheck360",
       avatar: testimonialMiranda
     },
     {
-      quote: "Working with Significo and their recommendation service has been a game-changer for our occupational prevention efforts. Our customers are extremely satisfied with the tool's impressive technical capabilities and data-driven approach. But what truly sets it apart is the intuitive and modern user experience it offers, making it a breeze for our clients to navigate. By leveraging this service, our customers have successfully tackled presenteeism and absenteeism, making a significant impact on their workforce's well-being. We highly recommend Significo to any organization looking to optimize their occupational health and drive positive change.",
+      quote: "Working with Crewmind and their recommendation service has been a game-changer for our occupational prevention efforts. Our customers are extremely satisfied with the tool's impressive technical capabilities and data-driven approach. But what truly sets it apart is the intuitive and modern user experience it offers, making it a breeze for our clients to navigate. By leveraging this service, our customers have successfully tackled presenteeism and absenteeism, making a significant impact on their workforce's well-being. We highly recommend Crewmind to any organization looking to optimize their occupational health and drive positive change.",
       name: "Emek Altun",
       role: "CEO",
       company: "Vitaservices",

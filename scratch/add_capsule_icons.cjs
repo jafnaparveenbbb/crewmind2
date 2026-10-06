@@ -30,7 +30,7 @@ export default function CoreValues() {
     });
 
     const ctx = gsap.context(() => {
-      // 1. Pinned 300vh Scroll-Driven Counter-Parallax Animation matching Significo.com/about
+      // 1. Pinned 300vh Scroll-Driven Counter-Parallax Animation matching Crewmind.com/about
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -80,16 +80,16 @@ export default function CoreValues() {
   return (
     <section 
       ref={sectionRef} 
-      className="section significo-about-stats" 
+      className="section crewmind-about-stats" 
       this-theme="white" 
       id="industry-changing"
     >
-      <div ref={stickyRef} className="significo-about-stats__sticky">
+      <div ref={stickyRef} className="crewmind-about-stats__sticky">
         <div className="container">
-          <div className="significo-about-stats__layout">
+          <div className="crewmind-about-stats__layout">
             
             {/* Left Side: Compact Tag, Heading & Paragraph */}
-            <div ref={leftRef} className="significo-about-stats__left">
+            <div ref={leftRef} className="crewmind-about-stats__left">
               <div className="core-values__tag">
                 <span className="core-values__dot"></span>
                 <span className="f-14 is--btn caps">THE INDUSTRY IS CHANGING</span>
@@ -105,15 +105,15 @@ export default function CoreValues() {
             </div>
 
             {/* Right Side: Stadium Stream Rotated at -15deg (HEX #00063D Container with White Text) */}
-            <div className="significo-about-stats__right">
-              <div className="significo-about-stats__stream">
+            <div className="crewmind-about-stats__right">
+              <div className="crewmind-about-stats__stream">
                 
                 {/* Column 1 (Left Stream) */}
-                <div ref={col1Ref} className="significo-about-stats__col is--col-1">
+                <div ref={col1Ref} className="crewmind-about-stats__col is--col-1">
                   
                   {/* Card 1: Better Crew Retention */}
-                  <div className="significo-egg-card">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card">
+                    <div className="crewmind-egg-card__content">
                       <div className="capsule-icon-circle">
                         <Users className="capsule-icon" />
                       </div>
@@ -124,8 +124,8 @@ export default function CoreValues() {
                   </div>
 
                   {/* Card 3: Improved Operational Stability */}
-                  <div className="significo-egg-card">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card">
+                    <div className="crewmind-egg-card__content">
                       <div className="capsule-icon-circle">
                         <Workflow className="capsule-icon" />
                       </div>
@@ -138,11 +138,11 @@ export default function CoreValues() {
                 </div>
 
                 {/* Column 2 (Right Stream) */}
-                <div ref={col2Ref} className="significo-about-stats__col is--col-2">
+                <div ref={col2Ref} className="crewmind-about-stats__col is--col-2">
                   
                   {/* Card 2: Stronger Team Resilience */}
-                  <div className="significo-egg-card">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card">
+                    <div className="crewmind-egg-card__content">
                       <div className="capsule-icon-circle">
                         <ShieldCheck className="capsule-icon" />
                       </div>
@@ -153,8 +153,8 @@ export default function CoreValues() {
                   </div>
 
                   {/* Card 4: Reduced Burnout Risk */}
-                  <div className="significo-egg-card">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card">
+                    <div className="crewmind-egg-card__content">
                       <div className="capsule-icon-circle">
                         <BatteryCharging className="capsule-icon" />
                       </div>

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import mainLogo from '../assets/significo/misc/main-logo.png';
-import mainLogo2x from '../assets/significo/misc/main-logo-2x.png';
+import mainLogo from '../assets/crewmind/misc/main-logo.png';
+import mainLogo2x from '../assets/crewmind/misc/main-logo-2x.png';
 
 gsap.registerPlugin(ScrollTrigger);
 

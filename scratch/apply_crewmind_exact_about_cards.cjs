@@ -34,7 +34,7 @@ export default function CoreValues() {
     });
 
     const ctx = gsap.context(() => {
-      // 1. Pinned 300vh Scroll-Driven Counter-Parallax Animation matching Significo.com/about
+      // 1. Pinned 300vh Scroll-Driven Counter-Parallax Animation matching Crewmind.com/about
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -84,26 +84,26 @@ export default function CoreValues() {
   return (
     <section 
       ref={sectionRef} 
-      className="section significo-about-stats" 
+      className="section crewmind-about-stats" 
       this-theme="white" 
       id="industry-changing"
     >
-      <div ref={stickyRef} className="significo-about-stats__sticky">
+      <div ref={stickyRef} className="crewmind-about-stats__sticky">
         <div className="container">
-          <div className="significo-about-stats__layout">
+          <div className="crewmind-about-stats__layout">
             
             {/* Left Side: Subtitle, Large Heading & Button matching Image */}
-            <div ref={leftRef} className="significo-about-stats__left">
-              <p className="significo-about-stats__subdescr">
+            <div ref={leftRef} className="crewmind-about-stats__left">
+              <p className="crewmind-about-stats__subdescr">
                 We’re here to make an impact, for health technology, for our partners, and for our team.
               </p>
               
-              <h2 className="significo-about-stats__heading">
+              <h2 className="crewmind-about-stats__heading">
                 Real Talk,<br />
                 Real Impact.
               </h2>
 
-              <div className="significo-about-stats__btn">
+              <div className="crewmind-about-stats__btn">
                 <MagneticButton buttonStyle="yellow" href="#contact">
                   Let’s Partner ↗
                 </MagneticButton>
@@ -111,54 +111,54 @@ export default function CoreValues() {
             </div>
 
             {/* Right Side: Giant Angled Stadium Egg Stream (Rotated -15deg) */}
-            <div className="significo-about-stats__right">
-              <div className="significo-about-stats__stream">
+            <div className="crewmind-about-stats__right">
+              <div className="crewmind-about-stats__stream">
                 
                 {/* Column 1 (Left Stream) */}
-                <div ref={col1Ref} className="significo-about-stats__col is--col-1">
+                <div ref={col1Ref} className="crewmind-about-stats__col is--col-1">
                   
                   {/* Card 1: 20M / Circle at Top */}
-                  <div className="significo-egg-card is--top-circle">
-                    <div className="significo-egg-card__circle">
-                      <span className="significo-egg-card__number">20M</span>
+                  <div className="crewmind-egg-card is--top-circle">
+                    <div className="crewmind-egg-card__circle">
+                      <span className="crewmind-egg-card__number">20M</span>
                     </div>
-                    <div className="significo-egg-card__text">
+                    <div className="crewmind-egg-card__text">
                       Real people — real lives — we have built products and solutions for.
                     </div>
                   </div>
 
                   {/* Card 3: 13 / Circle at Bottom */}
-                  <div className="significo-egg-card is--bottom-circle">
-                    <div className="significo-egg-card__text">
+                  <div className="crewmind-egg-card is--bottom-circle">
+                    <div className="crewmind-egg-card__text">
                       Nationalities Represented on Our Team
                     </div>
-                    <div className="significo-egg-card__circle">
-                      <span className="significo-egg-card__number">13</span>
+                    <div className="crewmind-egg-card__circle">
+                      <span className="crewmind-egg-card__number">13</span>
                     </div>
                   </div>
 
                 </div>
 
                 {/* Column 2 (Right Stream) */}
-                <div ref={col2Ref} className="significo-about-stats__col is--col-2">
+                <div ref={col2Ref} className="crewmind-about-stats__col is--col-2">
                   
                   {/* Card 2: 43% / Circle at Top */}
-                  <div className="significo-egg-card is--top-circle">
-                    <div className="significo-egg-card__circle">
-                      <span className="significo-egg-card__number">43%</span>
+                  <div className="crewmind-egg-card is--top-circle">
+                    <div className="crewmind-egg-card__circle">
+                      <span className="crewmind-egg-card__number">43%</span>
                     </div>
-                    <div className="significo-egg-card__text">
+                    <div className="crewmind-egg-card__text">
                       Of Our Experts are Women
                     </div>
                   </div>
 
                   {/* Card 4: 46 / Circle at Bottom */}
-                  <div className="significo-egg-card is--bottom-circle">
-                    <div className="significo-egg-card__text">
+                  <div className="crewmind-egg-card is--bottom-circle">
+                    <div className="crewmind-egg-card__text">
                       Papers Published.
                     </div>
-                    <div className="significo-egg-card__circle">
-                      <span className="significo-egg-card__number">46</span>
+                    <div className="crewmind-egg-card__circle">
+                      <span className="crewmind-egg-card__number">46</span>
                     </div>
                   </div>
 
@@ -176,7 +176,7 @@ export default function CoreValues() {
 `;
 
 fs.writeFileSync(coreValuesPath, coreValuesContent, 'utf8');
-console.log('CoreValues.jsx updated with exact Significo.com/about EggSlideStats structure & animations!');
+console.log('CoreValues.jsx updated with exact Crewmind.com/about EggSlideStats structure & animations!');
 
 let css = fs.readFileSync(indexCssPath, 'utf8');
 const startTag = '/* ==========================================================================\r\n   CORE VALUES / THE INDUSTRY IS CHANGING';
@@ -184,11 +184,11 @@ const startTagLF = '/* =========================================================
 const endTag = '/* ==========================================================================\r\n   WHAT MAKES US DIFFERENT (Centered Header + Alternating Perfect Circle Cards)';
 const endTagLF = '/* ==========================================================================\n   WHAT MAKES US DIFFERENT (Centered Header + Alternating Perfect Circle Cards)';
 
-const newSignificoAboutStatsCss = `/* ==========================================================================
-   SIGNIFICO ABOUT STATS / EGG SLIDE STATS (300vh Pinned Stadium Stream)
+const newCrewmindAboutStatsCss = `/* ==========================================================================
+   CREWMIND ABOUT STATS / EGG SLIDE STATS (300vh Pinned Stadium Stream)
    ========================================================================== */
 
-.significo-about-stats {
+.crewmind-about-stats {
   position: relative;
   width: 100%;
   height: 300vh;
@@ -198,7 +198,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
   box-sizing: border-box;
 }
 
-.significo-about-stats__sticky {
+.crewmind-about-stats__sticky {
   position: sticky;
   top: 0;
   height: 100vh;
@@ -208,7 +208,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
   align-items: center;
 }
 
-.significo-about-stats__layout {
+.crewmind-about-stats__layout {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -218,7 +218,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
 }
 
 /* Left Content Column matching Image */
-.significo-about-stats__left {
+.crewmind-about-stats__left {
   max-width: clamp(24rem, 32vw, 36rem);
   display: flex;
   flex-direction: column;
@@ -228,7 +228,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
   position: relative;
 }
 
-.significo-about-stats__subdescr {
+.crewmind-about-stats__subdescr {
   font-family: 'Manrope', sans-serif;
   font-size: clamp(1.05rem, 1.35vw, 1.45rem);
   font-weight: 500;
@@ -238,7 +238,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
   max-width: 32rem;
 }
 
-.significo-about-stats__heading {
+.crewmind-about-stats__heading {
   font-family: 'Manrope', sans-serif;
   font-size: clamp(3.2rem, 5.2vw, 6.2rem);
   font-weight: 600;
@@ -248,12 +248,12 @@ const newSignificoAboutStatsCss = `/* ==========================================
   text-align: left;
 }
 
-.significo-about-stats__btn {
+.crewmind-about-stats__btn {
   margin-top: clamp(0.5rem, 1.5vh, 1.5rem);
 }
 
 /* Right Stream Rotated at -15deg */
-.significo-about-stats__right {
+.crewmind-about-stats__right {
   position: absolute;
   top: 50%;
   right: calc(-8vw);
@@ -263,21 +263,21 @@ const newSignificoAboutStatsCss = `/* ==========================================
   pointer-events: all;
 }
 
-.significo-about-stats__stream {
+.crewmind-about-stats__stream {
   display: flex;
   align-items: center;
   gap: clamp(2rem, 3.5vw, 4.5rem);
 }
 
-.significo-about-stats__col {
+.crewmind-about-stats__col {
   display: flex;
   flex-direction: column;
   gap: clamp(3rem, 5.5vh, 6rem);
   will-change: transform;
 }
 
-/* Authentic Massive Significo Stadium / Egg Capsule Cards */
-.significo-egg-card {
+/* Authentic Massive Crewmind Stadium / Egg Capsule Cards */
+.crewmind-egg-card {
   width: clamp(22rem, 27vw, 33rem);
   height: clamp(45rem, 74vh, 58rem);
   border-radius: 9999px;
@@ -294,13 +294,13 @@ const newSignificoAboutStatsCss = `/* ==========================================
   flex-shrink: 0;
 }
 
-.significo-egg-card:hover {
+.crewmind-egg-card:hover {
   transform: scale(1.02);
   box-shadow: 0 35px 80px rgba(0, 0, 0, 0.1);
 }
 
 /* Giant Yellow Circular Disc matching Image */
-.significo-egg-card__circle {
+.crewmind-egg-card__circle {
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
@@ -312,7 +312,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
   box-sizing: border-box;
 }
 
-.significo-egg-card__number {
+.crewmind-egg-card__number {
   font-family: 'Manrope', sans-serif;
   font-size: clamp(5rem, 7.8vw, 9.2rem);
   font-weight: 400;
@@ -324,7 +324,7 @@ const newSignificoAboutStatsCss = `/* ==========================================
 }
 
 /* Topic / Description text inside the capsule */
-.significo-egg-card__text {
+.crewmind-egg-card__text {
   flex: 1;
   display: flex;
   align-items: center;
@@ -342,32 +342,32 @@ const newSignificoAboutStatsCss = `/* ==========================================
 }
 
 @media screen and (max-width: 991px) {
-  .significo-about-stats {
+  .crewmind-about-stats {
     height: auto;
   }
 
-  .significo-about-stats__sticky {
+  .crewmind-about-stats__sticky {
     position: static;
     height: auto;
     padding-block: 5rem;
   }
 
-  .significo-about-stats__layout {
+  .crewmind-about-stats__layout {
     flex-direction: column;
     gap: 4rem;
   }
 
-  .significo-about-stats__left {
+  .crewmind-about-stats__left {
     max-width: 100%;
     align-items: center;
     text-align: center;
   }
 
-  .significo-about-stats__heading {
+  .crewmind-about-stats__heading {
     text-align: center;
   }
 
-  .significo-about-stats__right {
+  .crewmind-about-stats__right {
     position: static;
     transform: none;
     width: 100%;
@@ -376,12 +376,12 @@ const newSignificoAboutStatsCss = `/* ==========================================
     margin-top: 2rem;
   }
 
-  .significo-about-stats__stream {
+  .crewmind-about-stats__stream {
     flex-direction: column;
     gap: 2.5rem;
   }
 
-  .significo-egg-card {
+  .crewmind-egg-card {
     width: clamp(18rem, 75vw, 24rem);
     height: clamp(36rem, 55vh, 44rem);
     transform: rotate(-10deg);
@@ -396,9 +396,9 @@ let endIdx = css.indexOf(endTag);
 if (endIdx === -1) endIdx = css.indexOf(endTagLF);
 
 if (startIdx !== -1 && endIdx !== -1) {
-  const updatedCss = css.substring(0, startIdx) + newSignificoAboutStatsCss + css.substring(endIdx);
+  const updatedCss = css.substring(0, startIdx) + newCrewmindAboutStatsCss + css.substring(endIdx);
   fs.writeFileSync(indexCssPath, updatedCss, 'utf8');
-  console.log('index.css updated with exact Significo About EggSlideStats!');
+  console.log('index.css updated with exact Crewmind About EggSlideStats!');
 } else {
   console.error('Could not find start or end tags in index.css: startIdx=' + startIdx + ', endIdx=' + endIdx);
 }

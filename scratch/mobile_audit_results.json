@@ -1,0 +1,780 @@
+{
+  "iphone14_390": {
+    "viewport": {
+      "W": 390,
+      "H": 844,
+      "docW": 390,
+      "hasDocOverflow": false
+    },
+    "overflowingCount": 85,
+    "overflowingEls": [
+      {
+        "tag": "DIV",
+        "className": "hero__rows--parent",
+        "id": "",
+        "right": 1120,
+        "excess": 730
+      },
+      {
+        "tag": "DIV",
+        "className": "hero__rows",
+        "id": "",
+        "right": 3317,
+        "excess": 2927
+      },
+      {
+        "tag": "DIV",
+        "className": "hero__row",
+        "id": "",
+        "right": 3317,
+        "excess": 2927
+      },
+      {
+        "tag": "SPAN",
+        "className": "hero__word",
+        "id": "",
+        "right": 1423,
+        "excess": 1033
+      },
+      {
+        "tag": "DIV",
+        "className": "hero__circle",
+        "id": "",
+        "right": 1613,
+        "excess": 1223
+      },
+      {
+        "tag": "IMG",
+        "className": "",
+        "id": "",
+        "right": 1602,
+        "excess": 1212
+      },
+      {
+        "tag": "SPAN",
+        "className": "hero__word",
+        "id": "",
+        "right": 2223,
+        "excess": 1833
+      },
+      {
+        "tag": "DIV",
+        "className": "hero__circle",
+        "id": "",
+        "right": 2412,
+        "excess": 2022
+      },
+      {
+        "tag": "IMG",
+        "className": "",
+        "id": "",
+        "right": 2401,
+        "excess": 2011
+      },
+      {
+        "tag": "SPAN",
+        "className": "hero__word",
+        "id": "",
+        "right": 3127,
+        "excess": 2737
+      }
+    ],
+    "header": {
+      "rect": {},
+      "logoRect": {},
+      "btnRect": {}
+    },
+    "hero": {
+      "descrFontSize": "17.16px",
+      "descrLineHeight": "28.314px",
+      "row4Display": "flex"
+    },
+    "about": {
+      "headingFontSize": "33.15px",
+      "paraFontSize": "14px",
+      "pillars": [
+        {
+          "w": 112,
+          "h": 112,
+          "aspectRatio": "1 / 1",
+          "titleFontSize": "14.04px",
+          "titleLineHeight": "16.5672px",
+          "text": "People First"
+        },
+        {
+          "w": 112,
+          "h": 112,
+          "aspectRatio": "1 / 1",
+          "titleFontSize": "14.04px",
+          "titleLineHeight": "16.5672px",
+          "text": "Care On Tour"
+        },
+        {
+          "w": 112,
+          "h": 112,
+          "aspectRatio": "1 / 1",
+          "titleFontSize": "14.04px",
+          "titleLineHeight": "16.5672px",
+          "text": "Support Early"
+        }
+      ]
+    },
+    "stats": {
+      "height": 3207,
+      "statItems": [
+        {
+          "w": 346,
+          "h": 844,
+          "numFontSize": null,
+          "labelFontSize": null,
+          "text": "THE INDUSTRY CAN’T IGNORE THIS"
+        },
+        {
+          "w": 346,
+          "h": 844,
+          "numFontSize": "85.8px",
+          "labelFontSize": "17.94px",
+          "text": "0% Music industry professionals experience depression."
+        },
+        {
+          "w": 346,
+          "h": 844,
+          "numFontSize": "85.8px",
+          "labelFontSize": "17.94px",
+          "text": "0% Report significant anxiety symptoms."
+        },
+        {
+          "w": 346,
+          "h": 844,
+          "numFontSize": "85.8px",
+          "labelFontSize": "17.94px",
+          "text": "0.0% Experienced suicidal thoughts in the last year."
+        },
+        {
+          "w": 346,
+          "h": 844,
+          "numFontSize": "85.8px",
+          "labelFontSize": "17.94px",
+          "text": "1 IN 6 Lost a colleague to suicide."
+        }
+      ]
+    },
+    "coreVal": {
+      "height": 1350,
+      "headingFontSize": "40.95px",
+      "trackDisplay": "flex",
+      "cards": [
+        {
+          "w": 203,
+          "h": 330,
+          "headingFontSize": "20.28px",
+          "descFontSize": "13.65px",
+          "title": "BETTER CREW RETENTION",
+          "desc": "Preserving experienced touring talent and reducing season-to-season turnover."
+        },
+        {
+          "w": 203,
+          "h": 330,
+          "headingFontSize": "20.28px",
+          "descFontSize": "13.65px",
+          "title": "STRONGER TEAM RESILIENCE",
+          "desc": "Empowering touring crews to navigate high-pressure live environments together."
+        },
+        {
+          "w": 203,
+          "h": 330,
+          "headingFontSize": "20.28px",
+          "descFontSize": "13.65px",
+          "title": "OPERATIONAL STABILITY",
+          "desc": "Minimising show-critical disruptions through proactive backstage care."
+        },
+        {
+          "w": 203,
+          "h": 330,
+          "headingFontSize": "20.28px",
+          "descFontSize": "13.65px",
+          "title": "REDUCED BURNOUT RISK",
+          "desc": "Identifying exhaustion early to sustain long-term stamina and performance."
+        }
+      ]
+    },
+    "services": {
+      "titleFontSize": "40.95px",
+      "cards": [
+        {
+          "w": 362,
+          "h": 128,
+          "titleFontSize": "18.72px",
+          "descFontSize": "14.82px",
+          "title": "EMBEDDED TOUR SUPPORT"
+        },
+        {
+          "w": 355,
+          "h": 126,
+          "titleFontSize": "18.72px",
+          "descFontSize": "14.82px",
+          "title": "ON-SITE EVENT SUPPORT"
+        },
+        {
+          "w": 355,
+          "h": 126,
+          "titleFontSize": "18.72px",
+          "descFontSize": "14.82px",
+          "title": "CONFIDENTIAL 1:1 SUPPORT"
+        },
+        {
+          "w": 355,
+          "h": 126,
+          "titleFontSize": "18.72px",
+          "descFontSize": "14.82px",
+          "title": "VIRTUAL SUPPORT ACCESS"
+        },
+        {
+          "w": 355,
+          "h": 126,
+          "titleFontSize": "18.72px",
+          "descFontSize": "14.82px",
+          "title": "LEADERSHIP CONSULTATION"
+        }
+      ]
+    },
+    "mgmt": {
+      "titleFontSize": "38.22px",
+      "gridColumns": "repeat(2, 1fr)",
+      "cards": [
+        {
+          "w": 355,
+          "h": 81,
+          "titleFontSize": "17.16px",
+          "title": "Improved Crew Retention."
+        },
+        {
+          "w": 355,
+          "h": 81,
+          "titleFontSize": "17.16px",
+          "title": "Better Communication."
+        },
+        {
+          "w": 355,
+          "h": 81,
+          "titleFontSize": "17.16px",
+          "title": "More Resilient Teams."
+        },
+        {
+          "w": 355,
+          "h": 81,
+          "titleFontSize": "17.16px",
+          "title": "Reduced Operational Disruption."
+        },
+        {
+          "w": 355,
+          "h": 81,
+          "titleFontSize": "17.16px",
+          "title": "Stronger Artist Wellbeing."
+        },
+        {
+          "w": 355,
+          "h": 106,
+          "titleFontSize": "17.16px",
+          "title": "Healthier Production Environments."
+        }
+      ]
+    },
+    "diff": {
+      "headingFontSize": "33.15px",
+      "gridColumns": "repeat(2, 1fr)",
+      "cards": [
+        {
+          "w": 234,
+          "h": 234,
+          "titleFontSize": "15.6px",
+          "title": "Present During Tours & Productions"
+        },
+        {
+          "w": 234,
+          "h": 234,
+          "titleFontSize": "15.6px",
+          "title": "Available In High-Pressure Moments"
+        },
+        {
+          "w": 234,
+          "h": 234,
+          "titleFontSize": "15.6px",
+          "title": "Embedded Within Team Environment"
+        },
+        {
+          "w": 234,
+          "h": 234,
+          "titleFontSize": "15.6px",
+          "title": "Focused On Prevention First"
+        }
+      ]
+    },
+    "cta": {
+      "headingFontSize": "40.95px",
+      "scrollBadgeSize": {
+        "w": 56,
+        "h": 56
+      },
+      "btnSize": {
+        "w": 172,
+        "h": 42
+      }
+    },
+    "footer": {
+      "formInputs": [
+        {
+          "name": "firstName",
+          "w": 355,
+          "h": 44,
+          "fontSize": "15px",
+          "padding": "7.79981px 10.3997px"
+        },
+        {
+          "name": "secondName",
+          "w": 355,
+          "h": 44,
+          "fontSize": "15px",
+          "padding": "7.79981px 10.3997px"
+        },
+        {
+          "name": "email",
+          "w": 355,
+          "h": 44,
+          "fontSize": "15px",
+          "padding": "7.79981px 10.3997px"
+        },
+        {
+          "name": "phone",
+          "w": 355,
+          "h": 44,
+          "fontSize": "15px",
+          "padding": "7.79981px 10.3997px"
+        },
+        {
+          "name": "message",
+          "w": 355,
+          "h": 105,
+          "fontSize": "15px",
+          "padding": "7.79981px 10.3997px"
+        }
+      ],
+      "submitBtnSize": {
+        "w": 99,
+        "h": 40
+      },
+      "backToTopSize": {
+        "w": 38,
+        "h": 38
+      },
+      "wordmarkSize": {
+        "w": 343,
+        "h": 29
+      },
+      "legalLinks": [
+        {
+          "text": "Privacy Policy",
+          "w": 76,
+          "h": 17
+        },
+        {
+          "text": "Terms of Use",
+          "w": 73,
+          "h": 17
+        }
+      ]
+    },
+    "scrollArrow": {
+      "rect": {}
+    }
+  },
+  "iphoneX_375": {
+    "viewport": {
+      "W": 375,
+      "H": 812,
+      "docW": 375,
+      "hasDocOverflow": false
+    },
+    "overflowingCount": 85,
+    "overflowingEls": [
+      {
+        "tag": "DIV",
+        "className": "hero__rows--parent",
+        "id": "",
+        "right": 1076,
+        "excess": 701
+      },
+      {
+        "tag": "DIV",
+        "className": "hero__rows",
+        "id": "",
+        "right": 3200,
+        "excess": 2825
+      },
+      {
+        "tag": "DIV",
+        "className": "hero__row",
+        "id": "",
+        "right": 3200,
+        "excess": 2825
+      },
+      {
+        "tag": "SPAN",
+        "className": "hero__word",
+        "id": "",
+        "right": 1368,
+        "excess": 993
+      },
+      {
+        "tag": "DIV",
+        "className": "hero__circle",
+        "id": "",
+        "right": 1553,
+        "excess": 1178
+      },
+      {
+        "tag": "IMG",
+        "className": "",
+        "id": "",
+        "right": 1543,
+        "excess": 1168
+      },
+      {
+        "tag": "SPAN",
+        "className": "hero__word",
+        "id": "",
+        "right": 2141,
+        "excess": 1766
+      },
+      {
+        "tag": "DIV",
+        "className": "hero__circle",
+        "id": "",
+        "right": 2326,
+        "excess": 1951
+      },
+      {
+        "tag": "IMG",
+        "className": "",
+        "id": "",
+        "right": 2316,
+        "excess": 1941
+      },
+      {
+        "tag": "SPAN",
+        "className": "hero__word",
+        "id": "",
+        "right": 3016,
+        "excess": 2641
+      }
+    ],
+    "header": {
+      "rect": {},
+      "logoRect": {},
+      "btnRect": {}
+    },
+    "hero": {
+      "descrFontSize": "16.5px",
+      "descrLineHeight": "27.225px",
+      "row4Display": "flex"
+    },
+    "about": {
+      "headingFontSize": "32px",
+      "paraFontSize": "14px",
+      "pillars": [
+        {
+          "w": 108,
+          "h": 108,
+          "aspectRatio": "1 / 1",
+          "titleFontSize": "13.5px",
+          "titleLineHeight": "15.93px",
+          "text": "People First"
+        },
+        {
+          "w": 108,
+          "h": 108,
+          "aspectRatio": "1 / 1",
+          "titleFontSize": "13.5px",
+          "titleLineHeight": "15.93px",
+          "text": "Care On Tour"
+        },
+        {
+          "w": 108,
+          "h": 108,
+          "aspectRatio": "1 / 1",
+          "titleFontSize": "13.5px",
+          "titleLineHeight": "15.93px",
+          "text": "Support Early"
+        }
+      ]
+    },
+    "stats": {
+      "height": 3086,
+      "statItems": [
+        {
+          "w": 331,
+          "h": 812,
+          "numFontSize": null,
+          "labelFontSize": null,
+          "text": "THE INDUSTRY CAN’T IGNORE THIS"
+        },
+        {
+          "w": 331,
+          "h": 812,
+          "numFontSize": "82.5px",
+          "labelFontSize": "17.25px",
+          "text": "0% Music industry professionals experience depression."
+        },
+        {
+          "w": 331,
+          "h": 812,
+          "numFontSize": "82.5px",
+          "labelFontSize": "17.25px",
+          "text": "0% Report significant anxiety symptoms."
+        },
+        {
+          "w": 331,
+          "h": 812,
+          "numFontSize": "82.5px",
+          "labelFontSize": "17.25px",
+          "text": "0.0% Experienced suicidal thoughts in the last year."
+        },
+        {
+          "w": 331,
+          "h": 812,
+          "numFontSize": "82.5px",
+          "labelFontSize": "17.25px",
+          "text": "1 IN 6 Lost a colleague to suicide."
+        }
+      ]
+    },
+    "coreVal": {
+      "height": 1299,
+      "headingFontSize": "40px",
+      "trackDisplay": "flex",
+      "cards": [
+        {
+          "w": 195,
+          "h": 325,
+          "headingFontSize": "19.5px",
+          "descFontSize": "13.125px",
+          "title": "BETTER CREW RETENTION",
+          "desc": "Preserving experienced touring talent and reducing season-to-season turnover."
+        },
+        {
+          "w": 195,
+          "h": 325,
+          "headingFontSize": "19.5px",
+          "descFontSize": "13.125px",
+          "title": "STRONGER TEAM RESILIENCE",
+          "desc": "Empowering touring crews to navigate high-pressure live environments together."
+        },
+        {
+          "w": 195,
+          "h": 325,
+          "headingFontSize": "19.5px",
+          "descFontSize": "13.125px",
+          "title": "OPERATIONAL STABILITY",
+          "desc": "Minimising show-critical disruptions through proactive backstage care."
+        },
+        {
+          "w": 195,
+          "h": 325,
+          "headingFontSize": "19.5px",
+          "descFontSize": "13.125px",
+          "title": "REDUCED BURNOUT RISK",
+          "desc": "Identifying exhaustion early to sustain long-term stamina and performance."
+        }
+      ]
+    },
+    "services": {
+      "titleFontSize": "40px",
+      "cards": [
+        {
+          "w": 348,
+          "h": 125,
+          "titleFontSize": "18px",
+          "descFontSize": "14.25px",
+          "title": "EMBEDDED TOUR SUPPORT"
+        },
+        {
+          "w": 341,
+          "h": 123,
+          "titleFontSize": "18px",
+          "descFontSize": "14.25px",
+          "title": "ON-SITE EVENT SUPPORT"
+        },
+        {
+          "w": 341,
+          "h": 123,
+          "titleFontSize": "18px",
+          "descFontSize": "14.25px",
+          "title": "CONFIDENTIAL 1:1 SUPPORT"
+        },
+        {
+          "w": 341,
+          "h": 123,
+          "titleFontSize": "18px",
+          "descFontSize": "14.25px",
+          "title": "VIRTUAL SUPPORT ACCESS"
+        },
+        {
+          "w": 341,
+          "h": 123,
+          "titleFontSize": "18px",
+          "descFontSize": "14.25px",
+          "title": "LEADERSHIP CONSULTATION"
+        }
+      ]
+    },
+    "mgmt": {
+      "titleFontSize": "38px",
+      "gridColumns": "repeat(2, 1fr)",
+      "cards": [
+        {
+          "w": 341,
+          "h": 78,
+          "titleFontSize": "16.5px",
+          "title": "Improved Crew Retention."
+        },
+        {
+          "w": 341,
+          "h": 78,
+          "titleFontSize": "16.5px",
+          "title": "Better Communication."
+        },
+        {
+          "w": 341,
+          "h": 78,
+          "titleFontSize": "16.5px",
+          "title": "More Resilient Teams."
+        },
+        {
+          "w": 341,
+          "h": 78,
+          "titleFontSize": "16.5px",
+          "title": "Reduced Operational Disruption."
+        },
+        {
+          "w": 341,
+          "h": 78,
+          "titleFontSize": "16.5px",
+          "title": "Stronger Artist Wellbeing."
+        },
+        {
+          "w": 341,
+          "h": 102,
+          "titleFontSize": "16.5px",
+          "title": "Healthier Production Environments."
+        }
+      ]
+    },
+    "diff": {
+      "headingFontSize": "32px",
+      "gridColumns": "repeat(2, 1fr)",
+      "cards": [
+        {
+          "w": 225,
+          "h": 225,
+          "titleFontSize": "15px",
+          "title": "Present During Tours & Productions"
+        },
+        {
+          "w": 225,
+          "h": 225,
+          "titleFontSize": "15px",
+          "title": "Available In High-Pressure Moments"
+        },
+        {
+          "w": 225,
+          "h": 225,
+          "titleFontSize": "15px",
+          "title": "Embedded Within Team Environment"
+        },
+        {
+          "w": 225,
+          "h": 225,
+          "titleFontSize": "15px",
+          "title": "Focused On Prevention First"
+        }
+      ]
+    },
+    "cta": {
+      "headingFontSize": "40px",
+      "scrollBadgeSize": {
+        "w": 54,
+        "h": 54
+      },
+      "btnSize": {
+        "w": 172,
+        "h": 42
+      }
+    },
+    "footer": {
+      "formInputs": [
+        {
+          "name": "firstName",
+          "w": 341,
+          "h": 44,
+          "fontSize": "15px",
+          "padding": "7.49981px 9.99975px"
+        },
+        {
+          "name": "secondName",
+          "w": 341,
+          "h": 44,
+          "fontSize": "15px",
+          "padding": "7.49981px 9.99975px"
+        },
+        {
+          "name": "email",
+          "w": 341,
+          "h": 44,
+          "fontSize": "15px",
+          "padding": "7.49981px 9.99975px"
+        },
+        {
+          "name": "phone",
+          "w": 341,
+          "h": 44,
+          "fontSize": "15px",
+          "padding": "7.49981px 9.99975px"
+        },
+        {
+          "name": "message",
+          "w": 341,
+          "h": 105,
+          "fontSize": "15px",
+          "padding": "7.49981px 9.99975px"
+        }
+      ],
+      "submitBtnSize": {
+        "w": 97,
+        "h": 40
+      },
+      "backToTopSize": {
+        "w": 38,
+        "h": 38
+      },
+      "wordmarkSize": {
+        "w": 330,
+        "h": 28
+      },
+      "legalLinks": [
+        {
+          "text": "Privacy Policy",
+          "w": 76,
+          "h": 17
+        },
+        {
+          "text": "Terms of Use",
+          "w": 73,
+          "h": 17
+        }
+      ]
+    },
+    "scrollArrow": {
+      "rect": {}
+    }
+  }
+}

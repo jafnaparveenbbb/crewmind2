@@ -2,11 +2,11 @@ const fs = require('fs');
 
 let css = fs.readFileSync('src/index.css', 'utf8');
 
-// Replace the significo-egg-card section in index.css
+// Replace the crewmind-egg-card section in index.css
 const eggCardRegex = /\/\* Stadium Egg Capsule Cards[\s\S]*?(\.capsule-topic-heading\s*\{[\s\S]*?\})/;
 
 const updatedEggStyles = `/* Stadium Egg Capsule Cards - HEX: #00063D border, White inside, #00063D text & icons */
-.significo-egg-card {
+.crewmind-egg-card {
   width: clamp(19rem, 23vw, 28rem);
   height: clamp(36rem, 60vh, 46rem);
   border-radius: 9999px;
@@ -24,14 +24,14 @@ const updatedEggStyles = `/* Stadium Egg Capsule Cards - HEX: #00063D border, Wh
   flex-shrink: 0;
 }
 
-.significo-egg-card:hover {
+.crewmind-egg-card:hover {
   transform: scale(1.03);
   box-shadow: 0 30px 70px rgba(0, 6, 61, 0.16);
   border-color: #00063D;
 }
 
 /* Capsule Card Content: Centered Layout with Icon Circle Above Topic Heading */
-.significo-egg-card__content {
+.crewmind-egg-card__content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,7 +57,7 @@ const updatedEggStyles = `/* Stadium Egg Capsule Cards - HEX: #00063D border, Wh
   flex-shrink: 0;
 }
 
-.significo-egg-card:hover .capsule-icon-circle {
+.crewmind-egg-card:hover .capsule-icon-circle {
   transform: translateY(-4px) scale(1.08);
   background-color: rgba(0, 6, 61, 0.08);
   box-shadow: 0 8px 24px rgba(0, 6, 61, 0.12);
@@ -87,7 +87,7 @@ if (eggCardRegex.test(css)) {
   css = css.replace(eggCardRegex, updatedEggStyles);
 } else {
   // append or replace based on comment
-  const startIdx = css.indexOf('.significo-egg-card');
+  const startIdx = css.indexOf('.crewmind-egg-card');
   const endIdx = css.indexOf('@media screen and (max-width: 991px)');
   if (startIdx !== -1 && endIdx !== -1) {
     css = css.substring(0, startIdx) + updatedEggStyles + '\n\n' + css.substring(endIdx);

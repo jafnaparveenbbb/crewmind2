@@ -152,16 +152,16 @@ export default function CoreValues() {
   return (
     <section
       ref={sectionRef}
-      className="section significo-about-stats"
+      className="section crewmind-about-stats"
       this-theme="white"
       id="industry-changing"
     >
-      <div ref={stickyRef} className="significo-about-stats__sticky">
+      <div ref={stickyRef} className="crewmind-about-stats__sticky">
         <div className="container">
-          <div className="significo-about-stats__layout">
+          <div className="crewmind-about-stats__layout">
 
             {/* Left Side: Tag, Heading & Paragraph */}
-            <div ref={leftRef} className="significo-about-stats__left">
+            <div ref={leftRef} className="crewmind-about-stats__left">
               <div className="core-values__tag">
                 <span className="core-values__dot"></span>
                 <span className="f-14 is--btn caps">A CULTURE SHIFT</span>
@@ -177,23 +177,23 @@ export default function CoreValues() {
             </div>
 
             {/* Right Side: Stadium Stream */}
-            <div className="significo-about-stats__right">
+            <div className="crewmind-about-stats__right">
               {/* Desktop Columns Stream (>= 768px) */}
-              <div ref={streamRef} className="significo-about-stats__stream significo-desktop-stream">
+              <div ref={streamRef} className="crewmind-about-stats__stream crewmind-desktop-stream">
 
                 {/* Column 1 (Left Stream) */}
-                <div ref={col1Ref} className="significo-about-stats__col is--col-1">
+                <div ref={col1Ref} className="crewmind-about-stats__col is--col-1">
                   {/* Card 1: Better Crew Retention */}
-                  <div className="significo-egg-card is--card-1">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card is--card-1">
+                    <div className="crewmind-egg-card__content">
                       <h3 className="capsule-topic-heading">{coreCards[0].title}</h3>
                       <p className="capsule-topic-desc">{coreCards[0].desc}</p>
                     </div>
                   </div>
 
                   {/* Card 3: Operational Stability */}
-                  <div className="significo-egg-card is--card-3">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card is--card-3">
+                    <div className="crewmind-egg-card__content">
                       <h3 className="capsule-topic-heading">{coreCards[2].title}</h3>
                       <p className="capsule-topic-desc">{coreCards[2].desc}</p>
                     </div>
@@ -201,18 +201,18 @@ export default function CoreValues() {
                 </div>
 
                 {/* Column 2 (Right Stream) */}
-                <div ref={col2Ref} className="significo-about-stats__col is--col-2">
+                <div ref={col2Ref} className="crewmind-about-stats__col is--col-2">
                   {/* Card 2: Stronger Team Resilience */}
-                  <div className="significo-egg-card is--card-2">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card is--card-2">
+                    <div className="crewmind-egg-card__content">
                       <h3 className="capsule-topic-heading">{coreCards[1].title}</h3>
                       <p className="capsule-topic-desc">{coreCards[1].desc}</p>
                     </div>
                   </div>
 
                   {/* Card 4: Reduced Burnout Risk */}
-                  <div className="significo-egg-card is--card-4">
-                    <div className="significo-egg-card__content">
+                  <div className="crewmind-egg-card is--card-4">
+                    <div className="crewmind-egg-card__content">
                       <h3 className="capsule-topic-heading">{coreCards[3].title}</h3>
                       <p className="capsule-topic-desc">{coreCards[3].desc}</p>
                     </div>
@@ -222,10 +222,10 @@ export default function CoreValues() {
               </div>
 
               {/* Mobile Stream (Single flat horizontal track matching HorizontalStats) */}
-              <div ref={mobileTrackRef} className="significo-about-stats__mobile-track">
+              <div ref={mobileTrackRef} className="crewmind-about-stats__mobile-track">
                 {coreCards.map((card, idx) => (
-                  <div key={idx} className={`significo-egg-card ${card.cardClass}`}>
-                    <div className="significo-egg-card__content">
+                  <div key={idx} className={`crewmind-egg-card ${card.cardClass}`}>
+                    <div className="crewmind-egg-card__content">
                       <h3 className="capsule-topic-heading">{card.title}</h3>
                       <p className="capsule-topic-desc">{card.desc}</p>
                     </div>

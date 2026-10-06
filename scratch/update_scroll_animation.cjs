@@ -28,7 +28,7 @@ export default function CoreValues() {
     const col2 = col2Ref.current;
     if (!section || !leftCol || !col1 || !col2) return;
 
-    // Theme trigger for white (matching Significo /about aesthetic)
+    // Theme trigger for white (matching Crewmind /about aesthetic)
     const stTheme = ScrollTrigger.create({
       trigger: section,
       start: "top 60%",
@@ -53,7 +53,7 @@ export default function CoreValues() {
       });
 
       // Capsule cards initial reveal
-      const capsules = section.querySelectorAll('.significo-capsule');
+      const capsules = section.querySelectorAll('.crewmind-capsule');
       gsap.from(capsules, {
         opacity: 0,
         y: 80,
@@ -197,22 +197,22 @@ export default function CoreValues() {
             </div>
           </div>
 
-          {/* Right Column: 2 Parallax Columns of Significo Tilted Stadium Capsules */}
+          {/* Right Column: 2 Parallax Columns of Crewmind Tilted Stadium Capsules */}
           <div className="core-values__right">
-            <div className="significo-capsules-stream">
+            <div className="crewmind-capsules-stream">
               
               {/* Column 1 (Glides Up on scroll) */}
-              <div ref={col1Ref} className="significo-capsules-col is--col-1">
+              <div ref={col1Ref} className="crewmind-capsules-col is--col-1">
                 {/* Card 01 */}
                 <div 
                   ref={card1Ref}
-                  className="significo-capsule is--circle-top is--float-1"
+                  className="crewmind-capsule is--circle-top is--float-1"
                 >
-                  <div className="significo-capsule__small-circle">
-                    <span className="significo-capsule__num">01</span>
+                  <div className="crewmind-capsule__small-circle">
+                    <span className="crewmind-capsule__num">01</span>
                   </div>
-                  <div className="significo-capsule__topic-box">
-                    <h3 className="significo-capsule__topic">
+                  <div className="crewmind-capsule__topic-box">
+                    <h3 className="crewmind-capsule__topic">
                       BETTER CREW<br />RETENTION
                     </h3>
                   </div>
@@ -221,31 +221,31 @@ export default function CoreValues() {
                 {/* Card 03 */}
                 <div 
                   ref={card3Ref}
-                  className="significo-capsule is--circle-bottom is--float-3"
+                  className="crewmind-capsule is--circle-bottom is--float-3"
                 >
-                  <div className="significo-capsule__topic-box">
-                    <h3 className="significo-capsule__topic">
+                  <div className="crewmind-capsule__topic-box">
+                    <h3 className="crewmind-capsule__topic">
                       IMPROVED OPERATIONAL<br />STABILITY
                     </h3>
                   </div>
-                  <div className="significo-capsule__small-circle">
-                    <span className="significo-capsule__num">03</span>
+                  <div className="crewmind-capsule__small-circle">
+                    <span className="crewmind-capsule__num">03</span>
                   </div>
                 </div>
               </div>
 
               {/* Column 2 (Glides Down on scroll) */}
-              <div ref={col2Ref} className="significo-capsules-col is--col-2">
+              <div ref={col2Ref} className="crewmind-capsules-col is--col-2">
                 {/* Card 02 */}
                 <div 
                   ref={card2Ref}
-                  className="significo-capsule is--circle-top is--float-2"
+                  className="crewmind-capsule is--circle-top is--float-2"
                 >
-                  <div className="significo-capsule__small-circle">
-                    <span className="significo-capsule__num">02</span>
+                  <div className="crewmind-capsule__small-circle">
+                    <span className="crewmind-capsule__num">02</span>
                   </div>
-                  <div className="significo-capsule__topic-box">
-                    <h3 className="significo-capsule__topic">
+                  <div className="crewmind-capsule__topic-box">
+                    <h3 className="crewmind-capsule__topic">
                       STRONGER TEAM<br />RESILIENCE
                     </h3>
                   </div>
@@ -254,15 +254,15 @@ export default function CoreValues() {
                 {/* Card 04 */}
                 <div 
                   ref={card4Ref}
-                  className="significo-capsule is--circle-bottom is--float-4"
+                  className="crewmind-capsule is--circle-bottom is--float-4"
                 >
-                  <div className="significo-capsule__topic-box">
-                    <h3 className="significo-capsule__topic">
+                  <div className="crewmind-capsule__topic-box">
+                    <h3 className="crewmind-capsule__topic">
                       REDUCED BURNOUT<br />RISK
                     </h3>
                   </div>
-                  <div className="significo-capsule__small-circle">
-                    <span className="significo-capsule__num">04</span>
+                  <div className="crewmind-capsule__small-circle">
+                    <span className="crewmind-capsule__num">04</span>
                   </div>
                 </div>
               </div>
@@ -288,7 +288,7 @@ const endTag = '/* =============================================================
 const endTagLF = '/* ==========================================================================\n   WHAT MAKES US DIFFERENT (Centered Header + Alternating Perfect Circle Cards)';
 
 const newCoreValuesCss = `/* ==========================================================================
-   CORE VALUES / THE INDUSTRY IS CHANGING (Significo Stadium Capsule Stream)
+   CORE VALUES / THE INDUSTRY IS CHANGING (Crewmind Stadium Capsule Stream)
    ========================================================================== */
 
 .core-values-section {
@@ -381,7 +381,7 @@ const newCoreValuesCss = `/* ===================================================
 }
 
 /* 2-Column Parallax Stadium Capsules Stream */
-.significo-capsules-stream {
+.crewmind-capsules-stream {
   display: flex;
   align-items: flex-start;
   gap: clamp(1.5rem, 3vw, 3.5rem);
@@ -390,7 +390,7 @@ const newCoreValuesCss = `/* ===================================================
   position: relative;
 }
 
-.significo-capsules-col {
+.crewmind-capsules-col {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -398,12 +398,12 @@ const newCoreValuesCss = `/* ===================================================
   will-change: transform;
 }
 
-.significo-capsules-col.is--col-2 {
+.crewmind-capsules-col.is--col-2 {
   margin-top: clamp(3.5rem, 7vh, 7.5rem);
 }
 
 /* Authentic Oval Stadium / Pill Capsule Structure */
-.significo-capsule {
+.crewmind-capsule {
   width: 100%;
   max-width: clamp(15rem, 18.5vw, 21.5rem);
   height: clamp(25rem, 33vh, 32rem);
@@ -445,29 +445,29 @@ const newCoreValuesCss = `/* ===================================================
   50% { transform: translateY(-6px); }
 }
 
-.significo-capsule.is--float-1 {
+.crewmind-capsule.is--float-1 {
   animation: ambientFloat1 4.5s ease-in-out infinite;
 }
 
-.significo-capsule.is--float-2 {
+.crewmind-capsule.is--float-2 {
   animation: ambientFloat2 5.2s ease-in-out infinite -1.5s;
 }
 
-.significo-capsule.is--float-3 {
+.crewmind-capsule.is--float-3 {
   animation: ambientFloat3 4.8s ease-in-out infinite -3s;
 }
 
-.significo-capsule.is--float-4 {
+.crewmind-capsule.is--float-4 {
   animation: ambientFloat4 5.6s ease-in-out infinite -0.8s;
 }
 
-.significo-capsule:hover {
+.crewmind-capsule:hover {
   transform: scale(1.03);
   box-shadow: 0 30px 65px rgba(0, 0, 0, 0.14);
 }
 
 /* Compact Number Circle Disc */
-.significo-capsule__small-circle {
+.crewmind-capsule__small-circle {
   width: clamp(3.2rem, 4vw, 4.4rem);
   height: clamp(3.2rem, 4vw, 4.4rem);
   border-radius: 50%;
@@ -480,7 +480,7 @@ const newCoreValuesCss = `/* ===================================================
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
 }
 
-.significo-capsule__num {
+.crewmind-capsule__num {
   font-family: 'Staatliches', sans-serif;
   font-size: clamp(1.4rem, 1.8vw, 2.2rem);
   font-weight: 400;
@@ -492,7 +492,7 @@ const newCoreValuesCss = `/* ===================================================
 }
 
 /* Big Impact Topic Name */
-.significo-capsule__topic-box {
+.crewmind-capsule__topic-box {
   flex: 1;
   display: flex;
   align-items: center;
@@ -503,7 +503,7 @@ const newCoreValuesCss = `/* ===================================================
   box-sizing: border-box;
 }
 
-.significo-capsule__topic {
+.crewmind-capsule__topic {
   font-family: 'Staatliches', sans-serif;
   font-size: clamp(1.75rem, 2.5vw, 3rem);
   font-weight: 400;
@@ -544,14 +544,14 @@ const newCoreValuesCss = `/* ===================================================
     justify-content: center;
   }
 
-  .significo-capsules-stream {
+  .crewmind-capsules-stream {
     max-width: 32rem;
     gap: 1.8rem;
   }
 }
 
 @media screen and (max-width: 580px) {
-  .significo-capsules-stream {
+  .crewmind-capsules-stream {
     flex-direction: column;
     align-items: center;
     max-width: 18rem;
@@ -559,11 +559,11 @@ const newCoreValuesCss = `/* ===================================================
     gap: 2.5rem;
   }
 
-  .significo-capsules-col.is--col-2 {
+  .crewmind-capsules-col.is--col-2 {
     margin-top: 0;
   }
 
-  .significo-capsule {
+  .crewmind-capsule {
     height: 24rem;
   }
 }
