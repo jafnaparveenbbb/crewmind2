@@ -29,51 +29,84 @@ export default function HorizontalStats() {
         onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
 
-      // Horizontal scrub calculation
-      const getScrollWidth = () => {
-        return -(list.scrollWidth - window.innerWidth);
-      };
+      const mm = gsap.matchMedia();
 
-      const horizTween = gsap.to(list, {
-        x: getScrollWidth,
-        ease: "none",
-        force3D: true
-      });
+      // DESKTOP & TABLET (>= 768px): Original horizontal pinned scrub experience
+      mm.add("(min-width: 768px)", () => {
+        const getScrollWidth = () => {
+          return -(list.scrollWidth - window.innerWidth);
+        };
 
-      ScrollTrigger.create({
-        trigger: container,
-        start: "top top",
-        end: "bottom bottom",
-        animation: horizTween,
-        scrub: 0.8,
-        invalidateOnRefresh: true
-      });
-
-      // Counter animations triggered on horizontal container animation
-      const animateCounter = (ref, targetVal, isDecimal, suffix) => {
-        if (!ref.current) return;
-        const obj = { val: 0 };
-        gsap.to(obj, {
-          val: targetVal,
-          duration: 1.4,
-          ease: "power2.out",
-          onUpdate: () => {
-            if (!ref.current) return;
-            const display = isDecimal ? obj.val.toFixed(1) : Math.round(obj.val);
-            ref.current.innerText = `${display}${suffix}`;
-          },
-          scrollTrigger: {
-            trigger: ref.current,
-            containerAnimation: horizTween,
-            start: "left 75%",
-            toggleActions: "play none none none"
-          }
+        const horizTween = gsap.to(list, {
+          x: getScrollWidth,
+          ease: "none",
+          force3D: true
         });
-      };
 
-      animateCounter(num1Ref, 63, false, "%");
-      animateCounter(num2Ref, 66, false, "%");
-      animateCounter(num3Ref, 11.4, true, "%");
+        ScrollTrigger.create({
+          trigger: container,
+          start: "top top",
+          end: "bottom bottom",
+          animation: horizTween,
+          scrub: 0.8,
+          invalidateOnRefresh: true
+        });
+
+        // Counter animations triggered on horizontal container animation
+        const animateCounter = (ref, targetVal, isDecimal, suffix) => {
+          if (!ref.current) return;
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: targetVal,
+            duration: 1.4,
+            ease: "power2.out",
+            onUpdate: () => {
+              if (!ref.current) return;
+              const display = isDecimal ? obj.val.toFixed(1) : Math.round(obj.val);
+              ref.current.innerText = `${display}${suffix}`;
+            },
+            scrollTrigger: {
+              trigger: ref.current,
+              containerAnimation: horizTween,
+              start: "left 75%",
+              toggleActions: "play none none none"
+            }
+          });
+        };
+
+        animateCounter(num1Ref, 63, false, "%");
+        animateCounter(num2Ref, 66, false, "%");
+        animateCounter(num3Ref, 11.4, true, "%");
+      });
+
+      // MOBILE (< 768px): Clean vertical stack with individual scroll-triggered counters
+      mm.add("(max-width: 767px)", () => {
+        gsap.set(list, { clearProps: "all" });
+
+        const animateCounterMobile = (ref, targetVal, isDecimal, suffix) => {
+          if (!ref.current) return;
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: targetVal,
+            duration: 1.3,
+            ease: "power2.out",
+            onUpdate: () => {
+              if (!ref.current) return;
+              const display = isDecimal ? obj.val.toFixed(1) : Math.round(obj.val);
+              ref.current.innerText = `${display}${suffix}`;
+            },
+            scrollTrigger: {
+              trigger: ref.current,
+              start: "top 88%",
+              toggleActions: "play none none none"
+            }
+          });
+        };
+
+        animateCounterMobile(num1Ref, 63, false, "%");
+        animateCounterMobile(num2Ref, 66, false, "%");
+        animateCounterMobile(num3Ref, 11.4, true, "%");
+      });
 
     }, container);
 
