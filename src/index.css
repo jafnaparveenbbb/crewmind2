@@ -3285,8 +3285,8 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Tablet & Mobile Layout (<= 991px): No sticky pinning, natural flow */
-@media screen and (max-width: 991px) {
+/* Tablet Layout (768px - 991px): 2x2 grid, natural flow */
+@media screen and (min-width: 768px) and (max-width: 991px) {
   .ovals-diff-section {
     height: auto !important;
     min-height: auto !important;
@@ -3338,30 +3338,38 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Mobile Layout (< 768px): 4 Circles moving horizontally */
-/* Mobile Layout (< 768px): Natural flow content layout with responsive touch carousel */
+/* Mobile Layout (< 768px): Pinned section with horizontal circle animation */
 @media screen and (max-width: 767px) {
   .ovals-diff-section {
+    position: relative !important;
+    width: 100% !important;
     height: auto !important;
     min-height: auto !important;
-    position: relative !important;
-    padding-top: clamp(48px, 6.5vh, 64px) !important;
-    padding-bottom: clamp(48px, 6.5vh, 64px) !important;
-    padding-block: clamp(48px, 6.5vh, 64px) !important;
+    padding: 0 !important;
     margin: 0 !important;
+    background-color: #FFFFFF !important;
     overflow: visible !important;
   }
 
+  .ovals-diff-section > .pin-spacer {
+    background-color: #FFFFFF !important;
+  }
+
   .ovals-diff__sticky {
-    position: relative !important;
-    top: auto !important;
-    height: auto !important;
-    width: 100% !important;
-    overflow: visible !important;
-    display: block !important;
-    padding-block: 0 !important;
-    background-color: var(--white) !important;
-    box-sizing: border-box !important;
+    position: relative;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #FFFFFF !important;
+    box-sizing: border-box;
+    padding: 0;
   }
 
   .ovals-diff-section .container {
@@ -3375,9 +3383,9 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   .ovals-diff__layout {
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     align-items: flex-start !important;
-    gap: 0 !important;
+    gap: clamp(16px, 2.5vh, 26px) !important;
     height: auto !important;
     width: 100% !important;
     padding: 0 !important;
@@ -3393,7 +3401,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     width: 100% !important;
     max-width: 100% !important;
     padding-inline: var(--page-padding-x, 20px) !important;
-    margin-bottom: clamp(24px, 3.5vh, 32px) !important;
+    margin-bottom: 0 !important;
     box-sizing: border-box !important;
     flex-shrink: 0 !important;
   }
@@ -3401,17 +3409,17 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   .ovals-diff__tag {
     font-size: 11px !important;
     letter-spacing: 0.04em !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
     display: inline-flex !important;
     align-items: center !important;
   }
 
   .ovals-diff__heading {
-    font-size: clamp(32px, 8.5vw, 42px) !important;
+    font-size: clamp(30px, 8vw, 40px) !important;
     line-height: 1.02 !important;
     letter-spacing: 0.01em !important;
     font-weight: 400 !important;
-    margin: 0 0 14px 0 !important;
+    margin: 0 0 12px 0 !important;
     text-wrap: balance !important;
   }
 
@@ -3421,7 +3429,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     letter-spacing: -0.01em !important;
     font-weight: 500 !important;
     max-width: 340px !important;
-    margin: 0 0 18px 0 !important;
+    margin: 0 0 16px 0 !important;
   }
 
   .ovals-diff__btn-wrap {
@@ -3429,17 +3437,15 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     margin-bottom: 0 !important;
   }
 
-  /* 4 Proportional Circles Track — Smooth Mobile Touch Carousel (Zero Clipping) */
+  /* 4 Proportional Circles Track — Horizontal Movement Driven by Vertical Scroll */
   .diff-principles-grid {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
-    gap: 14px !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    gap: clamp(14px, 3.5vw, 18px) !important;
+    overflow: visible !important;
+    width: max-content !important;
+    max-width: none !important;
     padding-left: var(--page-padding-x, 20px) !important;
     padding-right: var(--page-padding-x, 20px) !important;
     align-items: center !important;
@@ -3449,6 +3455,8 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     flex-shrink: 0 !important;
     box-sizing: border-box !important;
     scrollbar-width: none !important;
+    touch-action: pan-y !important;
+    will-change: transform;
   }
 
   .diff-principles-grid::-webkit-scrollbar {
@@ -3456,13 +3464,12 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 
   .diff-principle-card {
-    flex: 0 0 clamp(180px, 60vw, 240px) !important;
-    width: clamp(180px, 60vw, 240px) !important;
+    flex: 0 0 clamp(180px, 58vw, 240px) !important;
+    width: clamp(180px, 58vw, 240px) !important;
     max-width: 240px !important;
     min-width: 170px !important;
-    height: clamp(180px, 60vw, 240px) !important;
+    height: clamp(180px, 58vw, 240px) !important;
     aspect-ratio: 1 / 1 !important;
-    scroll-snap-align: start !important;
     border-radius: 50% !important;
     border: 1.5px solid var(--navy) !important;
     background-color: #FFFFFF !important;
@@ -3476,6 +3483,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     align-items: center !important;
     justify-content: center !important;
     transform: none !important;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
 
   .diff-principle-card.active {

@@ -4,6 +4,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticButton from '../components/MagneticButton';
 
 gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+  window.ScrollTrigger = ScrollTrigger;
+  window.gsap = gsap;
+}
 
 const DIFFERENCE_POINTS = [
   {
@@ -26,15 +30,17 @@ const DIFFERENCE_POINTS = [
 
 export default function WhatMakesUsDifferent() {
   const sectionRef = useRef(null);
+  const stickyRef = useRef(null);
   const leftRef = useRef(null);
   const gridRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const section = sectionRef.current;
+    const sticky = stickyRef.current;
     const left = leftRef.current;
     const grid = gridRef.current;
-    if (!section || !left || !grid) return;
+    if (!section || !left || !grid || !sticky) return;
 
     const ctx = gsap.context(() => {
       // 1. Theme trigger: Keep theme white
@@ -131,9 +137,50 @@ export default function WhatMakesUsDifferent() {
         });
       });
 
-      // Mobile (< 768px): Native responsive horizontal carousel without height/pinning traps
+      // Mobile (< 768px): Pinned section with horizontal circle animation driven by vertical scroll
       mm.add("(max-width: 767px)", () => {
-        gsap.set(grid, { clearProps: "all", x: 0 });
+        const getTravelDistance = () => {
+          return Math.max(0, grid.scrollWidth - window.innerWidth);
+        };
+
+        const horizTween = gsap.to(grid, {
+          x: () => -getTravelDistance(),
+          ease: "none",
+          force3D: true
+        });
+
+        const st = ScrollTrigger.create({
+          id: "diff-mobile-pin",
+          trigger: section,
+          pin: sticky,
+          start: "top top",
+          end: () => `+=${Math.max(window.innerHeight * 1.5, getTravelDistance() * 1.6)}`,
+          scrub: 0.8,
+          animation: horizTween,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const p = self.progress;
+            let idx = 0;
+            if (p >= 0.75) {
+              idx = 3;
+            } else if (p >= 0.50) {
+              idx = 2;
+            } else if (p >= 0.25) {
+              idx = 1;
+            } else {
+              idx = 0;
+            }
+            setActiveIndex((prev) => (prev !== idx ? idx : prev));
+          },
+          onLeaveBack: () => setActiveIndex(0),
+          onLeave: () => setActiveIndex(3)
+        });
+
+        return () => {
+          if (st) st.kill();
+          if (horizTween) horizTween.kill();
+          gsap.set(grid, { clearProps: "transform" });
+        };
       });
 
     }, section);
@@ -150,7 +197,7 @@ export default function WhatMakesUsDifferent() {
       this-theme="white"
       id="what-makes-us-different"
     >
-      <div className="ovals-diff__sticky">
+      <div ref={stickyRef} className="ovals-diff__sticky">
         <div className="container">
           <div className="ovals-diff__layout">
 
