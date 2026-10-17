@@ -15,23 +15,23 @@ export default function CoreValues() {
 
   const coreCards = [
     {
-      title: <>Better Crew<br />Retention</>,
-      desc: "Preserving experienced touring talent and reducing season-to-season turnover.",
+      title: "DEMANDING SCHEDULES",
+      desc: "Late finishes and changing call times leave limited space for rest and regular appointments.",
       cardClass: "is--card-1"
     },
     {
-      title: <>Stronger Team<br />Resilience</>,
-      desc: "Empowering touring crews to navigate high-pressure live environments together.",
+      title: "LIFE ON THE ROAD",
+      desc: "Frequent travel separates crews from familiar routines, relationships and everyday sources of support.",
       cardClass: "is--card-2"
     },
     {
-      title: <>Operational<br />Stability</>,
-      desc: "Minimising show-critical disruptions through proactive backstage care.",
+      title: "PRESSURE TO KEEP GOING",
+      desc: "Show-critical responsibilities can make people hesitate to raise concerns or ask for help.",
       cardClass: "is--card-3"
     },
     {
-      title: <>Reduced Burnout<br />Risk</>,
-      desc: "Identifying exhaustion early to sustain long-term stamina and performance.",
+      title: "GAPS BETWEEN PROJECTS",
+      desc: "Teams disperse after each production, making consistent access to support harder to maintain.",
       cardClass: "is--card-4"
     }
   ];
@@ -164,7 +164,7 @@ export default function CoreValues() {
             <div ref={leftRef} className="crewmind-about-stats__left">
               <div className="core-values__tag">
                 <span className="core-values__dot"></span>
-                <span className="f-14 is--btn caps">A CULTURE SHIFT</span>
+                <span className="f-14 is--btn caps">A Culture Shift</span>
               </div>
 
               <h2 className="core-values__heading">
@@ -172,7 +172,7 @@ export default function CoreValues() {
               </h2>
 
               <p className="core-values__subparagraph">
-                Live productions are moving away from the culture of unaddressed strain. Prioritising backstage psychological care creates healthier touring environments where both people and productions thrive long-term.
+                Long hours, frequent travel and project-based work can make psychological support difficult to access. Addressing these working realities means considering how people find help, both during a production and between engagements.
               </p>
             </div>
 

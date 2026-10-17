@@ -17,12 +17,19 @@ export default function CustomCursor() {
       yTo(e.clientY);
     };
 
-    const onMouseEnterInteractive = () => {
+    const onMouseEnterInteractive = (e) => {
       cursor.classList.add('hovering');
+      try {
+        const target = e.currentTarget;
+        const btnStyle = target.getAttribute && target.getAttribute('button-style');
+        if (btnStyle === 'black' || target.classList.contains('is--dark')) {
+          cursor.classList.add('hovering-dark');
+        }
+      } catch (err) {}
     };
 
     const onMouseLeaveInteractive = () => {
-      cursor.classList.remove('hovering');
+      cursor.classList.remove('hovering', 'hovering-dark');
     };
 
     window.addEventListener('mousemove', onMouseMove, { passive: true });

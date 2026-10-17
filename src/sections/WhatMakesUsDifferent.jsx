@@ -8,19 +8,19 @@ gsap.registerPlugin(ScrollTrigger);
 const DIFFERENCE_POINTS = [
   {
     id: 1,
-    title: "Present During Tours & Productions"
+    title: "Within Your Working Environment"
   },
   {
     id: 2,
-    title: "Available In High-Pressure Moments"
+    title: "Around Production Demands"
   },
   {
     id: 3,
-    title: "Embedded Within Team Environment"
+    title: "Space For Private Conversations"
   },
   {
     id: 4,
-    title: "Focused On Prevention First"
+    title: "Early Support, Before Concerns Escalate"
   }
 ];
 
@@ -162,16 +162,16 @@ export default function WhatMakesUsDifferent() {
               </div>
 
               <h2 className="ovals-diff__heading">
-                WE WORK BEFORE<br />SOMEONE ASKS FOR HELP.
+                SUPPORT THAT FITS<br />THE WAY YOU WORK.
               </h2>
 
               <p className="ovals-diff__subpara">
-                We operate proactively within live entertainment environments to protect crew wellbeing, reduce burnout, and keep productions thriving.
+                Support needs to fit around rehearsals, travel and show days. We bring care closer to the team, creating opportunities to talk before concerns become harder to manage.
               </p>
 
               <div className="ovals-diff__btn-wrap">
                 <MagneticButton buttonStyle="black" href="#contact">
-                  LET'S PARTNER
+                  LET’S TALK
                 </MagneticButton>
               </div>
             </div>

@@ -4615,18 +4615,46 @@ footer,
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: var(--navy);
-  mix-blend-mode: difference;
+  background-color: #FFFFFF;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  box-sizing: border-box;
 }
 
 .custom-cursor.hovering {
   width: 60px;
   height: 60px;
-  background-color: var(--white);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid #FFFFFF;
+}
+
+/* Light theme adaptations: Dark cursor on white/light sections */
+body[theme="white"] .custom-cursor,
+body[theme="clear"] .custom-cursor,
+body[theme="light-blue"] .custom-cursor,
+body[theme="light-purple"] .custom-cursor,
+body[theme="salmon"] .custom-cursor,
+body[theme="tan"] .custom-cursor,
+body[theme="alt-light"] .custom-cursor {
+  background-color: #00063D;
+}
+
+body[theme="white"] .custom-cursor.hovering,
+body[theme="clear"] .custom-cursor.hovering,
+body[theme="light-blue"] .custom-cursor.hovering,
+body[theme="light-purple"] .custom-cursor.hovering,
+body[theme="salmon"] .custom-cursor.hovering,
+body[theme="tan"] .custom-cursor.hovering,
+body[theme="alt-light"] .custom-cursor.hovering {
+  background-color: rgba(0, 6, 61, 0.15);
+  border: 2px solid #00063D;
+}
+
+.custom-cursor.hovering-dark {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border: 2px solid #FFFFFF !important;
 }
 
 @media (hover: none), (pointer: coarse), (max-width: 991px) {

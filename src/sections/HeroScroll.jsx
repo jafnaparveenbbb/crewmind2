@@ -236,6 +236,10 @@ export default function HeroScroll({ isLoaded = true }) {
 
   const circles = ASSETS.hero.circles;
 
+  const handleImageError = (e) => {
+    e.currentTarget.style.visibility = 'hidden';
+  };
+
   return (
     <section ref={containerRef} className="home-sticky">
       {/* Pinned Sticky Frame (Always in viewport 100vw x 100vh during scroll) */}
@@ -270,27 +274,27 @@ export default function HeroScroll({ isLoaded = true }) {
             <div ref={row1Ref} className="hero__row">
               <span className="hero__word">tour managers</span>
               <div className="hero__circle">
-                <img src={circles[0]?.img} alt="Tour Managers" loading="eager" />
+                <img src={circles[0]?.img} alt="Tour Managers" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">artists</span>
               <div className="hero__circle">
-                <img src={circles[1]?.img} alt="Artists" loading="eager" />
+                <img src={circles[1]?.img} alt="Artists" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">production teams</span>
               <div className="hero__circle">
-                <img src={circles[2]?.img} alt="Production Teams" loading="eager" />
+                <img src={circles[2]?.img} alt="Production Teams" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">technical crews</span>
               <div className="hero__circle">
-                <img src={circles[3]?.img} alt="Technical Crews" loading="eager" />
+                <img src={circles[3]?.img} alt="Technical Crews" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">festivals</span>
               <div className="hero__circle">
-                <img src={circles[4]?.img} alt="Festivals" loading="eager" />
+                <img src={circles[4]?.img} alt="Festivals" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">live events</span>
               <div className="hero__circle">
-                <img src={circles[5]?.img} alt="Live Events" loading="eager" />
+                <img src={circles[5]?.img} alt="Live Events" loading="eager" onError={handleImageError} />
               </div>
             </div>
 
@@ -298,26 +302,26 @@ export default function HeroScroll({ isLoaded = true }) {
             <div ref={row2Ref} className="hero__row">
               <span className="hero__word">live events</span>
               <div className="hero__circle">
-                <img src={circles[11]?.img} alt="Live Events" loading="eager" />
+                <img src={circles[11]?.img} alt="Live Events" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">artists</span>
               <div className="hero__circle">
-                <img src={circles[6]?.img} alt="Artists" loading="eager" />
+                <img src={circles[6]?.img} alt="Artists" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">production teams</span>
 
               {/* TARGET CENTER CIRCLE (Exact concentric match for contracting video) */}
               <div ref={centerCircleRef} className="hero__circle hero__circle--target">
-                <img src={circles[8]?.img} alt="Central Circle Target" loading="eager" />
+                <img src={circles[8]?.img} alt="Central Circle Target" loading="eager" onError={handleImageError} />
               </div>
 
               <span className="hero__word">technical crews</span>
               <div className="hero__circle">
-                <img src={circles[9]?.img} alt="Technical Crews" loading="eager" />
+                <img src={circles[9]?.img} alt="Technical Crews" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">festivals</span>
               <div className="hero__circle">
-                <img src={circles[10]?.img} alt="Festivals" loading="eager" />
+                <img src={circles[10]?.img} alt="Festivals" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">tour managers</span>
             </div>
@@ -326,27 +330,27 @@ export default function HeroScroll({ isLoaded = true }) {
             <div ref={row3Ref} className="hero__row">
               <span className="hero__word">festivals</span>
               <div className="hero__circle">
-                <img src={circles[12]?.img} alt="Festivals" loading="eager" />
+                <img src={circles[12]?.img} alt="Festivals" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">live events</span>
               <div className="hero__circle">
-                <img src={circles[13]?.img} alt="Live Events" loading="eager" />
+                <img src={circles[13]?.img} alt="Live Events" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">artists</span>
               <div className="hero__circle">
-                <img src={circles[14]?.img} alt="Artists" loading="eager" />
+                <img src={circles[14]?.img} alt="Artists" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">tour managers</span>
               <div className="hero__circle">
-                <img src={circles[15]?.img} alt="Tour Managers" loading="eager" />
+                <img src={circles[15]?.img} alt="Tour Managers" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">production teams</span>
               <div className="hero__circle">
-                <img src={circles[16]?.img} alt="Production Teams" loading="eager" />
+                <img src={circles[16]?.img} alt="Production Teams" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">technical crews</span>
               <div className="hero__circle">
-                <img src={circles[17]?.img} alt="Technical Crews" loading="eager" />
+                <img src={circles[17]?.img} alt="Technical Crews" loading="eager" onError={handleImageError} />
               </div>
             </div>
 
@@ -354,27 +358,27 @@ export default function HeroScroll({ isLoaded = true }) {
             <div ref={row4Ref} className="hero__row hero__row--mobile-only">
               <span className="hero__word">tour managers</span>
               <div className="hero__circle">
-                <img src={circles[18]?.img} alt="Tour Managers" loading="eager" />
+                <img src={circles[18]?.img} alt="Tour Managers" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">artists</span>
               <div className="hero__circle">
-                <img src={circles[19]?.img} alt="Artists" loading="eager" />
+                <img src={circles[19]?.img} alt="Artists" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">live events</span>
               <div className="hero__circle">
-                <img src={circles[20]?.img} alt="Live Events" loading="eager" />
+                <img src={circles[20]?.img} alt="Live Events" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">technical crews</span>
               <div className="hero__circle">
-                <img src={circles[21]?.img} alt="Technical Crews" loading="eager" />
+                <img src={circles[21]?.img} alt="Technical Crews" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">production teams</span>
               <div className="hero__circle">
-                <img src={circles[22]?.img} alt="Production Teams" loading="eager" />
+                <img src={circles[22]?.img} alt="Production Teams" loading="eager" onError={handleImageError} />
               </div>
               <span className="hero__word">festivals</span>
               <div className="hero__circle">
-                <img src={circles[23]?.img} alt="Festivals" loading="eager" />
+                <img src={circles[23]?.img} alt="Festivals" loading="eager" onError={handleImageError} />
               </div>
             </div>
 

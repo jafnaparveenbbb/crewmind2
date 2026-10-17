@@ -7,27 +7,27 @@ gsap.registerPlugin(ScrollTrigger);
 const MGMT_TOPICS = [
   {
     id: 1,
-    title: "Improved Crew Retention."
+    title: "Specialist Psychological Support."
   },
   {
     id: 2,
-    title: "Better Communication."
+    title: "Guidance For Team Leaders."
   },
   {
     id: 3,
-    title: "More Resilient Teams."
+    title: "Understanding Of Backstage Work."
   },
   {
     id: 4,
-    title: "Reduced Operational Disruption."
+    title: "Support Across Production Settings."
   },
   {
     id: 5,
-    title: "Stronger Artist Wellbeing."
+    title: "Private Space For Crew Concerns."
   },
   {
     id: 6,
-    title: "Healthier Production Environments."
+    title: "Access Between Productions."
   }
 ];
 
