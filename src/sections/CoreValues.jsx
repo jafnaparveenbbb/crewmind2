@@ -100,46 +100,64 @@ export default function CoreValues() {
         }
       });
 
-      // MOBILE (< 768px): Horizontal Moving Track matching HorizontalStats
+      // MOBILE (< 768px): Pinned section with horizontal cards track driven by vertical scroll
       mm.add("(max-width: 767px)", () => {
         const mobileTrack = mobileTrackRef.current;
-        if (!mobileTrack) return;
+        const sticky = stickyRef.current;
+        if (!mobileTrack || !sticky) return;
 
         gsap.set(mobileTrack, { clearProps: "all", x: 0 });
 
-        const getScrollWidth = () => {
-          return -(mobileTrack.scrollWidth - window.innerWidth + 40);
+        const getTravelDistance = () => {
+          return Math.max(0, mobileTrack.scrollWidth - window.innerWidth + 40);
         };
 
         const horizTween = gsap.to(mobileTrack, {
-          x: getScrollWidth,
+          x: () => -getTravelDistance(),
           ease: "none",
           force3D: true
         });
 
-        ScrollTrigger.create({
+        const st = ScrollTrigger.create({
+          id: "core-values-mobile-pin",
           trigger: section,
+          pin: sticky,
           start: "top top",
-          end: "bottom bottom",
-          animation: horizTween,
+          end: () => `+=${Math.max(window.innerHeight * 1.5, getTravelDistance() * 1.6)}`,
           scrub: 0.5,
+          animation: horizTween,
           invalidateOnRefresh: true
         });
 
+        let headingTween = null;
         if (leftRef.current) {
-          gsap.from(leftRef.current.children, {
-            opacity: 0,
-            y: 20,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 85%",
-              toggleActions: "play none none reverse"
+          headingTween = gsap.fromTo(
+            leftRef.current.children,
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.65,
+              stagger: 0.08,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: section,
+                start: "top 85%",
+                toggleActions: "play none none none"
+              }
             }
-          });
+          );
         }
+
+        return () => {
+          if (st) st.kill();
+          if (horizTween) horizTween.kill();
+          if (headingTween) headingTween.kill();
+          gsap.set(mobileTrack, { clearProps: "transform" });
+          if (leftRef.current) {
+            gsap.set(leftRef.current.children, { clearProps: "opacity,transform" });
+          }
+        };
       });
 
     }, section);

@@ -57,44 +57,44 @@ export default function WhatMakesUsDifferent() {
       const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) return;
 
-      // 3. Subtle one-shot entrance reveal on scroll into view
-      const masterTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top 75%",
-          toggleActions: "play none none reverse"
-        }
-      });
-
-      // Left narrative entrance
-      masterTl.fromTo(
-        left.children,
-        { opacity: 0, y: 26 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.65,
-          stagger: 0.08,
-          ease: "power2.out"
-        }
-      );
-
-      // Bubbles grid entrance
-      masterTl.fromTo(
-        grid,
-        { opacity: 0, y: 28 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.65,
-          ease: "power2.out",
-          clearProps: "transform,opacity"
-        },
-        "-=0.3"
-      );
-
-      // 4. Responsive ScrollTrigger using GSAP matchMedia
+      // 3. Responsive ScrollTrigger using GSAP matchMedia
       const mm = gsap.matchMedia();
+
+      // Desktop & Tablet (>= 768px): Narrative entrance & grid reveal
+      mm.add("(min-width: 768px)", () => {
+        const masterTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top 75%",
+            toggleActions: "play none none none"
+          }
+        });
+
+        masterTl.fromTo(
+          left.children,
+          { opacity: 0, y: 26 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            stagger: 0.08,
+            ease: "power2.out"
+          }
+        );
+
+        masterTl.fromTo(
+          grid,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            ease: "power2.out",
+            clearProps: "transform,opacity"
+          },
+          "-=0.3"
+        );
+      });
 
       // Desktop pinning & scroll-controlled sequential progression (min-width: 992px)
       mm.add("(min-width: 992px)", () => {
@@ -139,33 +139,51 @@ export default function WhatMakesUsDifferent() {
 
       // Mobile (< 768px): Pinned section with horizontal circle animation driven by vertical scroll
       mm.add("(max-width: 767px)", () => {
+        // Guarantee immediate, robust visibility on mobile
+        gsap.set([left, grid], { opacity: 1, visibility: "visible" });
+        gsap.set(left.children, { opacity: 1, y: 0, visibility: "visible" });
+
         const getTravelDistance = () => {
-          return Math.max(0, grid.scrollWidth - window.innerWidth);
+          const cardCount = grid.children.length;
+          if (cardCount > 0) {
+            const lastCard = grid.children[cardCount - 1];
+            const totalRightEdge = lastCard.offsetLeft + lastCard.offsetWidth + 28;
+            return Math.max(0, totalRightEdge - window.innerWidth);
+          }
+          return Math.max(0, grid.scrollWidth - window.innerWidth + 28);
         };
 
-        const horizTween = gsap.to(grid, {
+        const tl = gsap.timeline({
+          defaults: { ease: "none" }
+        });
+
+        // Step 1: Smooth horizontal translation revealing circle 1 -> 2 -> 3 -> 4
+        tl.to(grid, {
           x: () => -getTravelDistance(),
-          ease: "none",
+          duration: 1.0,
           force3D: true
         });
+
+        // Step 2: Resting hold beat so Circle 4 is fully viewed and appreciated before unpinning
+        tl.to({}, { duration: 0.25 });
 
         const st = ScrollTrigger.create({
           id: "diff-mobile-pin",
           trigger: section,
           pin: sticky,
           start: "top top",
-          end: () => `+=${Math.max(window.innerHeight * 1.5, getTravelDistance() * 1.6)}`,
-          scrub: 0.8,
-          animation: horizTween,
+          end: () => `+=${Math.round(getTravelDistance() * 1.6)}`,
+          scrub: 0.4,
+          animation: tl,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const p = self.progress;
             let idx = 0;
-            if (p >= 0.75) {
+            if (p >= 0.70) {
               idx = 3;
-            } else if (p >= 0.50) {
+            } else if (p >= 0.45) {
               idx = 2;
-            } else if (p >= 0.25) {
+            } else if (p >= 0.20) {
               idx = 1;
             } else {
               idx = 0;
@@ -178,7 +196,7 @@ export default function WhatMakesUsDifferent() {
 
         return () => {
           if (st) st.kill();
-          if (horizTween) horizTween.kill();
+          if (tl) tl.kill();
           gsap.set(grid, { clearProps: "transform" });
         };
       });
