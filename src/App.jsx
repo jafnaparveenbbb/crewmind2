@@ -19,10 +19,19 @@ import Footer from './sections/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Configure ScrollTrigger for mobile resize stability:
+// - ignoreMobileResize: true ignores vertical viewport fluctuations (< 25%) caused by mobile browser address bars collapsing/expanding on scroll.
+// - autoRefreshEvents ensures necessary recalculations continue to occur on initial load, DOMContentLoaded, visibility change, and genuine window resizes.
+ScrollTrigger.config({
+  ignoreMobileResize: true,
+  autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load,resize'
+});
+
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [arrowVisible, setArrowVisible] = useState(true);
   const lenisRef = useRef(null);
+  const loaderRefreshTimerRef = useRef(null);
 
   useEffect(() => {
     // 1. Force manual scroll restoration to 0
@@ -48,9 +57,12 @@ export default function App() {
 
     // Connect Lenis to GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => {
+
+    // Named ticker callback so it can be strictly registered and removed without leaking in React Strict Mode
+    const updateLenis = (time) => {
       lenis.raf(time * 1000);
-    });
+    };
+    gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
     // Track scroll position for header state & scroll arrow visibility
@@ -73,9 +85,37 @@ export default function App() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
+    // Handle orientation changes gracefully with a debounced recalculation
+    let orientationTimer = null;
+    const handleOrientationChange = () => {
+      clearTimeout(orientationTimer);
+      orientationTimer = setTimeout(() => {
+        if (lenisRef.current) {
+          lenisRef.current.resize();
+        }
+        ScrollTrigger.refresh();
+      }, 200);
+    };
+
+    window.addEventListener('orientationchange', handleOrientationChange, { passive: true });
+
     return () => {
+      clearTimeout(orientationTimer);
+      window.removeEventListener('orientationchange', handleOrientationChange);
       window.removeEventListener('scroll', handleScroll);
+
+      // Clean up Lenis scroll listener
+      lenis.off('scroll', ScrollTrigger.update);
+
+      // Remove the exact ticker callback before destroying Lenis to prevent stale rAF loops
+      gsap.ticker.remove(updateLenis);
+
       lenis.destroy();
+      lenisRef.current = null;
+      if (window.__lenis === lenis) {
+        delete window.__lenis;
+      }
+
       ScrollTrigger.getAll().forEach(t => t.kill());
       if ('scrollRestoration' in window.history) {
         window.history.scrollRestoration = 'auto';
@@ -91,10 +131,17 @@ export default function App() {
       lenisRef.current.resize();
     }
     // Refresh ScrollTrigger cleanly once layout and loader are settled
-    setTimeout(() => {
+    clearTimeout(loaderRefreshTimerRef.current);
+    loaderRefreshTimerRef.current = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 150);
   };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(loaderRefreshTimerRef.current);
+    };
+  }, []);
 
   const handleScrollArrowClick = () => {
     const footer = document.getElementById('footer') || document.querySelector('footer');
