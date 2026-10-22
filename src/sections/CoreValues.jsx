@@ -109,7 +109,7 @@ export default function CoreValues() {
         gsap.set(mobileTrack, { clearProps: "all", x: 0 });
 
         const getTravelDistance = () => {
-          return Math.max(0, mobileTrack.scrollWidth - window.innerWidth + 40);
+          return Math.max(0, mobileTrack.scrollWidth - window.innerWidth + 32);
         };
 
         const horizTween = gsap.to(mobileTrack, {
@@ -123,8 +123,8 @@ export default function CoreValues() {
           trigger: section,
           pin: sticky,
           start: "top top",
-          end: () => `+=${Math.max(window.innerHeight * 1.5, getTravelDistance() * 1.6)}`,
-          scrub: 0.5,
+          end: () => `+=${Math.round(getTravelDistance() * 1.25)}`,
+          scrub: 0.4,
           animation: horizTween,
           invalidateOnRefresh: true
         });

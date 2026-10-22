@@ -8,6 +8,7 @@ import CustomCursor from './components/CustomCursor';
 import ScrollArrow from './components/ScrollArrow';
 
 import HeroScroll from './sections/HeroScroll';
+import HeroScrollMobile from './sections/HeroScrollMobile';
 import AboutSection from './sections/AboutSection';
 import IconCards from './sections/IconCards';
 import HorizontalStats from './sections/HorizontalStats';
@@ -30,8 +31,33 @@ ScrollTrigger.config({
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [arrowVisible, setArrowVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth <= 767;
+    }
+    return false;
+  });
   const lenisRef = useRef(null);
   const loaderRefreshTimerRef = useRef(null);
+
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 767px)');
+    const handleMediaChange = (e) => {
+      setIsMobile(e.matches);
+    };
+    if (mql.addEventListener) {
+      mql.addEventListener('change', handleMediaChange);
+    } else {
+      mql.addListener(handleMediaChange);
+    }
+    return () => {
+      if (mql.removeEventListener) {
+        mql.removeEventListener('change', handleMediaChange);
+      } else {
+        mql.removeListener(handleMediaChange);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // 1. Force manual scroll restoration to 0
@@ -166,7 +192,11 @@ export default function App() {
       {/* Main Page Content */}
       <main className="main">
         {/* 1. Hero Experience (Theme: Navy #00063D) */}
-        <HeroScroll isLoaded={!loading} />
+        {isMobile ? (
+          <HeroScrollMobile isLoaded={!loading} />
+        ) : (
+          <HeroScroll isLoaded={!loading} />
+        )}
 
         {/* 2. About / Meet Crewmind (Theme: White #FFFFFF) */}
         <AboutSection />

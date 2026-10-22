@@ -172,7 +172,7 @@ export default function WhatMakesUsDifferent() {
           trigger: section,
           pin: sticky,
           start: "top top",
-          end: () => `+=${Math.round(getTravelDistance() * 1.6)}`,
+          end: () => `+=${Math.round(getTravelDistance() * 1.25)}`,
           scrub: 0.4,
           animation: tl,
           invalidateOnRefresh: true,

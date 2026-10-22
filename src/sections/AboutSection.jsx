@@ -152,19 +152,19 @@ export default function AboutSection() {
       // MOBILE (< 768px): No text animation scrub; all text & elements 100% visible immediately
       mm.add("(max-width: 767px)", () => {
         if (labelRef.current) {
-          gsap.set(labelRef.current, { opacity: 1, y: 0, clearProps: "all" });
+          gsap.set(labelRef.current, { opacity: 1, y: 0, clearProps: "transform" });
         }
         const headingLines = [headingLine1Ref.current, headingLine2Ref.current].filter(Boolean);
         if (headingLines.length > 0) {
-          gsap.set(headingLines, { yPercent: 0, opacity: 1, clearProps: "all" });
+          gsap.set(headingLines, { yPercent: 0, opacity: 1, clearProps: "transform" });
         }
         if (wordsWrapRef.current) {
           const words = wordsWrapRef.current.querySelectorAll('.about__word');
-          gsap.set(words, { opacity: 1, y: 0, clearProps: "all" });
+          gsap.set(words, { opacity: 1, y: 0, clearProps: "transform" });
         }
         const bubbleItems = section.querySelectorAll('.about-pillar-item');
         if (bubbleItems.length > 0) {
-          gsap.set(bubbleItems, { opacity: 1, y: 0, clearProps: "all" });
+          gsap.set(bubbleItems, { opacity: 1, y: 0, clearProps: "transform" });
         }
       });
 

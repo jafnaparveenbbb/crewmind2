@@ -88,16 +88,20 @@ export default function HorizontalStats() {
           const obj = { val: 0 };
           gsap.to(obj, {
             val: targetVal,
-            duration: 1.3,
+            duration: 1.2,
             ease: "power2.out",
             onUpdate: () => {
               if (!ref.current) return;
               const display = isDecimal ? obj.val.toFixed(1) : Math.round(obj.val);
               ref.current.innerText = `${display}${suffix}`;
             },
+            onComplete: () => {
+              if (!ref.current) return;
+              ref.current.innerText = `${targetVal}${suffix}`;
+            },
             scrollTrigger: {
               trigger: ref.current,
-              start: "top 88%",
+              start: "top 90%",
               toggleActions: "play none none none"
             }
           });

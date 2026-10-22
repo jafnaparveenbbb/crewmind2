@@ -2,7 +2,7 @@
 
 // Videos & Placeholders
 import heroVideo from '../assets/crewmind/videos/herovideo.mp4';
-import heroVideoMob from '../assets/crewmind/videos/herovideo.mp4';
+import heroVideoMob from '../assets/crewmind/videos/hero-video-mob-concert.mp4';
 import heroPlaceholderPc from '../assets/crewmind/hero/hero-placeholder-pc.png';
 import heroPlaceholderMob from '../assets/crewmind/hero/hero-placeholder-mob.jpeg';
 
