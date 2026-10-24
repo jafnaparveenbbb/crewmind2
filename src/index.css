@@ -3889,7 +3889,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.28em;
   white-space: nowrap;
 }
 
@@ -3929,9 +3928,9 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 /* Individual card slot positioned in the overlapping stack */
 .mgmt-card-slot {
   position: absolute;
-  --stack-step: clamp(165px, 12.8vw, 195px);
-  --card-w: clamp(230px, 16.5vw, 260px);
-  --card-h: clamp(340px, 40vh, 390px);
+  --stack-step: clamp(175px, 14.2vw, 204px);
+  --card-w: clamp(245px, 18.8vw, 276px);
+  --card-h: clamp(390px, 47vh, 440px);
   --total-w: calc(5 * var(--stack-step) + var(--card-w));
   left: calc(50% - (var(--total-w) / 2) + var(--card-idx) * var(--stack-step));
   top: calc(50% - (var(--card-h) / 2));
@@ -3942,20 +3941,21 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   cursor: pointer;
 }
 
-/* Physical white card with depth & shadow */
+/* Physical white card with depth & shadow — plain white, no borders or dots */
 .mgmt-card {
   width: 100%;
   height: 100%;
   background: #FFFFFF !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
-  border-radius: 22px;
-  padding: clamp(1.4rem, 2vh, 1.8rem) clamp(1.1rem, 1.4vw, 1.5rem);
-  box-shadow: -8px 16px 36px -4px rgba(0, 4, 35, 0.32), 0 3px 10px rgba(0, 4, 35, 0.12) !important;
+  border: none !important;
+  border-radius: 24px;
+  padding: clamp(2rem, 3vh, 2.6rem) clamp(1.2rem, 1.5vw, 1.8rem);
+  box-shadow: -8px 16px 36px -4px rgba(0, 4, 35, 0.35), 0 4px 12px rgba(0, 4, 35, 0.12) !important;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.32s ease, border-color 0.32s ease;
+  justify-content: center;
+  align-items: flex-start;
+  transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.32s ease;
   user-select: none;
 }
 
@@ -3966,73 +3966,31 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 
 .mgmt-card-slot:hover .mgmt-card {
   transform: translateY(-22px) scale(1.04);
-  box-shadow: 0 24px 50px -4px rgba(0, 4, 35, 0.45), 0 0 0 1.5px rgba(255, 255, 255, 0.5) !important;
-  border-color: rgba(0, 6, 61, 0.22) !important;
-}
-
-.mgmt-card__inner {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.mgmt-card__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid rgba(0, 6, 61, 0.08);
-}
-
-.mgmt-card__num {
-  font-family: 'Manrope', 'Inter', sans-serif !important;
-  font-size: clamp(1.4rem, 1.8vw, 1.9rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: #00063D !important;
-  opacity: 0.85;
-}
-
-.mgmt-card__orb {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background-color: #00063D !important;
-  box-shadow: 0 0 6px rgba(0, 6, 61, 0.35) !important;
-  flex-shrink: 0;
-}
-
-.mgmt-card__body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex: 1;
-  padding: 1.2rem 0;
+  box-shadow: 0 24px 50px -4px rgba(0, 4, 35, 0.45), 0 4px 16px rgba(0, 4, 35, 0.18) !important;
 }
 
 .mgmt-card__title {
-  font-family: 'Manrope', sans-serif !important;
-  font-size: clamp(1.15rem, 1.3vw, 1.4rem);
+  font-family: 'Manrope', 'Inter', sans-serif !important;
+  font-size: clamp(1.15rem, 1.35vw, 1.42rem);
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.28;
   letter-spacing: -0.015em;
   text-align: left;
   margin: 0;
   color: #00063D !important;
   text-transform: none;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
   user-select: none;
 }
 
-/* Ensure text on cards 0-4 comfortably wraps within the exposed portion */
-@media screen and (min-width: 992px) {
-  .mgmt-card-slot:not(:last-child) .mgmt-card__title {
-    max-width: 152px;
-    word-wrap: break-word;
-  }
+.mgmt-card__line {
+  display: block;
+  white-space: nowrap;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
 }
 
 @media screen and (max-height: 750px) and (min-width: 992px) {
@@ -4126,24 +4084,25 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 12px !important;
+    gap: 0 !important;
     width: 100% !important;
-    max-width: 480px !important;
+    max-width: 360px !important;
     height: auto !important;
     margin: 0 auto !important;
-    padding: 0 !important;
+    padding: 8px 0 24px !important;
   }
 
   .mgmt-card-slot {
     position: relative !important;
     left: auto !important;
     top: auto !important;
-    transform: none !important;
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: 340px !important;
     height: auto !important;
-    margin-top: 0 !important;
-    opacity: 1 !important;
+    margin-top: -26px !important;
+    transform-origin: center center !important;
+    cursor: pointer;
+    will-change: transform, opacity;
   }
 
   .mgmt-card-slot:first-child {
@@ -4153,63 +4112,52 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   .mgmt-card {
     width: 100% !important;
     height: auto !important;
-    min-height: 72px !important;
-    padding: clamp(14px, 2.5vw, 18px) clamp(18px, 3.5vw, 24px) !important;
-    border-radius: 16px !important;
+    min-height: 142px !important;
+    padding: 24px 26px 36px !important;
+    border-radius: 20px !important;
     background-color: #FFFFFF !important;
-    box-shadow: 0 8px 20px -2px rgba(0, 4, 35, 0.28) !important;
-  }
-
-  .mgmt-card__inner {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 16px !important;
-    width: 100% !important;
-  }
-
-  .mgmt-card__top {
+    box-shadow: 0 12px 30px -4px rgba(0, 4, 35, 0.35), 0 2px 8px rgba(0, 4, 35, 0.12) !important;
+    border: none !important;
     display: flex !important;
     flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    padding-bottom: 0 !important;
-    border-bottom: none !important;
-    width: auto !important;
-    flex-shrink: 0 !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    box-sizing: border-box !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
   }
 
-  .mgmt-card__num {
-    font-size: clamp(1.2rem, 2.2vw, 1.45rem) !important;
-    color: var(--navy) !important;
-    font-weight: 800 !important;
-  }
-
-  .mgmt-card__orb {
-    width: 6px !important;
-    height: 6px !important;
-    background-color: var(--navy) !important;
-  }
-
-  .mgmt-card__body {
-    flex: 1 !important;
-    padding: 0 !important;
+  .mgmt-card-slot:last-child .mgmt-card {
+    padding-bottom: 24px !important;
   }
 
   .mgmt-card__title {
-    font-family: 'Manrope', sans-serif !important;
-    font-size: clamp(14.5px, 3.8vw, 17px) !important;
+    font-family: 'Manrope', 'Inter', sans-serif !important;
+    font-size: clamp(1.05rem, 4.2vw, 1.25rem) !important;
     font-weight: 700 !important;
-    letter-spacing: -0.01em !important;
-    line-height: 1.35 !important;
+    letter-spacing: -0.015em !important;
+    line-height: 1.3 !important;
     text-transform: none !important;
-    color: var(--navy) !important;
+    color: #00063D !important;
+    text-align: left !important;
+    margin: 0 !important;
     max-width: none !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
   }
 
-  .mgmt-card-slot:hover .mgmt-card {
+  .mgmt-card__line {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
+  }
+
+  .mgmt-card-slot:hover .mgmt-card,
+  .mgmt-card-slot:active .mgmt-card {
     transform: translateY(-8px) scale(1.02) !important;
+    box-shadow: 0 16px 36px -4px rgba(0, 4, 35, 0.45), 0 0 0 1.5px rgba(255, 255, 255, 0.6) !important;
   }
 }
 

@@ -65,6 +65,10 @@ export default function HorizontalStats() {
               const display = isDecimal ? obj.val.toFixed(1) : Math.round(obj.val);
               ref.current.innerText = `${display}${suffix}`;
             },
+            onComplete: () => {
+              if (!ref.current) return;
+              ref.current.innerText = `${targetVal}${suffix}`;
+            },
             scrollTrigger: {
               trigger: ref.current,
               containerAnimation: horizTween,
@@ -76,7 +80,7 @@ export default function HorizontalStats() {
 
         animateCounter(num1Ref, 63, false, "%");
         animateCounter(num2Ref, 66, false, "%");
-        animateCounter(num3Ref, 11.4, true, "%");
+        animateCounter(num3Ref, 28.9, true, "%");
       });
 
       // MOBILE (< 768px): Clean vertical stack with individual scroll-triggered counters
@@ -109,7 +113,7 @@ export default function HorizontalStats() {
 
         animateCounterMobile(num1Ref, 63, false, "%");
         animateCounterMobile(num2Ref, 66, false, "%");
-        animateCounterMobile(num3Ref, 11.4, true, "%");
+        animateCounterMobile(num3Ref, 28.9, true, "%");
       });
 
     }, container);
@@ -163,10 +167,10 @@ export default function HorizontalStats() {
             </div>
           </div>
 
-          {/* Slide 4: 11.4% */}
+          {/* Slide 4: 28.9% */}
           <div className="horizontal__item">
             <div className="horizontal__content">
-              <div ref={num3Ref} className="f-140">11.4%</div>
+              <div ref={num3Ref} className="f-140">28.9%</div>
               <div className="f-40">
                 Experienced suicidal thoughts
                 <br />

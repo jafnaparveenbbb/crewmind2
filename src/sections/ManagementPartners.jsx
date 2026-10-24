@@ -7,37 +7,43 @@ gsap.registerPlugin(ScrollTrigger);
 const MGMT_TOPICS = [
   {
     id: 1,
-    title: "Specialist Psychological Support."
+    title: "Specialist Psychological Support.",
+    lines: ["Specialist", "Psychological", "Support."]
   },
   {
     id: 2,
-    title: "Guidance For Team Leaders."
+    title: "Guidance For Team Leaders.",
+    lines: ["Guidance", "For Team", "Leaders."]
   },
   {
     id: 3,
-    title: "Understanding Of Backstage Work."
+    title: "Understanding Of Backstage Work.",
+    lines: ["Understanding", "Of Backstage", "Work."]
   },
   {
     id: 4,
-    title: "Support Across Production Settings."
+    title: "Support Across Production Settings.",
+    lines: ["Support", "Across", "Production", "Settings."]
   },
   {
     id: 5,
-    title: "Private Space For Crew Concerns."
+    title: "Private Space For Crew Concerns.",
+    lines: ["Private", "Space For", "Crew", "Concerns."]
   },
   {
     id: 6,
-    title: "Access Between Productions."
+    title: "Access Between Productions.",
+    lines: ["Access Between", "Productions."]
   }
 ];
 
 const CARD_CONFIG = [
-  { rot: -4.2, enterRot: -9, y: 8, mobRot: -1.6 },
-  { rot: 2.6, enterRot: 8, y: -6, mobRot: 1.8 },
-  { rot: -3.2, enterRot: -8, y: 10, mobRot: -1.4 },
-  { rot: 3.4, enterRot: 9, y: -8, mobRot: 1.7 },
-  { rot: -2.4, enterRot: -7, y: 6, mobRot: -1.5 },
-  { rot: 2.0, enterRot: 7, y: -4, mobRot: 1.4 }
+  { rot: -3.5, enterRot: -8, y: 10, mobRot: -1.4 },
+  { rot: 2.0, enterRot: 7, y: -6, mobRot: 1.5 },
+  { rot: -2.5, enterRot: -7, y: 8, mobRot: -1.2 },
+  { rot: 2.2, enterRot: 8, y: -7, mobRot: 1.4 },
+  { rot: -1.8, enterRot: -6, y: 6, mobRot: -1.3 },
+  { rot: 1.2, enterRot: 6, y: -4, mobRot: 1.2 }
 ];
 
 export default function ManagementPartners() {
@@ -155,18 +161,21 @@ export default function ManagementPartners() {
       }
 
       cardSlots.forEach((slot, idx) => {
+        const config = CARD_CONFIG[idx] || CARD_CONFIG[0];
         gsap.fromTo(
           slot,
           {
             opacity: 0,
-            y: 24,
-            scale: 0.98
+            y: 30,
+            rotation: config.mobRot * 2,
+            scale: 0.96
           },
           {
             opacity: 1,
             y: 0,
+            rotation: config.mobRot,
             scale: 1,
-            duration: 0.55,
+            duration: 0.6,
             ease: "power2.out",
             scrollTrigger: {
               trigger: slot,
@@ -201,9 +210,7 @@ export default function ManagementPartners() {
           <div ref={headerRef} className="mgmt-header">
             <h2 className="mgmt-title">
               <span>WHY MANAGEMENT TEAMS</span>
-              <span className="mgmt-title__line-2">
-                PARTNER <span className="mgmt-title__highlight">WITH US</span>
-              </span>
+              <span className="mgmt-title__line-2">PARTNER WITH US</span>
             </h2>
           </div>
 
@@ -220,17 +227,13 @@ export default function ManagementPartners() {
                 }}
               >
                 <div className="mgmt-card">
-                  <div className="mgmt-card__inner">
-                    <div className="mgmt-card__top">
-                      <span className="mgmt-card__num">{String(idx + 1).padStart(2, '0')}.</span>
-                      <span className="mgmt-card__orb" />
-                    </div>
-                    <div className="mgmt-card__body">
-                      <h3 className="mgmt-card__title">
-                        {topic.title}
-                      </h3>
-                    </div>
-                  </div>
+                  <h3 className="mgmt-card__title">
+                    {topic.lines.map((line, lIdx) => (
+                      <span key={lIdx} className="mgmt-card__line">
+                        {line}
+                      </span>
+                    ))}
+                  </h3>
                 </div>
               </div>
             ))}

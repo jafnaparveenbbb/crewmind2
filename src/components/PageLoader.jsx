@@ -1,33 +1,59 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import crewmindLogo from '../assets/crewmind-logo-02.png';
+
+import sliceC from '../assets/logo-slices/c.png';
+import sliceR from '../assets/logo-slices/r.png';
+import sliceE from '../assets/logo-slices/e.png';
+import sliceW from '../assets/logo-slices/w.png';
+import sliceM from '../assets/logo-slices/m.png';
+import sliceI from '../assets/logo-slices/i.png';
+import sliceN from '../assets/logo-slices/n.png';
+import sliceD from '../assets/logo-slices/d.png';
+import sliceDot from '../assets/logo-slices/dot.png';
 
 /**
- * Character slice definitions directly from CREWMIND LOGO-02.png (viewBox: 0 0 807 138)
- * Ensures 100% exact letter shapes, proportions, and kerning matching the official reference.
- * Glyphs: c, r, e, w, m, i, n, d, .
+ * Exact character slice definitions directly from the official CREWMIND logo
+ * Total SVG canvas: viewBox="0 0 807 138"
+ * Slices partition the 807x138 wordmark without gaps or overlaps:
+ *   c:   0..98   (w: 98)
+ *   r:  98..157  (w: 59)
+ *   e: 157..246  (w: 89)
+ *   w: 246..378  (w: 132)
+ *   m: 378..525  (w: 147)
+ *   i: 525..566  (w: 41)
+ *   n: 566..662  (w: 96)
+ *   d: 662..766  (w: 104)
+ *   .: 766..807  (w: 41)
  */
-const CHAR_SLICES = [
-  { id: 'c', x: 0, w: 98, cx: 49 },
-  { id: 'r', x: 98, w: 59, cx: 127.5 },
-  { id: 'e', x: 157, w: 89, cx: 201.5 },
-  { id: 'w', x: 246, w: 132, cx: 312 },
-  { id: 'm', x: 378, w: 147, cx: 451.5 },
-  { id: 'i', x: 525, w: 41, cx: 545.5 },
-  { id: 'n', x: 566, w: 96, cx: 614 },
-  { id: 'd', x: 662, w: 104, cx: 714 },
-  { id: 'dot', x: 766, w: 41, cx: 786.5 },
+const GLYPHS = [
+  { id: 'c', src: sliceC, x: 0, y: 0, w: 98, h: 138 },
+  { id: 'r', src: sliceR, x: 98, y: 0, w: 59, h: 138 },
+  { id: 'e', src: sliceE, x: 157, y: 0, w: 89, h: 138 },
+  { id: 'w', src: sliceW, x: 246, y: 0, w: 132, h: 138 },
+  { id: 'm', src: sliceM, x: 378, y: 0, w: 147, h: 138 },
+  { id: 'i', src: sliceI, x: 525, y: 0, w: 41, h: 138 },
+  { id: 'n', src: sliceN, x: 566, y: 0, w: 96, h: 138 },
+  { id: 'd', src: sliceD, x: 662, y: 0, w: 104, h: 138 },
+  { id: 'dot', src: sliceDot, x: 766, y: 0, w: 41, h: 138 },
 ];
 
 /**
  * PageLoader
- * Letter-by-letter animation using the exact reference logo 'crewmind.'
- * Medium-slow, smooth, deliberate arrival and settle with a buttery exit into the hero section.
+ * Reproduces the Figma/reference motion from 'Desktop - 1.mp4':
+ * 1. Full-screen dark navy background: #00063D.
+ * 2. Morphing & overlapping sequence of the individual brand glyphs:
+ *    - 'm' rotates clockwise from -180° to 0° while dot emerges.
+ *    - 'd' and 'n' rotate into place, 'i' drops in, forming "mind.".
+ *    - 'e' and 'w' appear inverted; 'e' flips upright.
+ *    - 'w' rotates clockwise through 90° ('3') and snaps upright; 'r' straightens; 'c' glides in.
+ * 3. Brief confident hold on the pristine assembled wordmark.
+ * 4. Buttery smooth dissolve/fade into the Hero section with Lenis/ScrollTrigger handoff.
+ * 5. Respects prefers-reduced-motion with a clean instant fade-in and reveal.
  */
 export default function PageLoader({ onComplete }) {
   const loaderRef = useRef(null);
   const logoWrapRef = useRef(null);
-  const charRefs = useRef([]);
+  const glyphRefs = useRef([]);
 
   useEffect(() => {
     // Force instant scroll to top on mount
@@ -37,98 +63,185 @@ export default function PageLoader({ onComplete }) {
     const logoWrap = logoWrapRef.current;
     if (!loader || !logoWrap) return;
 
-    // Initial state: hide individual character slices and anchor transform origins
-    CHAR_SLICES.forEach((slice, idx) => {
-      const el = charRefs.current[idx];
-      if (el) {
-        gsap.set(el, {
-          opacity: 0,
-          y: 7,
-          transformOrigin: `${slice.cx}px 69px`,
-        });
-      }
-    });
+    // Check prefers-reduced-motion
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Exit transition handler
+    const triggerExit = () => {
+      // 1. Gently dissolve the wordmark with subtle scale drift
+      gsap.to(logoWrap, {
+        opacity: 0,
+        scale: 0.985,
+        duration: 0.45,
+        ease: 'power2.inOut',
+      });
+
+      // 2. Buttery smooth fade-out of the dark navy background into the hero section
+      gsap.to(loader, {
+        opacity: 0,
+        duration: 0.60,
+        delay: 0.15,
+        ease: 'power3.inOut',
+        onComplete: () => {
+          if (onComplete) onComplete();
+        },
+      });
+    };
+
+    if (prefersReducedMotion) {
+      // Reduced-motion: reveal completed logo quickly without rotation, then exit
+      glyphRefs.current.forEach((el) => {
+        if (el) gsap.set(el, { opacity: 1, rotation: 0, x: 0, y: 0, scale: 1 });
+      });
+      gsap.fromTo(
+        logoWrap,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 0.35,
+          ease: 'power1.out',
+          onComplete: () => {
+            gsap.delayedCall(0.5, triggerExit);
+          },
+        }
+      );
+      return () => {
+        gsap.killTweensOf([loader, logoWrap, ...glyphRefs.current]);
+      };
+    }
+
+    // Standard motion sequence:
+    // Elements: [c, r, e, w, m, i, n, d, dot]
+    const [c, r, e, w, m, i, n, d, dot] = glyphRefs.current;
+    if (!c || !r || !e || !w || !m || !i || !n || !d || !dot) return;
+
+    // Initial states:
+    // transformOrigin: "50% 50%" centers rotation on each glyph's own bounding box
+    gsap.set(m, { opacity: 0, rotation: -180, transformOrigin: '50% 50%' });
+    gsap.set(dot, { opacity: 0, scale: 0.5, transformOrigin: '50% 50%' });
+    gsap.set(d, { opacity: 0, rotation: 180, transformOrigin: '50% 50%' });
+    gsap.set(n, { opacity: 0, rotation: 180, transformOrigin: '50% 50%' });
+    gsap.set(i, { opacity: 0, y: -12, transformOrigin: '50% 50%' });
+    gsap.set(e, { opacity: 0, rotation: 180, transformOrigin: '50% 50%' });
+    gsap.set(w, { opacity: 0, rotation: -180, transformOrigin: '50% 50%' });
+    gsap.set(r, { opacity: 0, rotation: -22, x: -8, transformOrigin: '50% 50%' });
+    gsap.set(c, { opacity: 0, x: -10, transformOrigin: '50% 50%' });
 
     const tl = gsap.timeline({
-      delay: 0.15,
-      onComplete: () => {
-        // 1. Gently dissolve the wordmark with a subtle scale drift
-        gsap.to(logoWrap, {
-          opacity: 0,
-          scale: 0.985,
-          duration: 0.45,
-          ease: 'power2.inOut',
-        });
-
-        // 2. Buttery smooth fade-out of the dark navy background into the hero section
-        gsap.to(loader, {
-          opacity: 0,
-          duration: 0.6,
-          delay: 0.15,
-          ease: 'power3.inOut',
-          onComplete: () => {
-            if (onComplete) onComplete();
-          },
-        });
-      },
+      delay: 0.12,
+      onComplete: triggerExit,
     });
 
-    // Staggered emergence of the 9 glyphs with natural, comfortable cadence
-    const staggerDelays = [0.06, 0.28, 0.16, 0.44, 0.10, 0.58, 0.36, 0.70, 0.82];
+    // --- PHASE 1 (0.00s - 0.50s): 'm' rotation to 0 + dot emergence ---
+    tl.to(m, {
+      opacity: 1,
+      rotation: 0,
+      duration: 0.50,
+      ease: 'power2.out',
+    }, 0.00);
 
-    CHAR_SLICES.forEach((slice, idx) => {
-      const el = charRefs.current[idx];
-      if (!el) return;
-      const charDelay = staggerDelays[idx];
+    tl.to(dot, {
+      opacity: 0.70,
+      scale: 1,
+      duration: 0.35,
+      ease: 'power2.out',
+    }, 0.23);
 
-      tl.to(
-        el,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.24,
-          ease: 'power2.out',
-        },
-        charDelay
-      )
-      .to(
-        el,
-        {
-          opacity: 0.4,
-          duration: 0.12,
-        },
-        charDelay + 0.18
-      )
-      .to(
-        el,
-        {
-          opacity: 1,
-          duration: 0.16,
-        },
-        charDelay + 0.28
-      );
-    });
+    // --- PHASE 2 (0.53s - 1.13s): 'd' & 'n' rotation to 0, 'i' drops, dot to 1.0 ---
+    tl.to(d, {
+      opacity: 0.35,
+      duration: 0.06,
+    }, 0.53)
+    .to(d, {
+      opacity: 1,
+      rotation: 0,
+      duration: 0.52,
+      ease: 'power2.out',
+    }, 0.58);
 
-    // Settle beat: subtle collective breath as all characters lock into place
-    const validChars = charRefs.current.filter(Boolean);
-    tl.to(
-      validChars,
-      {
-        scale: 1.035,
-        duration: 0.24,
-        delay: 0.12,
-        stagger: 0.02,
-        ease: 'power1.out',
-        yoyo: true,
-        repeat: 1,
-      }
-    )
-    // Generous, confident hold on the complete settled wordmark
-    .to(logoWrap, { duration: 0.65 });
+    tl.to(n, {
+      opacity: 0.30,
+      duration: 0.06,
+    }, 0.70)
+    .to(n, {
+      opacity: 1,
+      rotation: 0,
+      duration: 0.35,
+      ease: 'power2.out',
+    }, 0.75);
+
+    tl.to(i, {
+      opacity: 1,
+      y: 0,
+      duration: 0.28,
+      ease: 'power2.out',
+    }, 0.88);
+
+    tl.to(dot, {
+      opacity: 1,
+      duration: 0.22,
+    }, 0.82);
+
+    // --- PHASE 3 (1.13s - 1.93s): 'e' & 'w' emerge at 180°, 'r' appears, 'e' flips upright ---
+    tl.to(e, {
+      opacity: 0.90,
+      duration: 0.30,
+      ease: 'power2.out',
+    }, 1.13);
+
+    tl.to(w, {
+      opacity: 0.75,
+      duration: 0.35,
+      ease: 'power2.out',
+    }, 1.38);
+
+    tl.to(r, {
+      opacity: 0.65,
+      rotation: -12,
+      x: -4,
+      duration: 0.28,
+      ease: 'power2.out',
+    }, 1.62);
+
+    tl.to(e, {
+      rotation: 0,
+      opacity: 1,
+      duration: 0.30,
+      ease: 'power2.inOut',
+    }, 1.66);
+
+    // --- PHASE 4 (1.93s - 2.53s): 'w' rotates clockwise to 0, 'r' straightens, 'c' glides in ---
+    tl.to(w, {
+      rotation: 0,
+      opacity: 1,
+      duration: 0.58,
+      ease: 'power2.inOut',
+    }, 1.93);
+
+    tl.to(r, {
+      rotation: 0,
+      x: 0,
+      opacity: 1,
+      duration: 0.45,
+      ease: 'power2.out',
+    }, 1.96);
+
+    tl.to(c, {
+      opacity: 1,
+      x: 0,
+      duration: 0.55,
+      ease: 'power2.out',
+    }, 1.96);
+
+    // --- PHASE 5 (2.53s - 3.45s): Confident, settled hold on complete wordmark ---
+    tl.to(logoWrap, { duration: 0.90 });
 
     return () => {
       tl.kill();
-      gsap.killTweensOf([loader, logoWrap, ...charRefs.current]);
+      gsap.killTweensOf([loader, logoWrap, ...glyphRefs.current]);
     };
   }, [onComplete]);
 
@@ -141,24 +254,19 @@ export default function PageLoader({ onComplete }) {
           aria-label="crewmind."
           role="img"
         >
-          <defs>
-            {CHAR_SLICES.map((slice) => (
-              <clipPath key={slice.id} id={`loader-clip-${slice.id}`}>
-                <rect x={slice.x} y="0" width={slice.w} height="138" />
-              </clipPath>
-            ))}
-          </defs>
-          {CHAR_SLICES.map((slice, index) => (
+          {GLYPHS.map((glyph, index) => (
             <g
-              key={slice.id}
-              ref={(el) => (charRefs.current[index] = el)}
-              clipPath={`url(#loader-clip-${slice.id})`}
+              key={glyph.id}
+              ref={(el) => (glyphRefs.current[index] = el)}
+              id={`loader-glyph-${glyph.id}`}
             >
               <image
-                href={crewmindLogo}
-                xlinkHref={crewmindLogo}
-                width="807"
-                height="138"
+                href={glyph.src}
+                xlinkHref={glyph.src}
+                x={glyph.x}
+                y={glyph.y}
+                width={glyph.w}
+                height={glyph.h}
               />
             </g>
           ))}
