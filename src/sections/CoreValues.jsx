@@ -49,15 +49,18 @@ export default function CoreValues() {
         trigger: section,
         start: "top 50%",
         end: "bottom 50%",
+        // Measure after this section's mobile pin has added its spacer
+        refreshPriority: -1,
         onEnter: () => document.body.setAttribute('theme', 'white'),
         onEnterBack: () => document.body.setAttribute('theme', 'white'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'white')
+        // Scrolling back up hands over to the navy stats section above
+        onLeaveBack: () => document.body.setAttribute('theme', 'navy')
       });
 
       const mm = gsap.matchMedia();
 
-      // DESKTOP (>= 768px): Counter-Parallax Stream Scroll Animation
-      mm.add("(min-width: 768px)", () => {
+      // DESKTOP (>= 768px): Counter-Parallax Stream Scroll Animation (static layout when motion is reduced)
+      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
         if (!col1 || !col2 || !stream) return;
         gsap.set(stream, { clearProps: "x,transform" });
 
@@ -100,60 +103,76 @@ export default function CoreValues() {
         }
       });
 
-      // MOBILE (< 768px): Pinned section with horizontal cards track driven by vertical scroll
-      mm.add("(max-width: 767px)", () => {
+      // MOBILE (< 768px): Pinned section with horizontal cards track driven by vertical scroll (static stack when motion is reduced)
+      mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
         const mobileTrack = mobileTrackRef.current;
         const sticky = stickyRef.current;
         if (!mobileTrack || !sticky) return;
 
         gsap.set(mobileTrack, { clearProps: "all", x: 0 });
+        if (leftRef.current) {
+          gsap.set(leftRef.current.children, { opacity: 1, y: 0 });
+        }
 
         const getTravelDistance = () => {
-          return Math.max(0, mobileTrack.scrollWidth - window.innerWidth + 32);
+          const cards = mobileTrack.children;
+          if (cards.length > 0) {
+            const lastCard = cards[cards.length - 1];
+            return Math.max(0, Math.round((lastCard.offsetLeft + lastCard.offsetWidth + 24) - window.innerWidth));
+          }
+          return Math.max(0, mobileTrack.scrollWidth - window.innerWidth + 24);
         };
 
-        const horizTween = gsap.to(mobileTrack, {
+        // Resting hold after the last card, as a fraction of the carousel's scroll length
+        const holdRatio = 0.3;
+
+        const getPinDistance = () => {
+          return Math.round(getTravelDistance() * 1.4 * (1 + holdRatio));
+        };
+
+        const tl = gsap.timeline({
+          defaults: { ease: "none" }
+        });
+
+        // Desktop-inspired stream: the track runs on a slight diagonal like the tilted desktop columns
+        gsap.set(mobileTrack, { rotation: -3, transformOrigin: "50% 50%" });
+
+        tl.to(mobileTrack, {
           x: () => -getTravelDistance(),
-          ease: "none",
+          duration: 1,
           force3D: true
         });
+
+        // Alternate cards drift in opposite directions, echoing the desktop counter-parallax columns
+        const driftCards = Array.from(mobileTrack.children);
+        driftCards.forEach((card, idx) => {
+          const dir = idx % 2 === 0 ? 1 : -1;
+          tl.fromTo(card, { yPercent: 5 * dir }, { yPercent: -5 * dir, duration: 1 }, 0);
+        });
+
+        // Hold so the scrub catches up and the last card settles before unpinning
+        tl.to({}, { duration: holdRatio });
 
         const st = ScrollTrigger.create({
           id: "core-values-mobile-pin",
           trigger: section,
           pin: sticky,
+          pinSpacing: true,
           start: "top top",
-          end: () => `+=${Math.round(getTravelDistance() * 1.25)}`,
-          scrub: 0.4,
-          animation: horizTween,
+          end: () => `+=${getPinDistance()}`,
+          scrub: 0.5,
+          animation: tl,
           invalidateOnRefresh: true
         });
 
-        let headingTween = null;
-        if (leftRef.current) {
-          headingTween = gsap.fromTo(
-            leftRef.current.children,
-            { opacity: 0, y: 20 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.65,
-              stagger: 0.08,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: section,
-                start: "top 85%",
-                toggleActions: "play none none none"
-              }
-            }
-          );
-        }
-
         return () => {
           if (st) st.kill();
-          if (horizTween) horizTween.kill();
-          if (headingTween) headingTween.kill();
+          if (tl) tl.kill();
+          section.style.removeProperty('height');
+          section.style.removeProperty('min-height');
+          section.style.removeProperty('z-index');
           gsap.set(mobileTrack, { clearProps: "transform" });
+          gsap.set(driftCards, { clearProps: "transform" });
           if (leftRef.current) {
             gsap.set(leftRef.current.children, { clearProps: "opacity,transform" });
           }

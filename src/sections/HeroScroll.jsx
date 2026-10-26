@@ -20,6 +20,7 @@ export default function HeroScroll({ isLoaded = true }) {
   const row4Ref = useRef(null);
   const bottomRef = useRef(null);
   const refreshLayoutRef = useRef(null);
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   useEffect(() => {
     let isMounted = true;
@@ -36,6 +37,13 @@ export default function HeroScroll({ isLoaded = true }) {
     const heroBottom = bottomRef.current;
 
     if (!container || !stickyFrame || !videoBox || !rowsParent) return;
+
+    // Reduced motion: static opening frame (no zoom, no pin, no measuring); the video stays on its poster.
+    // Skipping the measurement also avoids reading transforms mid-way through the global 0.01ms transitions.
+    if (prefersReducedMotion) {
+      if (videoElement) videoElement.pause();
+      return;
+    }
 
     if (videoElement) {
       videoElement.play().catch(() => { });
@@ -309,7 +317,7 @@ export default function HeroScroll({ isLoaded = true }) {
           <video
             ref={videoElementRef}
             muted
-            autoPlay
+            autoPlay={!prefersReducedMotion}
             loop
             playsInline
             preload="auto"

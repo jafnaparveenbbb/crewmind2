@@ -20,6 +20,7 @@ export default function HeroScrollMobile({ isLoaded = true }) {
   const row3Ref = useRef(null);
   const bottomRef = useRef(null);
   const refreshLayoutRef = useRef(null);
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   useEffect(() => {
     let isMounted = true;
@@ -35,6 +36,12 @@ export default function HeroScrollMobile({ isLoaded = true }) {
     const heroBottom = bottomRef.current;
 
     if (!container || !stickyFrame || !videoBox || !rowsParent) return;
+
+    // Reduced motion: static opening frame (no zoom, no pin, no measuring); the video stays on its poster
+    if (prefersReducedMotion) {
+      if (videoElement) videoElement.pause();
+      return;
+    }
 
     // Gracefully handle mobile video autoplay
     if (videoElement) {
@@ -130,17 +137,18 @@ export default function HeroScrollMobile({ isLoaded = true }) {
         gsap.set(centerImgRef.current, { opacity: 1, scale: 1.05 });
       }
 
-      // Master Mobile Timeline pinned seamlessly across runway with responsive 0.5s scrub damping
+      // Master Mobile Timeline pinned seamlessly across runway with responsive 0.5s scrub damping.
+      // Ends at 'bottom bottom' (as on desktop) so the whole choreography finishes before About enters.
       const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
           start: 'top top',
-          end: 'bottom top',
+          end: 'bottom bottom',
           pin: stickyFrame,
           pinSpacing: false,
           scrub: 0.5,
           invalidateOnRefresh: true,
-          onEnterBack: () => document.body.setAttribute('theme', 'navy'),
+          // No onEnterBack theme here: About's own onLeaveBack restores navy as About leaves the screen.
           onRefresh: () => {
             const updated = getTargetCoordinates();
             clipX = updated.clipX;
@@ -319,7 +327,7 @@ export default function HeroScrollMobile({ isLoaded = true }) {
           <video
             ref={videoElementRef}
             muted
-            autoPlay
+            autoPlay={!prefersReducedMotion}
             loop
             playsInline
             preload="auto"
