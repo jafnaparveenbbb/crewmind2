@@ -29,6 +29,9 @@ export default function HorizontalStats() {
         onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
 
+      // Reduced motion: skip the count-up and keep the final figures from the markup
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
       const mm = gsap.matchMedia();
 
       // DESKTOP & TABLET (>= 768px): Original horizontal pinned scrub experience
@@ -54,7 +57,7 @@ export default function HorizontalStats() {
 
         // Counter animations triggered on horizontal container animation
         const animateCounter = (ref, targetVal, isDecimal, suffix) => {
-          if (!ref.current) return;
+          if (!ref.current || prefersReducedMotion) return;
           const obj = { val: 0 };
           gsap.to(obj, {
             val: targetVal,
@@ -83,11 +86,71 @@ export default function HorizontalStats() {
         animateCounter(num3Ref, 28.9, true, "%");
       });
 
-      // MOBILE (< 768px): Clean vertical stack with individual scroll-triggered counters
+      // MOBILE (< 768px): Pinned horizontal slide track with scroll-triggered animated counters
       mm.add("(max-width: 767px)", () => {
-        gsap.set(list, { clearProps: "all" });
+        const sticky = container.querySelector('.horizontal__sticky');
+        if (!sticky) return;
 
-        const animateCounterMobile = (ref, targetVal, isDecimal, suffix) => {
+        // Pacing in slide widths: each slide eases into place, then rests centred before the next one moves in
+        const MOVE = 0.8;
+        const DWELL = 0.45;
+        const slideCount = list.children.length;
+        const getSlideWidth = () => (list.children[0] ? list.children[0].offsetWidth : window.innerWidth);
+        // Timeline position (in slide widths) where the move onto slide k + 1 begins
+        const moveStart = (k) => DWELL + (k - 1) * (MOVE + DWELL);
+
+        const tl = gsap.timeline({
+          defaults: { ease: "none" }
+        });
+
+        // Step 1: Heading rests, then slides 2 -> 5 each ease in and dwell (slide 5 rests through the cover hold)
+        for (let k = 1; k < slideCount; k++) {
+          tl.to(list, {
+            x: () => -k * getSlideWidth(),
+            duration: MOVE,
+            ease: "power2.inOut",
+            force3D: true
+          }, moveStart(k));
+        }
+
+        // Step 2: Resting hold beat as next section (#industry-changing) smoothly slides up over this section
+        tl.to({}, { duration: window.innerHeight / getSlideWidth() });
+
+        // Runway = timeline length in px, so the cover hold spans exactly one screen of scroll
+        const updateSectionRunway = () => {
+          const totalRunway = Math.round(tl.duration() * getSlideWidth());
+          container.style.setProperty('height', `${totalRunway}px`, 'important');
+          container.style.setProperty('min-height', `${totalRunway}px`, 'important');
+          container.style.setProperty('z-index', '1');
+        };
+
+        updateSectionRunway();
+
+        const st = ScrollTrigger.create({
+          id: "impact-mobile-pin",
+          trigger: container,
+          pin: sticky,
+          pinSpacing: false,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.4,
+          animation: tl,
+          invalidateOnRefresh: true,
+          onRefresh: () => {
+            updateSectionRunway();
+          }
+        });
+
+        if (!prefersReducedMotion) {
+          if (num1Ref.current) num1Ref.current.innerText = "0%";
+          if (num2Ref.current) num2Ref.current.innerText = "0%";
+          if (num3Ref.current) num3Ref.current.innerText = "0%";
+        }
+
+        // Animated counters triggered by overall timeline progress
+        const animatedFlags = { num1: false, num2: false, num3: false };
+
+        const runCounter = (ref, targetVal, isDecimal, suffix) => {
           if (!ref.current) return;
           const obj = { val: 0 };
           gsap.to(obj, {
@@ -102,18 +165,48 @@ export default function HorizontalStats() {
             onComplete: () => {
               if (!ref.current) return;
               ref.current.innerText = `${targetVal}${suffix}`;
-            },
-            scrollTrigger: {
-              trigger: ref.current,
-              start: "top 90%",
-              toggleActions: "play none none none"
             }
           });
         };
 
-        animateCounterMobile(num1Ref, 63, false, "%");
-        animateCounterMobile(num2Ref, 66, false, "%");
-        animateCounterMobile(num3Ref, 28.9, true, "%");
+        const counterTrigger = prefersReducedMotion ? null : ScrollTrigger.create({
+          trigger: container,
+          start: "top top",
+          end: "bottom top",
+          onUpdate: (self) => {
+            // Scroll position expressed in timeline units (this trigger spans the same range as the pin)
+            const t = self.progress * tl.duration();
+
+            // Each count starts halfway through its slide's move in, and resets once scrolled back before that move
+            const counters = [
+              { flag: 'num1', ref: num1Ref, target: 63, decimal: false, k: 1 },
+              { flag: 'num2', ref: num2Ref, target: 66, decimal: false, k: 2 },
+              { flag: 'num3', ref: num3Ref, target: 28.9, decimal: true, k: 3 }
+            ];
+            counters.forEach(({ flag, ref, target, decimal, k }) => {
+              if (t >= moveStart(k) + MOVE * 0.5 && !animatedFlags[flag]) {
+                animatedFlags[flag] = true;
+                runCounter(ref, target, decimal, "%");
+              } else if (t < moveStart(k) && animatedFlags[flag]) {
+                animatedFlags[flag] = false;
+                if (ref.current) ref.current.innerText = "0%";
+              }
+            });
+          }
+        });
+
+        return () => {
+          if (st) st.kill();
+          if (tl) tl.kill();
+          if (counterTrigger) counterTrigger.kill();
+          container.style.removeProperty('height');
+          container.style.removeProperty('min-height');
+          container.style.removeProperty('z-index');
+          gsap.set(list, { clearProps: "all" });
+          if (num1Ref.current) num1Ref.current.innerText = "63%";
+          if (num2Ref.current) num2Ref.current.innerText = "66%";
+          if (num3Ref.current) num3Ref.current.innerText = "28.9%";
+        };
       });
 
     }, container);

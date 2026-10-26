@@ -1684,8 +1684,9 @@ body[theme="footer-cta"] .scroll-arrow:hover {
      DEDICATED MOBILE HERO (HEROSCROLLMOBILE)
      ========================================================================== */
 
+  /* 220vh: the pin ends at 'bottom bottom', giving the opening ~1.2 screens of scroll (about 80% of desktop's pace) */
   .hero-mob-sticky {
-    height: 180vh !important;
+    height: 220vh !important;
     position: relative !important;
     width: 100% !important;
     background-color: var(--navy) !important;
@@ -2207,15 +2208,14 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     color: var(--navy) !important;
   }
 
+  /* Mask for the line rise-up reveal (opacity/transform are driven by GSAP, static when motion is reduced) */
   .about__heading-line {
     display: block !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   .about__heading-inner {
     color: var(--navy) !important;
-    opacity: 1 !important;
-    transform: none !important;
     visibility: visible !important;
   }
 
@@ -2232,8 +2232,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 
   .about__word {
-    opacity: 1 !important;
-    transform: none !important;
     visibility: visible !important;
   }
 
@@ -2257,8 +2255,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     justify-content: center !important;
     align-items: center !important;
     flex-shrink: 0 !important;
-    opacity: 1 !important;
-    transform: none !important;
     visibility: visible !important;
   }
 
@@ -2730,73 +2726,74 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 
 @media screen and (max-width: 767px) {
   .horizontal {
-    height: auto !important;
-    min-height: 0 !important;
     position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
     padding: 0 !important;
-    padding-top: clamp(64px, 8.5vh, 88px) !important;
-    padding-bottom: clamp(64px, 8.5vh, 88px) !important;
+    margin: 0 !important;
     background-color: #00063D !important;
     overflow: visible !important;
-    width: 100% !important;
+    z-index: 1;
+    box-sizing: border-box !important;
   }
 
   .horizontal__sticky {
-    position: relative !important;
-    top: auto !important;
-    height: auto !important;
-    min-height: 0 !important;
-    width: 100% !important;
-    display: block !important;
-    overflow: visible !important;
-    background-color: transparent !important;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    overflow: hidden !important;
+    background-color: #00063D !important;
+    box-sizing: border-box !important;
   }
 
   .horizontal__list {
     display: flex !important;
-    flex-direction: column !important;
-    height: auto !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    align-items: stretch !important;
-    padding-left: clamp(20px, 5.5vw, 24px) !important;
-    padding-right: clamp(20px, 5.5vw, 24px) !important;
-    gap: clamp(28px, 4vh, 38px) !important;
-    transform: none !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    height: 100% !important;
+    width: auto !important;
+    max-width: none !important;
+    align-items: center !important;
+    padding: 0 !important;
+    gap: 0 !important;
     box-sizing: border-box !important;
+    will-change: transform;
   }
 
   .horizontal__item {
-    flex: none !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    height: auto !important;
+    flex: 0 0 100vw !important;
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
-    justify-content: flex-start !important;
-    padding: 0 !important;
+    justify-content: center !important;
+    padding: 0 clamp(24px, 6vw, 36px) !important;
     margin: 0 !important;
+    border-top: none !important;
     box-sizing: border-box !important;
   }
 
   .horizontal__item:not(.is--first) {
-    padding-top: clamp(18px, 2.5vh, 24px) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding-top: 0 !important;
+    border-top: none !important;
   }
 
   .horizontal__item.is--first {
-    flex: none !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
+    margin-bottom: 0 !important;
+    justify-content: center !important;
     align-items: flex-start !important;
-    justify-content: flex-start !important;
-    text-align: left !important;
-    padding: 0 !important;
-    margin-bottom: clamp(10px, 1.8vh, 16px) !important;
-    border-top: none !important;
   }
 
   .horizontal__item.is--first .horizontal__content,
@@ -2810,8 +2807,8 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 
   .horizontal__item.is--first .f-96 {
     font-family: 'Staatliches', sans-serif !important;
-    font-size: clamp(34px, 9.2vw, 40px) !important;
-    line-height: 1.04 !important;
+    font-size: clamp(40px, 11vw, 56px) !important;
+    line-height: 1.02 !important;
     letter-spacing: 0.02em !important;
     font-weight: 400 !important;
     text-align: left !important;
@@ -2826,15 +2823,15 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     flex-direction: column !important;
     align-items: flex-start !important;
     text-align: left !important;
-    justify-content: flex-start !important;
-    gap: clamp(8px, 1.2vh, 12px) !important;
+    justify-content: center !important;
+    gap: clamp(10px, 2vh, 18px) !important;
     width: 100% !important;
     max-width: 100% !important;
   }
 
   .horizontal__content .f-140 {
     font-family: 'Staatliches', sans-serif !important;
-    font-size: clamp(58px, 15.5vw, 68px) !important;
+    font-size: clamp(74px, 20vw, 96px) !important;
     line-height: 0.95 !important;
     letter-spacing: 0.02em !important;
     color: #ffffff !important;
@@ -2846,7 +2843,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 
   .horizontal__content .f-40 {
     font-family: 'Manrope', sans-serif !important;
-    font-size: clamp(14.5px, 4vw, 16.5px) !important;
+    font-size: clamp(16px, 4.4vw, 19px) !important;
     line-height: 1.45 !important;
     letter-spacing: -0.01em !important;
     font-weight: 500 !important;
@@ -3106,7 +3103,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 /* Responsive Mobile (< 768px) */
 @media screen and (max-width: 767px) {
   .crewmind-about-stats {
-    position: relative !important;
+    position: relative;
     width: 100% !important;
     height: auto !important;
     min-height: auto !important;
@@ -3131,9 +3128,10 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding-block: 0 !important;
+    padding-top: clamp(20px, 3vh, 32px) !important;
+    padding-bottom: clamp(24px, 4vh, 36px) !important;
     background-color: #FFFFFF !important;
     box-sizing: border-box;
   }
@@ -3143,7 +3141,10 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
-    height: auto !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
   }
 
   .crewmind-about-stats__layout {
@@ -3152,10 +3153,10 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     justify-content: center !important;
     align-items: flex-start !important;
     gap: clamp(14px, 2.4vh, 22px) !important;
-    height: auto !important;
+    height: 100% !important;
     width: 100% !important;
-    padding-top: clamp(1rem, 2vh, 1.8rem) !important;
-    padding-bottom: clamp(1rem, 2vh, 1.8rem) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
     box-sizing: border-box !important;
   }
 
@@ -3247,7 +3248,8 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     border: 1.5px solid rgba(0, 6, 61, 0.12) !important;
     background-color: #FFFFFF !important;
     color: var(--navy) !important;
-    transform: none !important;
+    /* Not !important: GSAP drives a gentle drift on mobile (reduced motion keeps cards static) */
+    transform: none;
     padding: clamp(1.4rem, 2.5vh, 2rem) clamp(1rem, 2.8vw, 1.4rem) !important;
     box-shadow: 0 10px 30px rgba(0, 6, 61, 0.08) !important;
     flex-shrink: 0 !important;
@@ -3312,13 +3314,49 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   .crewmind-about-stats {
     height: auto !important;
   }
+  /* One static frame that holds the rotated card stream at rest */
   .crewmind-about-stats__sticky {
-    position: static !important;
-    height: auto !important;
+    position: relative !important;
+    height: 100vh !important;
   }
   .crewmind-egg-card {
     transition: none !important;
     transform: none !important;
+  }
+}
+
+/* Animated mobile carousel: clearance above the tilted, drifting cards so they never reach the paragraph */
+@media (prefers-reduced-motion: no-preference) and (max-width: 767px) {
+  .crewmind-about-stats__right {
+    margin-top: 28px !important;
+  }
+}
+
+/* Reduced motion, mobile: no pin, cards stacked so every card is readable without scrolling sideways */
+@media (prefers-reduced-motion: reduce) and (max-width: 767px) {
+  .crewmind-about-stats__sticky {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-top: clamp(56px, 8vh, 80px) !important;
+    padding-bottom: clamp(56px, 8vh, 80px) !important;
+  }
+
+  .crewmind-about-stats .container,
+  .crewmind-about-stats__layout {
+    height: auto !important;
+  }
+
+  .crewmind-about-stats__layout {
+    gap: clamp(28px, 4vh, 40px) !important;
+  }
+
+  .crewmind-about-stats__mobile-track {
+    flex-direction: column !important;
+    width: 100% !important;
+    padding-right: var(--page-padding-x, 20px) !important;
+    gap: 16px !important;
   }
 }
 
@@ -3581,7 +3619,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 /* Mobile Layout (< 768px): Pinned section with horizontal circle animation */
 @media screen and (max-width: 767px) {
   .ovals-diff-section {
-    position: relative !important;
+    position: relative;
     width: 100% !important;
     height: auto !important;
     min-height: auto !important;
@@ -3606,9 +3644,10 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding-block: 0 !important;
+    padding-top: clamp(20px, 3vh, 32px) !important;
+    padding-bottom: clamp(24px, 4vh, 36px) !important;
     background-color: #FFFFFF !important;
     box-sizing: border-box;
   }
@@ -3618,7 +3657,10 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
-    height: auto !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
   }
 
   .ovals-diff__layout {
@@ -3627,10 +3669,10 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     justify-content: center !important;
     align-items: flex-start !important;
     gap: clamp(14px, 2.4vh, 22px) !important;
-    height: auto !important;
+    height: 100% !important;
     width: 100% !important;
-    padding-top: clamp(1rem, 2vh, 1.8rem) !important;
-    padding-bottom: clamp(1rem, 2vh, 1.8rem) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
     box-sizing: border-box !important;
   }
 
@@ -3702,6 +3744,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     justify-content: flex-start !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+    flex-grow: 0 !important; /* base rule's flex: 1 would stretch the row and open a gap above the circles */
     flex-shrink: 0 !important;
     box-sizing: border-box !important;
     scrollbar-width: none !important;
@@ -3792,6 +3835,37 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     transform: none !important;
     transition: none !important;
     animation: none !important;
+  }
+}
+
+/* Reduced motion, mobile: no pin, the four circles wrap into a 2x2 grid like desktop */
+@media (prefers-reduced-motion: reduce) and (max-width: 767px) {
+  .ovals-diff__sticky {
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-top: clamp(56px, 8vh, 80px) !important;
+    padding-bottom: clamp(56px, 8vh, 80px) !important;
+  }
+
+  .ovals-diff-section .container,
+  .ovals-diff__layout {
+    height: auto !important;
+  }
+
+  .diff-principles-grid {
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    gap: 14px !important;
+    padding-right: var(--page-padding-x, 20px) !important;
+  }
+
+  .diff-principle-card {
+    flex: 0 0 calc((100% - 14px) / 2) !important;
+    width: calc((100% - 14px) / 2) !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
   }
 }
 
@@ -4023,8 +4097,8 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Tablet & Mobile (<= 991px): Natural vertical sequence with zero empty scroll void and clear legibility */
-@media screen and (max-width: 991px) {
+/* Tablet (768px - 991px): Natural vertical sequence with zero empty scroll void and clear legibility */
+@media screen and (min-width: 768px) and (max-width: 991px) {
   .mgmt-section {
     height: auto !important;
     min-height: auto !important;
@@ -4161,6 +4235,121 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
+/* Mobile Layout (< 768px): Pinned stage with cards dealt into a vertical fan */
+@media screen and (max-width: 767px) {
+  .mgmt-section {
+    position: relative;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #00063D !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  .mgmt-section > .pin-spacer {
+    background-color: #00063D !important;
+  }
+
+  .mgmt-sticky-frame {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: clamp(14px, 2.5vh, 24px) 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    background-color: #00063D !important;
+  }
+
+  .mgmt-sticky-frame .container {
+    height: 100% !important;
+    max-height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: clamp(16px, 3vh, 28px) !important;
+    width: min(100% - 32px, 380px) !important;
+  }
+
+  .mgmt-header {
+    gap: 10px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .mgmt-title {
+    font-size: clamp(30px, 8vw, 42px) !important;
+    line-height: 1.05 !important;
+  }
+
+  /* Height of the settled fan, measured in JS (5 title bands + one full card) */
+  .mgmt-stack-stage {
+    position: relative !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 340px !important;
+    height: var(--mgmt-fan-height, 460px) !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+
+  .mgmt-card-slot {
+    position: absolute !important;
+    left: 50% !important;
+    top: 0 !important;
+    /* Centering is applied by GSAP (xPercent/yPercent) so it can compose with rotation, y and scale */
+    margin: 0 !important;
+    margin-top: 0 !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    height: auto !important;
+    will-change: transform, opacity;
+  }
+
+  /* Title sits at the top so it stays visible when the next card overlaps the lower part */
+  .mgmt-card {
+    width: 100% !important;
+    min-height: 120px !important;
+    padding: 18px 22px !important;
+    border-radius: 18px !important;
+    background-color: #FFFFFF !important;
+    box-shadow: 0 16px 36px -4px rgba(0, 4, 35, 0.45), 0 2px 8px rgba(0, 4, 35, 0.15) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    box-sizing: border-box !important;
+  }
+
+  .mgmt-card__title {
+    font-size: clamp(1rem, 4vw, 1.15rem) !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Titles flow as one wrapped line instead of one word per line, keeping each fan band short */
+  .mgmt-card__line {
+    display: inline !important;
+    white-space: normal !important;
+  }
+
+  .mgmt-card__line:not(:last-child)::after {
+    content: " ";
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .mgmt-card-slot,
   .mgmt-card,
@@ -4170,6 +4359,35 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     transform: none !important;
     transition: none !important;
     animation: none !important;
+  }
+}
+
+/* Reduced motion, mobile: no pin, all six cards listed in normal flow */
+@media (prefers-reduced-motion: reduce) and (max-width: 767px) {
+  .mgmt-sticky-frame {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-top: clamp(64px, 9vh, 88px) !important;
+    padding-bottom: clamp(64px, 9vh, 88px) !important;
+  }
+
+  .mgmt-sticky-frame .container {
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .mgmt-stack-stage {
+    flex-direction: column !important;
+    height: auto !important;
+    gap: 14px !important;
+  }
+
+  .mgmt-card-slot {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
   }
 }
 
@@ -4284,6 +4502,9 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 
 @media screen and (max-width: 767px) {
   #cta {
+    position: relative !important;
+    z-index: 10 !important;
+    background-color: #ffffff !important;
     height: auto !important;
     min-height: auto !important;
     max-height: none !important;
@@ -5026,5 +5247,12 @@ body[theme="alt-light"] .custom-cursor.hovering {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Static hero: one screen showing the opening frame, no scroll runway */
+  .home-sticky,
+  .hero-mob-sticky {
+    height: 100vh !important;
+    height: 100dvh !important;
   }
 }

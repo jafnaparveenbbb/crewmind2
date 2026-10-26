@@ -31,8 +31,11 @@ export default function AboutSection() {
 
       const mm = gsap.matchMedia();
 
-      // DESKTOP (>= 768px): Keep full kinetic reveal and word scrub animation
-      mm.add("(min-width: 768px)", () => {
+      // ALL WIDTHS: Full kinetic reveal and word scrub animation (trigger points are viewport-relative, so they suit phones too)
+      mm.add({ animate: "(prefers-reduced-motion: no-preference)", isMobile: "(max-width: 767px)" }, (context) => {
+        const { animate, isMobile } = context.conditions;
+        if (!animate) return;
+
         // Section Entry: Label & Heading Masked Rise-Up Animation
         if (labelRef.current) {
           gsap.fromTo(labelRef.current,
@@ -89,7 +92,8 @@ export default function AboutSection() {
               scrollTrigger: {
                 trigger: wordsWrapRef.current,
                 start: "top 78%",
-                end: "bottom 50%",
+                // The taller mobile paragraph finishes while still near the centre of the screen
+                end: isMobile ? "bottom 65%" : "bottom 50%",
                 scrub: 0.8
               }
             }
@@ -149,8 +153,8 @@ export default function AboutSection() {
         }
       });
 
-      // MOBILE (< 768px): No text animation scrub; all text & elements 100% visible immediately
-      mm.add("(max-width: 767px)", () => {
+      // REDUCED MOTION (all widths): No text animation scrub; all text & elements 100% visible immediately
+      mm.add("(prefers-reduced-motion: reduce)", () => {
         if (labelRef.current) {
           gsap.set(labelRef.current, { opacity: 1, y: 0, clearProps: "transform" });
         }

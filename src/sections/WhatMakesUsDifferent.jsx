@@ -48,9 +48,12 @@ export default function WhatMakesUsDifferent() {
         trigger: section,
         start: "top 60%",
         end: "bottom 40%",
+        // Measure after this section's mobile pin has added its spacer
+        refreshPriority: -1,
         onEnter: () => document.body.setAttribute('theme', 'white'),
         onEnterBack: () => document.body.setAttribute('theme', 'white'),
-        onLeaveBack: () => document.body.setAttribute('theme', 'white')
+        // Scrolling back up hands over to the navy Management section above
+        onLeaveBack: () => document.body.setAttribute('theme', 'navy')
       });
 
       // 2. Respect reduced-motion preferences
@@ -141,49 +144,74 @@ export default function WhatMakesUsDifferent() {
       mm.add("(max-width: 767px)", () => {
         // Guarantee immediate, robust visibility on mobile
         gsap.set([left, grid], { opacity: 1, visibility: "visible" });
-        gsap.set(left.children, { opacity: 1, y: 0, visibility: "visible" });
+
+        // Tag, heading, paragraph and button stagger in as the section arrives (as on desktop)
+        const leftEntrance = gsap.fromTo(
+          left.children,
+          { opacity: 0, y: 26, visibility: "visible" },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 80%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
 
         const getTravelDistance = () => {
           const cardCount = grid.children.length;
           if (cardCount > 0) {
             const lastCard = grid.children[cardCount - 1];
-            const totalRightEdge = lastCard.offsetLeft + lastCard.offsetWidth + 28;
-            return Math.max(0, totalRightEdge - window.innerWidth);
+            return Math.max(0, Math.round((lastCard.offsetLeft + lastCard.offsetWidth + 24) - window.innerWidth));
           }
-          return Math.max(0, grid.scrollWidth - window.innerWidth + 28);
+          return Math.max(0, grid.scrollWidth - window.innerWidth + 24);
+        };
+
+        // Resting hold after the last circle, as a fraction of the carousel's scroll length
+        const holdRatio = 0.3;
+
+        const getPinDistance = () => {
+          return Math.round(getTravelDistance() * 1.4 * (1 + holdRatio));
         };
 
         const tl = gsap.timeline({
           defaults: { ease: "none" }
         });
 
-        // Step 1: Smooth horizontal translation revealing circle 1 -> 2 -> 3 -> 4
+        // Smooth horizontal translation revealing circle 1 -> 2 -> 3 -> 4
         tl.to(grid, {
           x: () => -getTravelDistance(),
-          duration: 1.0,
+          duration: 1,
           force3D: true
         });
 
-        // Step 2: Resting hold beat so Circle 4 is fully viewed and appreciated before unpinning
-        tl.to({}, { duration: 0.25 });
+        // Hold so the scrub catches up and the last circle settles before unpinning
+        tl.to({}, { duration: holdRatio });
 
         const st = ScrollTrigger.create({
           id: "diff-mobile-pin",
           trigger: section,
           pin: sticky,
+          pinSpacing: true,
           start: "top top",
-          end: () => `+=${Math.round(getTravelDistance() * 1.25)}`,
-          scrub: 0.4,
+          end: () => `+=${getPinDistance()}`,
+          scrub: 0.5,
           animation: tl,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
-            const p = self.progress;
+            // Carousel progress (excludes the end hold) so circles activate at the same positions
+            const p = Math.min(1, self.progress * (1 + holdRatio));
             let idx = 0;
-            if (p >= 0.70) {
+            if (p >= 0.75) {
               idx = 3;
-            } else if (p >= 0.45) {
+            } else if (p >= 0.50) {
               idx = 2;
-            } else if (p >= 0.20) {
+            } else if (p >= 0.25) {
               idx = 1;
             } else {
               idx = 0;
@@ -197,7 +225,13 @@ export default function WhatMakesUsDifferent() {
         return () => {
           if (st) st.kill();
           if (tl) tl.kill();
+          section.style.removeProperty('height');
+          section.style.removeProperty('min-height');
+          section.style.removeProperty('z-index');
           gsap.set(grid, { clearProps: "transform" });
+          leftEntrance.scrollTrigger?.kill();
+          leftEntrance.kill();
+          gsap.set(left.children, { clearProps: "opacity,transform" });
         };
       });
 
