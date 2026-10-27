@@ -69,15 +69,7 @@ export default function ManagementPartners() {
       onLeaveBack: () => document.body.setAttribute('theme', 'white')
     });
 
-    // 2. Motion preference check
-    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-      return () => {
-        themeTrigger.kill();
-      };
-    }
-
-    // 3. Responsive GSAP Scroll-Linked Animation via matchMedia
+    // 2. Responsive GSAP Scroll-Linked Animation via matchMedia
     const mm = gsap.matchMedia(section);
 
     // Desktop (>= 992px): Fixed background with scroll-driven fanned stack

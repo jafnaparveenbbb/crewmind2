@@ -2324,31 +2324,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .about__label,
-  .about__heading-inner,
-  .about__word,
-  .about-pillar-item {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
-@media screen and (max-width: 767px) and (prefers-reduced-motion: reduce) {
-  .hero-mob-sticky {
-    height: 100svh !important;
-  }
-}
-
-/* Desktop hero, reduced motion: a single static screen (no pinned runway) */
-@media (prefers-reduced-motion: reduce) {
-  .home-sticky {
-    height: 100vh !important;
-  }
-}
-
-
-
 /* ==========================================================================
    ICON CARDS SECTION (ALTERNATING LIGHT SECTION)
    ========================================================================== */
@@ -2568,9 +2543,9 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Mobile, motion allowed: the heading stays fixed at the top of the section (desktop keeps it fixed
+/* Mobile: the heading stays fixed at the top of the section (desktop keeps it fixed
    beside the list) while the cards scroll beneath it and activate at the same 65% line. */
-@media screen and (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+@media screen and (max-width: 767px) {
   .cards__left {
     position: sticky !important;
     top: 0 !important;
@@ -2774,9 +2749,9 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Mobile, motion allowed: desktop-style pinned horizontal track, one full-width slide per statistic.
+/* Mobile: desktop-style pinned horizontal track, one full-width slide per statistic.
    480vh = 100vh sticky frame + 380vh runway (same as desktop). */
-@media screen and (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+@media screen and (max-width: 767px) {
   .horizontal {
     height: 480vh;
   }
@@ -2784,6 +2759,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   .horizontal__sticky {
     height: 100vh;
     height: 100svh;
+    height: 100dvh;
   }
 
   .horizontal__list {
@@ -2827,178 +2803,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     text-wrap: initial !important;
   }
 }
-
-/* Desktop & tablet, reduced motion: no pin or horizontal travel; heading above a row of statistics */
-@media screen and (min-width: 768px) and (prefers-reduced-motion: reduce) {
-  .horizontal {
-    height: auto;
-    padding-block: clamp(5rem, 10vh, 8rem) !important;
-  }
-
-  .horizontal__sticky {
-    position: relative;
-    height: auto;
-    overflow: visible;
-  }
-
-  .horizontal__list {
-    flex-wrap: wrap;
-    height: auto;
-    gap: clamp(2.5rem, 5vh, 4rem) clamp(2rem, 4vw, 4rem);
-    padding-inline: clamp(2.5rem, 6vw, 6rem);
-    transform: none !important;
-  }
-
-  .horizontal__item {
-    flex: 1 1 0;
-    width: auto;
-    min-width: 0;
-    height: auto;
-  }
-
-  .horizontal__item.is--first {
-    flex: 0 0 100%;
-    min-width: 100%;
-    max-width: 100%;
-  }
-
-  .horizontal__content .f-140 {
-    font-size: clamp(3.4rem, 5.6vw, 6.4rem);
-  }
-}
-
-/* Mobile, reduced motion: static vertical list with the real figures */
-@media screen and (max-width: 767px) and (prefers-reduced-motion: reduce) {
-  .horizontal {
-    height: auto !important;
-    min-height: 0 !important;
-    position: relative !important;
-    padding: 0 !important;
-    padding-top: clamp(64px, 8.5vh, 88px) !important;
-    padding-bottom: clamp(64px, 8.5vh, 88px) !important;
-    background-color: #00063D !important;
-    overflow: visible !important;
-    width: 100% !important;
-  }
-
-  .horizontal__sticky {
-    position: relative !important;
-    top: auto !important;
-    height: auto !important;
-    min-height: 0 !important;
-    width: 100% !important;
-    display: block !important;
-    overflow: visible !important;
-    background-color: transparent !important;
-  }
-
-  .horizontal__list {
-    display: flex !important;
-    flex-direction: column !important;
-    height: auto !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    align-items: stretch !important;
-    padding-left: clamp(20px, 5.5vw, 24px) !important;
-    padding-right: clamp(20px, 5.5vw, 24px) !important;
-    gap: clamp(28px, 4vh, 38px) !important;
-    transform: none !important;
-    box-sizing: border-box !important;
-  }
-
-  .horizontal__item {
-    flex: none !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    height: auto !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .horizontal__item:not(.is--first) {
-    padding-top: clamp(18px, 2.5vh, 24px) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-  }
-
-  .horizontal__item.is--first {
-    flex: none !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    text-align: left !important;
-    padding: 0 !important;
-    margin-bottom: clamp(10px, 1.8vh, 16px) !important;
-    border-top: none !important;
-  }
-
-  .horizontal__item.is--first .horizontal__content,
-  .horizontal__item.is--first .is--heading-center {
-    align-items: flex-start !important;
-    text-align: left !important;
-    margin: 0 !important;
-    width: 100% !important;
-    gap: 0 !important;
-  }
-
-  .horizontal__item.is--first .f-96 {
-    font-family: 'Staatliches', sans-serif !important;
-    font-size: clamp(34px, 9.2vw, 40px) !important;
-    line-height: 1.04 !important;
-    letter-spacing: 0.02em !important;
-    font-weight: 400 !important;
-    text-align: left !important;
-    color: #ffffff !important;
-    text-wrap: balance !important;
-    margin: 0 !important;
-    text-transform: uppercase !important;
-  }
-
-  .horizontal__content {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    text-align: left !important;
-    justify-content: flex-start !important;
-    gap: clamp(8px, 1.2vh, 12px) !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  .horizontal__content .f-140 {
-    font-family: 'Staatliches', sans-serif !important;
-    font-size: clamp(58px, 15.5vw, 68px) !important;
-    line-height: 0.95 !important;
-    letter-spacing: 0.02em !important;
-    color: #ffffff !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    text-align: left !important;
-    white-space: nowrap !important;
-  }
-
-  .horizontal__content .f-40 {
-    font-family: 'Manrope', sans-serif !important;
-    font-size: clamp(14.5px, 4vw, 16.5px) !important;
-    line-height: 1.45 !important;
-    letter-spacing: -0.01em !important;
-    font-weight: 500 !important;
-    color: rgba(255, 255, 255, 0.9) !important;
-    max-width: 320px !important;
-    margin: 0 !important;
-    text-align: left !important;
-    padding: 0 !important;
-  }
-}
-
-
 
 /* ==========================================================================
    THE INDUSTRY IS CHANGING / CORE VALUES (CAPSULE STREAM)
@@ -3327,9 +3131,9 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Mobile, motion allowed: 300vh = 100vh sticky frame + 200vh runway. The heading block stays on top
+/* Mobile: 300vh = 100vh sticky frame + 200vh runway. The heading block stays on top
    (layered above the stream as on desktop) while the tilted columns drift beneath it. */
-@media screen and (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+@media screen and (max-width: 767px) {
   .crewmind-about-stats {
     height: 300vh;
   }
@@ -3337,6 +3141,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   .crewmind-about-stats__sticky {
     height: 100vh;
     height: 100svh;
+    height: 100dvh;
   }
 
   .crewmind-about-stats__left {
@@ -3365,73 +3170,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     transform: translate(-50%, -50%) rotate(-14deg) !important;
   }
 }
-
-/* Mobile, reduced motion: no pin, no tilt; every card readable in a static two-column grid */
-@media screen and (max-width: 767px) and (prefers-reduced-motion: reduce) {
-  .crewmind-about-stats {
-    padding-block: clamp(64px, 8.5vh, 88px) !important;
-  }
-
-  .crewmind-about-stats__right {
-    position: static !important;
-    transform: none !important;
-    width: 100% !important;
-    margin-top: clamp(28px, 4vh, 40px) !important;
-  }
-
-  .crewmind-about-stats__col {
-    transform: none !important;
-  }
-}
-
-/* Reduced Motion preference */
-@media (prefers-reduced-motion: reduce) {
-  .crewmind-about-stats {
-    height: auto !important;
-  }
-  .crewmind-about-stats__sticky {
-    position: static !important;
-    height: auto !important;
-  }
-  .crewmind-egg-card {
-    transition: none !important;
-    transform: none !important;
-  }
-}
-
-/* Desktop & tablet, reduced motion: text and an untilted, static two-column card grid side by side */
-@media screen and (min-width: 768px) and (prefers-reduced-motion: reduce) {
-  .crewmind-about-stats {
-    padding-block: clamp(5rem, 10vh, 8rem) !important;
-  }
-
-  .crewmind-about-stats .container,
-  .crewmind-about-stats__layout {
-    height: auto;
-  }
-
-  .crewmind-about-stats__layout {
-    gap: clamp(2rem, 4vw, 5rem);
-  }
-
-  .crewmind-about-stats__right {
-    position: static;
-    transform: none;
-    width: auto;
-    flex: 1 1 auto;
-  }
-
-  .crewmind-about-stats__col {
-    transform: none !important;
-  }
-
-  .crewmind-egg-card {
-    width: clamp(14rem, 18vw, 20rem);
-    height: clamp(22rem, 30vw, 28rem);
-  }
-}
-
-
 
 /* ==========================================================================
    WHAT MAKES US DIFFERENT (CLEAN EDITORIAL 2x2 NUMBERED PRINCIPLES GRID)
@@ -3774,44 +3512,14 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Mobile, motion allowed: 280vh = 100vh sticky frame + 180vh runway (same as desktop) */
-@media screen and (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+/* Mobile: 280vh = 100vh sticky frame + 180vh runway (same as desktop) */
+@media screen and (max-width: 767px) {
   .ovals-diff__sticky {
     height: 100vh;
     height: 100svh;
+    height: 100dvh;
   }
 }
-
-/* Mobile, reduced motion: static flow, no pin */
-@media screen and (max-width: 767px) and (prefers-reduced-motion: reduce) {
-  .ovals-diff-section {
-    padding-block: clamp(64px, 8.5vh, 88px) !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ovals-diff-section {
-    height: auto !important;
-  }
-
-  .ovals-diff__sticky {
-    position: static !important;
-    height: auto !important;
-  }
-
-  .diff-principle-card,
-  .diff-principles-grid,
-  .ovals-diff__left,
-  .ovals-diff__heading,
-  .ovals-diff__subpara {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-
 
 /* ==========================================================================
    MANAGEMENT PARTNERS SECTION (#00063D THEME, WHITE CARDS, #00063D TEXT)
@@ -4177,10 +3885,10 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Mobile, motion allowed: pinned frame with the deck dealt as a vertically overlapping stack.
+/* Mobile: pinned frame with the deck dealt as a vertically overlapping stack.
    300vh = 100vh sticky frame + 200vh runway. Each card overlaps the previous one, leaving the
    previous card's title strip (--m-step) visible. */
-@media screen and (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+@media screen and (max-width: 767px) {
   .mgmt-section {
     height: 300vh !important;
     padding: 0 !important;
@@ -4191,6 +3899,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     top: 0 !important;
     height: 100vh !important;
     height: 100svh !important;
+    height: 100dvh !important;
     min-height: 0 !important;
     justify-content: center !important;
     padding: clamp(24px, 5svh, 48px) 0 !important;
@@ -4262,31 +3971,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     content: ' ';
   }
 }
-
-/* Desktop, reduced motion: one static screen with the settled deck (no sticky runway) */
-@media screen and (min-width: 992px) and (prefers-reduced-motion: reduce) {
-  .mgmt-section {
-    height: auto;
-  }
-
-  .mgmt-sticky-frame {
-    position: relative;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mgmt-card-slot,
-  .mgmt-card,
-  .mgmt-header,
-  .mgmt-title {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-
 
 /* ==========================================================================
    CLOSING CTA & FOOTER (IMPORTANT SECTIONS - DEEP NAVY #00063D)
@@ -5100,14 +4784,3 @@ body[theme="alt-light"] .custom-cursor.hovering {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}

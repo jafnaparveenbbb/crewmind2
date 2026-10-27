@@ -34,8 +34,8 @@ export default function Footer() {
         onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
 
-      // Wordmark rising entrance animation (skipped for reduced motion)
-      if (wordmark && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Wordmark rising entrance animation
+      if (wordmark) {
         gsap.fromTo(wordmark,
           { y: 35, opacity: 0 },
           {
@@ -74,11 +74,10 @@ export default function Footer() {
 
   // Route through Lenis so the smooth-scroll loop and ScrollTriggers stay in sync
   const scrollToTop = () => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (window.__lenis) {
-      window.__lenis.scrollTo(0, reduced ? { immediate: true } : { duration: 1.8 });
+      window.__lenis.scrollTo(0, { duration: 1.8 });
     } else {
-      window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 

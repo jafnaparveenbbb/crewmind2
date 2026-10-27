@@ -32,8 +32,7 @@ export default function HorizontalStats() {
       const mm = gsap.matchMedia();
 
       // DESKTOP & TABLET (>= 768px): Original horizontal pinned scrub experience
-      // (reduced motion: static layout in CSS with the real figures, no counters)
-      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(min-width: 768px)", () => {
         const getScrollWidth = () => {
           return -(list.scrollWidth - window.innerWidth);
         };
@@ -87,7 +86,7 @@ export default function HorizontalStats() {
       // MOBILE (< 768px): Same pinned horizontal track, one full-width slide per statistic.
       // Each slide arrives, its counter finishes exactly as it lands, then holds before the next move.
       // Counters are scroll-linked so reverse scrolling retraces the same numbers.
-      mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(max-width: 767px)", () => {
         const items = list.querySelectorAll('.horizontal__item');
         const counters = [
           null,
@@ -141,7 +140,7 @@ export default function HorizontalStats() {
         });
 
         return () => {
-          // Restore the real figures for reduced motion / desktop branches
+          // Restore the real figures for the desktop branch
           counters.forEach((counter) => {
             if (counter && counter.ref.current) {
               counter.ref.current.innerText = `${counter.target}%`;

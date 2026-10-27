@@ -32,7 +32,7 @@ export default function AboutSection() {
       const mm = gsap.matchMedia();
 
       // ALL VIEWPORTS: Full kinetic reveal and word scrub animation (same choreography on mobile)
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
+      mm.add("all", () => {
         // Section Entry: Label & Heading Masked Rise-Up Animation
         if (labelRef.current) {
           gsap.fromTo(labelRef.current,
@@ -146,25 +146,6 @@ export default function AboutSection() {
           if (st.isActive) {
             playBubbleEntrance();
           }
-        }
-      });
-
-      // REDUCED MOTION: No reveals or scrub; all text & elements 100% visible immediately
-      mm.add("(prefers-reduced-motion: reduce)", () => {
-        if (labelRef.current) {
-          gsap.set(labelRef.current, { opacity: 1, y: 0, clearProps: "transform" });
-        }
-        const headingLines = [headingLine1Ref.current, headingLine2Ref.current].filter(Boolean);
-        if (headingLines.length > 0) {
-          gsap.set(headingLines, { yPercent: 0, opacity: 1, clearProps: "transform" });
-        }
-        if (wordsWrapRef.current) {
-          const words = wordsWrapRef.current.querySelectorAll('.about__word');
-          gsap.set(words, { opacity: 1, y: 0, clearProps: "transform" });
-        }
-        const bubbleItems = section.querySelectorAll('.about-pillar-item');
-        if (bubbleItems.length > 0) {
-          gsap.set(bubbleItems, { opacity: 1, y: 0, clearProps: "transform" });
         }
       });
 

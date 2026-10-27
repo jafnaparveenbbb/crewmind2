@@ -23,9 +23,6 @@ export default function ClosingCTA() {
         onLeaveBack: () => document.body.setAttribute('theme', 'white')
       });
 
-      // Reduced motion: no entrance; content stays fully visible
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
       // 2. Smooth Section Entry Animation
       const textWrap = section.querySelector('.cta__text-wrap');
       const scrollBadge = section.querySelector('.cta__scroll--parent');
@@ -102,11 +99,10 @@ export default function ClosingCTA() {
 
   // Route through Lenis so the smooth-scroll loop and ScrollTriggers stay in sync
   const scrollToTop = () => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (window.__lenis) {
-      window.__lenis.scrollTo(0, reduced ? { immediate: true } : { duration: 1.8 });
+      window.__lenis.scrollTo(0, { duration: 1.8 });
     } else {
-      window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 

@@ -54,11 +54,7 @@ export default function WhatMakesUsDifferent() {
         onLeaveBack: () => document.body.setAttribute('theme', 'navy')
       });
 
-      // 2. Respect reduced-motion preferences
-      const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReducedMotion) return;
-
-      // 3. Responsive ScrollTrigger using GSAP matchMedia
+      // 2. Responsive ScrollTrigger using GSAP matchMedia
       const mm = gsap.matchMedia();
 
       // All viewports: Narrative entrance & grid reveal

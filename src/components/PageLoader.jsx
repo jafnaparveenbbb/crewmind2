@@ -48,7 +48,6 @@ const GLYPHS = [
  *    - 'w' rotates clockwise through 90° ('3') and snaps upright; 'r' straightens; 'c' glides in.
  * 3. Brief confident hold on the pristine assembled wordmark.
  * 4. Buttery smooth dissolve/fade into the Hero section with Lenis/ScrollTrigger handoff.
- * 5. Respects prefers-reduced-motion with a clean instant fade-in and reveal.
  */
 export default function PageLoader({ onComplete }) {
   const loaderRef = useRef(null);
@@ -62,12 +61,6 @@ export default function PageLoader({ onComplete }) {
     const loader = loaderRef.current;
     const logoWrap = logoWrapRef.current;
     if (!loader || !logoWrap) return;
-
-    // Check prefers-reduced-motion
-    const prefersReducedMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // Exit transition handler
     const triggerExit = () => {
@@ -91,29 +84,7 @@ export default function PageLoader({ onComplete }) {
       });
     };
 
-    if (prefersReducedMotion) {
-      // Reduced-motion: reveal completed logo quickly without rotation, then exit
-      glyphRefs.current.forEach((el) => {
-        if (el) gsap.set(el, { opacity: 1, rotation: 0, x: 0, y: 0, scale: 1 });
-      });
-      gsap.fromTo(
-        logoWrap,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.35,
-          ease: 'power1.out',
-          onComplete: () => {
-            gsap.delayedCall(0.5, triggerExit);
-          },
-        }
-      );
-      return () => {
-        gsap.killTweensOf([loader, logoWrap, ...glyphRefs.current]);
-      };
-    }
-
-    // Standard motion sequence:
+    // Motion sequence:
     // Elements: [c, r, e, w, m, i, n, d, dot]
     const [c, r, e, w, m, i, n, d, dot] = glyphRefs.current;
     if (!c || !r || !e || !w || !m || !i || !n || !d || !dot) return;

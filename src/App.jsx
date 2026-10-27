@@ -67,17 +67,20 @@ export default function App() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
     // 2. Initialize Lenis Smooth Scrolling with responsive, faster scroll speed
-    // (reduced motion: native wheel scrolling without inertia)
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // (same smoothing on every device, regardless of the OS reduced-motion setting).
+    // syncTouch routes finger scrolling through Lenis as well, so pins and scrubs advance in the
+    // same frame as the scroll on phones, exactly as they do with a wheel on desktop.
     const lenis = new Lenis({
       duration: 0.85,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
-      smoothWheel: !prefersReducedMotion,
+      smoothWheel: true,
+      syncTouch: true,
       wheelMultiplier: 1.25,
       touchMultiplier: 1.15,
-      infinite: false
+      infinite: false,
+      respectReducedMotion: false
     });
     lenisRef.current = lenis;
     window.__lenis = lenis;
@@ -174,11 +177,10 @@ export default function App() {
 
   const handleScrollArrowClick = () => {
     const footer = document.getElementById('footer') || document.querySelector('footer');
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (footer && lenisRef.current) {
-      lenisRef.current.scrollTo(footer, reduced ? { immediate: true } : { duration: 1.8 });
+      lenisRef.current.scrollTo(footer, { duration: 1.8 });
     } else if (footer) {
-      footer.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+      footer.scrollIntoView({ behavior: 'smooth' });
     }
   };
 

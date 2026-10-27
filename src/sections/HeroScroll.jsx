@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ASSETS } from '../utils/assets';
+import { playWhenAllowed } from '../utils/playWhenAllowed';
 import Navbar from '../components/Navbar';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -37,11 +38,7 @@ export default function HeroScroll({ isLoaded = true }) {
 
     if (!container || !stickyFrame || !videoBox || !rowsParent) return;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (videoElement && !prefersReducedMotion) {
-      videoElement.play().catch(() => { });
-    }
+    const stopVideoRetry = playWhenAllowed(videoElement);
 
     let clipX = 0;
     let clipY = 0;
@@ -93,16 +90,6 @@ export default function HeroScroll({ isLoaded = true }) {
     radius = initialCoords.radius;
 
     const ctx = gsap.context(() => {
-      // Reduced motion: no pin or scrub. Show the settled typographic field with nav and
-      // tagline visible; the looping video is paused and hidden behind the target portrait.
-      if (prefersReducedMotion) {
-        if (videoElement) videoElement.pause();
-        gsap.set(videoBox, { opacity: 0 });
-        gsap.set(rowsParent, { opacity: 1, scale: 1 });
-        gsap.set([row1, row2, row3, row4].filter(Boolean), { x: 0 });
-        return;
-      }
-
       const isMob = window.innerWidth <= 768;
       const initialTextScale = isMob ? 4.2 : 5.6;
 
@@ -283,6 +270,7 @@ export default function HeroScroll({ isLoaded = true }) {
 
     return () => {
       isMounted = false;
+      stopVideoRetry();
       refreshLayoutRef.current = null;
       clearTimeout(resizeTimer);
       window.removeEventListener('resize', handleResize);

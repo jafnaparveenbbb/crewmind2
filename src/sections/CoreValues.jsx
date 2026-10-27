@@ -56,8 +56,7 @@ export default function CoreValues() {
       const mm = gsap.matchMedia();
 
       // DESKTOP (>= 768px): Counter-Parallax Stream Scroll Animation
-      // (reduced motion: static side-by-side layout in CSS)
-      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(min-width: 768px)", () => {
         if (!col1 || !col2 || !stream) return;
         gsap.set(stream, { clearProps: "x,transform" });
 
@@ -102,8 +101,7 @@ export default function CoreValues() {
 
       // MOBILE (< 768px): Same counter-parallax stream as desktop inside a CSS-sticky frame.
       // The tilted two-column stream sits beneath the heading block; columns drift in opposite directions.
-      // Reduced motion gets no pin and no movement (static layout in CSS).
-      mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(max-width: 767px)", () => {
         if (!col1 || !col2) return;
 
         const tl = gsap.timeline({

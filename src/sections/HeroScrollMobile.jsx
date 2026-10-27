@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ASSETS } from '../utils/assets';
+import { playWhenAllowed } from '../utils/playWhenAllowed';
 import Navbar from '../components/Navbar';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -36,21 +37,8 @@ export default function HeroScrollMobile({ isLoaded = true }) {
 
     if (!container || !stickyFrame || !videoBox || !rowsParent) return;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Gracefully handle mobile video autoplay
-    if (videoElement && !prefersReducedMotion) {
-      videoElement.muted = true;
-      videoElement.playsInline = true;
-      videoElement.setAttribute('muted', '');
-      videoElement.setAttribute('playsinline', '');
-      const playPromise = videoElement.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Video autoplay blocked by browser policy; poster remains visible as fallback
-        });
-      }
-    }
+    // Gracefully handle mobile video autoplay (retries on first touch if autoplay is blocked)
+    const stopVideoRetry = playWhenAllowed(videoElement);
 
     // Precise calculation of target center circle coordinates & radius relative to sticky frame
     const getTargetCoordinates = () => {
@@ -106,16 +94,6 @@ export default function HeroScrollMobile({ isLoaded = true }) {
     let { clipX, clipY, radius } = getTargetCoordinates();
 
     const ctx = gsap.context(() => {
-      // Reduced motion: no pin or scrub. Show the settled typographic field with nav and
-      // tagline visible; the looping video is paused and hidden behind the target portrait.
-      if (prefersReducedMotion) {
-        if (videoElement) videoElement.pause();
-        gsap.set(videoBox, { opacity: 0 });
-        gsap.set(rowsParent, { opacity: 1, scale: 1, y: 0 });
-        gsap.set([row1, row2, row3], { x: 0 });
-        return;
-      }
-
       const initialTextScale = 3.8;
 
       // Rows travel about one word-width, matching the desktop glide relative to the type size
@@ -298,6 +276,7 @@ export default function HeroScrollMobile({ isLoaded = true }) {
 
     return () => {
       isMounted = false;
+      stopVideoRetry();
       refreshLayoutRef.current = null;
       clearTimeout(resizeTimer);
       window.removeEventListener('resize', handleResize);
