@@ -31,8 +31,8 @@ export default function AboutSection() {
 
       const mm = gsap.matchMedia();
 
-      // DESKTOP (>= 768px): Keep full kinetic reveal and word scrub animation
-      mm.add("(min-width: 768px)", () => {
+      // ALL VIEWPORTS: Full kinetic reveal and word scrub animation (same choreography on mobile)
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
         // Section Entry: Label & Heading Masked Rise-Up Animation
         if (labelRef.current) {
           gsap.fromTo(labelRef.current,
@@ -149,8 +149,8 @@ export default function AboutSection() {
         }
       });
 
-      // MOBILE (< 768px): No text animation scrub; all text & elements 100% visible immediately
-      mm.add("(max-width: 767px)", () => {
+      // REDUCED MOTION: No reveals or scrub; all text & elements 100% visible immediately
+      mm.add("(prefers-reduced-motion: reduce)", () => {
         if (labelRef.current) {
           gsap.set(labelRef.current, { opacity: 1, y: 0, clearProps: "transform" });
         }

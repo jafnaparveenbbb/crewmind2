@@ -1684,8 +1684,9 @@ body[theme="footer-cta"] .scroll-arrow:hover {
      DEDICATED MOBILE HERO (HEROSCROLLMOBILE)
      ========================================================================== */
 
+  /* 260vh = 100vh pinned frame + 160vh scrub runway (desktop: 100vh + 140vh) */
   .hero-mob-sticky {
-    height: 180vh !important;
+    height: 260vh !important;
     position: relative !important;
     width: 100% !important;
     background-color: var(--navy) !important;
@@ -2207,15 +2208,14 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     color: var(--navy) !important;
   }
 
+  /* Mask for the rising heading reveal (same as desktop) */
   .about__heading-line {
     display: block !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   .about__heading-inner {
     color: var(--navy) !important;
-    opacity: 1 !important;
-    transform: none !important;
     visibility: visible !important;
   }
 
@@ -2232,8 +2232,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 
   .about__word {
-    opacity: 1 !important;
-    transform: none !important;
     visibility: visible !important;
   }
 
@@ -2257,8 +2255,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     justify-content: center !important;
     align-items: center !important;
     flex-shrink: 0 !important;
-    opacity: 1 !important;
-    transform: none !important;
     visibility: visible !important;
   }
 
@@ -2325,6 +2321,29 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     text-align: center !important;
     max-width: 85% !important;
     margin: 0 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about__label,
+  .about__heading-inner,
+  .about__word,
+  .about-pillar-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media screen and (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .hero-mob-sticky {
+    height: 100svh !important;
+  }
+}
+
+/* Desktop hero, reduced motion: a single static screen (no pinned runway) */
+@media (prefers-reduced-motion: reduce) {
+  .home-sticky {
+    height: 100vh !important;
   }
 }
 
@@ -2549,6 +2568,33 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
+/* Mobile, motion allowed: the heading stays fixed at the top of the section (desktop keeps it fixed
+   beside the list) while the cards scroll beneath it and activate at the same 65% line. */
+@media screen and (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .cards__left {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 6 !important;
+    padding-top: clamp(16px, 3svh, 28px) !important;
+    padding-bottom: clamp(12px, 2svh, 18px) !important;
+    background-color: #FFFFFF !important;
+  }
+
+  /* Full-bleed white backdrop with a soft fade so cards slide underneath the heading */
+  .cards__left::before {
+    content: '';
+    position: absolute;
+    inset: 0 calc(-1 * clamp(16px, 4.5vw, 20px)) -24px;
+    background: linear-gradient(to bottom, #FFFFFF calc(100% - 24px), rgba(255, 255, 255, 0));
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .cards__left .section-title h2 {
+    font-size: clamp(34px, min(10.5vw, 5.6svh), 54px) !important;
+  }
+}
+
 
 
 /* ==========================================================================
@@ -2728,7 +2774,101 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-@media screen and (max-width: 767px) {
+/* Mobile, motion allowed: desktop-style pinned horizontal track, one full-width slide per statistic.
+   480vh = 100vh sticky frame + 380vh runway (same as desktop). */
+@media screen and (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .horizontal {
+    height: 480vh;
+  }
+
+  .horizontal__sticky {
+    height: 100vh;
+    height: 100svh;
+  }
+
+  .horizontal__list {
+    gap: 0;
+    padding: 0;
+  }
+
+  .horizontal__item,
+  .horizontal__item.is--first {
+    flex: 0 0 100vw;
+    width: 100vw;
+    min-width: 100vw;
+    max-width: 100vw;
+    align-items: center;
+    padding: 0 clamp(24px, 7vw, 36px);
+  }
+
+  .horizontal__content {
+    width: auto;
+    gap: clamp(12px, 1.8vh, 18px);
+  }
+
+  .horizontal__item.is--first .f-96 {
+    font-size: clamp(44px, 13vw, 58px) !important;
+    line-height: 1 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .horizontal__content .f-140 {
+    font-size: clamp(76px, 24vw, 104px) !important;
+    line-height: 0.92 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .horizontal__content .f-40 {
+    font-family: 'Manrope', sans-serif !important;
+    font-size: clamp(16px, 4.4vw, 19px) !important;
+    line-height: 1.45 !important;
+    letter-spacing: -0.01em !important;
+    font-weight: 500 !important;
+    text-wrap: initial !important;
+  }
+}
+
+/* Desktop & tablet, reduced motion: no pin or horizontal travel; heading above a row of statistics */
+@media screen and (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .horizontal {
+    height: auto;
+    padding-block: clamp(5rem, 10vh, 8rem) !important;
+  }
+
+  .horizontal__sticky {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+
+  .horizontal__list {
+    flex-wrap: wrap;
+    height: auto;
+    gap: clamp(2.5rem, 5vh, 4rem) clamp(2rem, 4vw, 4rem);
+    padding-inline: clamp(2.5rem, 6vw, 6rem);
+    transform: none !important;
+  }
+
+  .horizontal__item {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    height: auto;
+  }
+
+  .horizontal__item.is--first {
+    flex: 0 0 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .horizontal__content .f-140 {
+    font-size: clamp(3.4rem, 5.6vw, 6.4rem);
+  }
+}
+
+/* Mobile, reduced motion: static vertical list with the real figures */
+@media screen and (max-width: 767px) and (prefers-reduced-motion: reduce) {
   .horizontal {
     height: auto !important;
     min-height: 0 !important;
@@ -2981,10 +3121,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   width: 100%;
 }
 
-.crewmind-about-stats__mobile-track {
-  display: none;
-}
-
 .crewmind-about-stats__col {
   display: flex;
   flex-direction: column;
@@ -3049,7 +3185,8 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: 0.02em;
-  color: var(--navy);
+  /* !important: the body theme turns navy (white headings) while these cards can still be on screen */
+  color: var(--navy) !important;
   text-align: center;
   text-transform: uppercase;
   max-width: 18rem;
@@ -3062,7 +3199,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   font-weight: 500;
   line-height: 1.55;
   letter-spacing: -0.01em;
-  color: var(--body-text);
+  color: var(--body-text) !important;
   opacity: 0.85;
   text-align: center;
   max-width: 17rem;
@@ -3103,88 +3240,37 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Responsive Mobile (< 768px) */
+/* Responsive Mobile (< 768px): heading block on top, desktop's tilted two-column pill stream below */
 @media screen and (max-width: 767px) {
   .crewmind-about-stats {
-    position: relative !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: auto !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    background-color: #FFFFFF !important;
-    overflow: visible !important;
-  }
-
-  .crewmind-about-stats > .pin-spacer {
-    background-color: #FFFFFF !important;
-  }
-
-  .crewmind-about-stats__sticky {
-    position: relative;
-    top: 0;
-    height: 100vh;
-    height: 100dvh;
-    min-height: 100dvh;
-    max-height: 100dvh;
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-block: 0 !important;
-    background-color: #FFFFFF !important;
-    box-sizing: border-box;
+    height: auto;
   }
 
   .crewmind-about-stats .container {
     width: 100% !important;
     max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    height: auto !important;
+    height: 100% !important;
   }
 
   .crewmind-about-stats__layout {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
-    gap: clamp(14px, 2.4vh, 22px) !important;
-    height: auto !important;
-    width: 100% !important;
-    padding-top: clamp(1rem, 2vh, 1.8rem) !important;
-    padding-bottom: clamp(1rem, 2vh, 1.8rem) !important;
-    box-sizing: border-box !important;
+    display: block !important;
+    height: 100% !important;
   }
 
   .crewmind-about-stats__left {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    text-align: left !important;
-    gap: 0 !important;
+    flex: none !important;
     width: 100% !important;
-    max-width: 100% !important;
-    padding-inline: var(--page-padding-x, 20px) !important;
-    box-sizing: border-box !important;
-    flex-shrink: 0 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    gap: 0 !important;
   }
 
   .core-values__tag {
     font-size: clamp(11px, 2.8vw, 12px) !important;
     letter-spacing: 0.05em !important;
     margin-bottom: 8px !important;
-    display: inline-flex !important;
-    align-items: center !important;
   }
 
   .core-values__heading {
-    text-align: left !important;
-    font-size: clamp(32px, 8.5vw, 44px) !important;
+    font-size: clamp(30px, min(8.5vw, 5.2svh), 44px) !important;
     line-height: 1.04 !important;
     letter-spacing: 0.01em !important;
     font-weight: 400 !important;
@@ -3194,8 +3280,7 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 
   .core-values__subparagraph {
-    text-align: left !important;
-    font-size: clamp(13.5px, 3.8vw, 15.5px) !important;
+    font-size: clamp(13px, min(3.8vw, 2.2svh), 15.5px) !important;
     line-height: 1.5 !important;
     letter-spacing: -0.01em !important;
     font-weight: 500 !important;
@@ -3204,106 +3289,98 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     color: var(--body-text) !important;
   }
 
-  .crewmind-about-stats__right {
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    transform: none !important;
-    width: 100vw !important;
-    margin-left: 0 !important;
-    margin-top: 0 !important;
-    overflow: visible !important;
-    z-index: 4 !important;
-    display: block !important;
-    flex-shrink: 0 !important;
+  .crewmind-about-stats__stream {
+    gap: clamp(14px, 4vw, 20px) !important;
+    width: auto !important;
   }
 
-  .crewmind-desktop-stream {
-    display: none !important;
-  }
-
-  .crewmind-about-stats__mobile-track {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    gap: clamp(14px, 3.8vw, 20px) !important;
-    width: max-content !important;
-    padding-left: var(--page-padding-x, 20px) !important;
-    padding-right: clamp(24px, 8vw, 44px) !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    will-change: transform !important;
-    margin-top: 0 !important;
-    flex-shrink: 0 !important;
+  .crewmind-about-stats__col {
+    gap: clamp(14px, 2.2svh, 20px) !important;
   }
 
   .crewmind-egg-card {
-    flex: 0 0 clamp(180px, 50vw, 215px) !important;
-    width: clamp(180px, 50vw, 215px) !important;
-    max-width: 220px !important;
-    min-width: 170px !important;
-    height: clamp(240px, 34vh, 290px) !important;
-    border-radius: 9999px !important;
-    border: 1.5px solid rgba(0, 6, 61, 0.12) !important;
-    background-color: #FFFFFF !important;
-    color: var(--navy) !important;
-    transform: none !important;
-    padding: clamp(1.4rem, 2.5vh, 2rem) clamp(1rem, 2.8vw, 1.4rem) !important;
+    width: clamp(150px, 42vw, 178px) !important;
+    height: clamp(250px, 36svh, 290px) !important;
+    padding: clamp(26px, 4svh, 34px) 14px !important;
     box-shadow: 0 10px 30px rgba(0, 6, 61, 0.08) !important;
-    flex-shrink: 0 !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
+    border: 1.5px solid rgba(0, 6, 61, 0.12) !important;
   }
 
   .crewmind-egg-card__content {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    gap: 10px !important;
-    width: 100% !important;
+    gap: 8px !important;
   }
 
-  .capsule-index {
-    font-family: 'Space Mono', monospace !important;
-    font-size: 11px !important;
-    letter-spacing: 0.1em !important;
-    padding: 2px 8px !important;
-    border-radius: 999px !important;
-    border: 1px solid rgba(0, 6, 61, 0.15) !important;
-    background: rgba(0, 6, 61, 0.04) !important;
-    color: var(--navy) !important;
-    opacity: 0.55 !important;
-  }
-
+  /* Explicit colours: the body theme turns navy (white headings) while these cards are still on screen */
   .capsule-topic-heading {
-    font-family: 'Staatliches', sans-serif !important;
-    font-size: clamp(18px, 4.8vw, 21px) !important;
-    font-weight: 400 !important;
-    letter-spacing: 0.02em !important;
-    text-transform: uppercase !important;
-    line-height: 1.1 !important;
+    font-size: clamp(17px, 4.6vw, 20px) !important;
+    line-height: 1.08 !important;
+    max-width: 88% !important;
     color: var(--navy) !important;
-    text-align: center !important;
-    max-width: 10.5rem !important;
-    margin: 0 auto !important;
   }
 
   .capsule-topic-desc {
-    font-family: 'Manrope', sans-serif !important;
-    font-size: clamp(12.5px, 3.2vw, 14px) !important;
-    line-height: 1.55 !important;
-    letter-spacing: -0.01em !important;
+    font-size: clamp(12px, 3.2vw, 13px) !important;
+    line-height: 1.45 !important;
     font-weight: 500 !important;
+    max-width: 84% !important;
     color: var(--body-text) !important;
-    opacity: 0.88 !important;
-    max-width: 150px !important;
-    margin: 0 auto !important;
-    text-align: center !important;
+  }
+}
+
+/* Mobile, motion allowed: 300vh = 100vh sticky frame + 200vh runway. The heading block stays on top
+   (layered above the stream as on desktop) while the tilted columns drift beneath it. */
+@media screen and (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .crewmind-about-stats {
+    height: 300vh;
+  }
+
+  .crewmind-about-stats__sticky {
+    height: 100vh;
+    height: 100svh;
+  }
+
+  .crewmind-about-stats__left {
+    position: relative !important;
+    z-index: 6 !important;
+    padding-top: clamp(28px, 7svh, 64px) !important;
+    padding-bottom: 6px !important;
+    background-color: #FFFFFF !important;
+  }
+
+  /* Full-bleed white backdrop with a soft fade so cards slide underneath the text */
+  .crewmind-about-stats__left::before {
+    content: '';
+    position: absolute;
+    inset: 0 calc(-1 * clamp(16px, 4.5vw, 20px)) -28px;
+    background: linear-gradient(to bottom, #FFFFFF calc(100% - 28px), rgba(255, 255, 255, 0));
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .crewmind-about-stats__right {
+    top: 70% !important;
+    left: 50% !important;
+    right: auto !important;
+    width: auto !important;
+    transform: translate(-50%, -50%) rotate(-14deg) !important;
+  }
+}
+
+/* Mobile, reduced motion: no pin, no tilt; every card readable in a static two-column grid */
+@media screen and (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .crewmind-about-stats {
+    padding-block: clamp(64px, 8.5vh, 88px) !important;
+  }
+
+  .crewmind-about-stats__right {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    margin-top: clamp(28px, 4vh, 40px) !important;
+  }
+
+  .crewmind-about-stats__col {
+    transform: none !important;
   }
 }
 
@@ -3319,6 +3396,38 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   .crewmind-egg-card {
     transition: none !important;
     transform: none !important;
+  }
+}
+
+/* Desktop & tablet, reduced motion: text and an untilted, static two-column card grid side by side */
+@media screen and (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .crewmind-about-stats {
+    padding-block: clamp(5rem, 10vh, 8rem) !important;
+  }
+
+  .crewmind-about-stats .container,
+  .crewmind-about-stats__layout {
+    height: auto;
+  }
+
+  .crewmind-about-stats__layout {
+    gap: clamp(2rem, 4vw, 5rem);
+  }
+
+  .crewmind-about-stats__right {
+    position: static;
+    transform: none;
+    width: auto;
+    flex: 1 1 auto;
+  }
+
+  .crewmind-about-stats__col {
+    transform: none !important;
+  }
+
+  .crewmind-egg-card {
+    width: clamp(14rem, 18vw, 20rem);
+    height: clamp(22rem, 30vw, 28rem);
   }
 }
 
@@ -3578,88 +3687,42 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Mobile Layout (< 768px): Pinned section with horizontal circle animation */
+/* Mobile Layout (< 768px): Desktop's pinned 2x2 grid. Heading block on top, the four cards
+   below; the highlight moves through the cards as the section scrolls. Card size is capped by
+   both width and height so the whole layout fits 667px-tall screens. */
 @media screen and (max-width: 767px) {
   .ovals-diff-section {
-    position: relative !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: auto !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    background-color: #FFFFFF !important;
-    overflow: visible !important;
-  }
-
-  .ovals-diff-section > .pin-spacer {
-    background-color: #FFFFFF !important;
-  }
-
-  .ovals-diff__sticky {
-    position: relative;
-    top: 0;
-    height: 100vh;
-    height: 100dvh;
-    min-height: 100dvh;
-    max-height: 100dvh;
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-block: 0 !important;
-    background-color: #FFFFFF !important;
-    box-sizing: border-box;
+    --diff-card: min(calc((100vw - 54px) / 2), 23svh, 190px);
   }
 
   .ovals-diff-section .container {
     width: 100% !important;
     max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    height: auto !important;
+    padding-inline: var(--page-padding-x, 20px) !important;
+    box-sizing: border-box !important;
   }
 
   .ovals-diff__layout {
-    display: flex !important;
     flex-direction: column !important;
+    align-items: stretch !important;
     justify-content: center !important;
-    align-items: flex-start !important;
-    gap: clamp(14px, 2.4vh, 22px) !important;
-    height: auto !important;
-    width: 100% !important;
-    padding-top: clamp(1rem, 2vh, 1.8rem) !important;
-    padding-bottom: clamp(1rem, 2vh, 1.8rem) !important;
-    box-sizing: border-box !important;
+    gap: clamp(16px, 3svh, 30px) !important;
   }
 
   .ovals-diff__left {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    text-align: left !important;
-    gap: 0 !important;
+    flex: none !important;
     width: 100% !important;
-    max-width: 100% !important;
-    padding-inline: var(--page-padding-x, 20px) !important;
-    box-sizing: border-box !important;
-    flex-shrink: 0 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    gap: 0 !important;
   }
 
   .ovals-diff__tag {
     font-size: clamp(11px, 2.8vw, 12px) !important;
     letter-spacing: 0.05em !important;
     margin-bottom: 8px !important;
-    display: inline-flex !important;
-    align-items: center !important;
   }
 
   .ovals-diff__heading {
-    text-align: left !important;
-    font-size: clamp(32px, 8.5vw, 44px) !important;
+    font-size: clamp(30px, min(8.5vw, 5.2svh), 44px) !important;
     line-height: 1.04 !important;
     letter-spacing: 0.01em !important;
     font-weight: 400 !important;
@@ -3669,107 +3732,60 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 
   .ovals-diff__subpara {
-    text-align: left !important;
-    font-size: clamp(13.5px, 3.8vw, 15.5px) !important;
+    font-size: clamp(13px, min(3.8vw, 2.2svh), 15.5px) !important;
     line-height: 1.5 !important;
     letter-spacing: -0.01em !important;
     font-weight: 500 !important;
     max-width: 360px !important;
-    margin: 0 0 clamp(10px, 1.6vh, 14px) 0 !important;
+    margin: 0 0 clamp(10px, 1.6svh, 14px) 0 !important;
     color: var(--body-text) !important;
   }
 
   .ovals-diff__btn-wrap {
     margin-top: 0 !important;
-    margin-bottom: 0 !important;
   }
 
-  /* 4 Proportional Circles Track — Horizontal Movement Driven by Vertical Scroll */
   .diff-principles-grid {
-    position: relative !important;
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    gap: clamp(14px, 3.5vw, 18px) !important;
-    overflow: visible !important;
-    width: max-content !important;
-    max-width: none !important;
-    padding-top: clamp(8px, 1.5vh, 12px) !important;
-    padding-bottom: clamp(16px, 2.5vh, 24px) !important;
-    padding-left: var(--page-padding-x, 20px) !important;
-    padding-right: clamp(24px, 8vw, 44px) !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    flex-shrink: 0 !important;
+    flex: none !important;
+    grid-template-columns: repeat(2, var(--diff-card)) !important;
+    justify-content: center !important;
+    gap: 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 6px 0 !important;
     box-sizing: border-box !important;
-    scrollbar-width: none !important;
-    touch-action: pan-y !important;
-    will-change: transform;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  .diff-principles-grid::-webkit-scrollbar {
-    display: none !important;
   }
 
   .diff-principle-card {
-    flex: 0 0 clamp(175px, 50vw, 215px) !important;
-    width: clamp(175px, 50vw, 215px) !important;
-    max-width: 220px !important;
-    min-width: 165px !important;
-    height: clamp(175px, 50vw, 215px) !important;
-    aspect-ratio: 1 / 1 !important;
-    border-radius: clamp(20px, 4.8vw, 24px) !important;
-    border: 1.5px solid var(--navy) !important;
-    background-color: #FFFFFF !important;
-    color: var(--navy) !important;
-    padding: clamp(1rem, 2.5vw, 1.4rem) !important;
-    box-shadow: 0 10px 30px rgba(0, 6, 61, 0.08) !important;
-    flex-shrink: 0 !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transform: none !important;
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-  }
-
-  .diff-principle-card.active {
-    background-color: var(--navy) !important;
-    color: #FFFFFF !important;
-    border-color: var(--navy) !important;
-    box-shadow: 0 16px 40px rgba(0, 6, 61, 0.26) !important;
-    transform: none !important;
-  }
-
-  .diff-principle-card.active .diff-principle-card__title {
-    color: #FFFFFF !important;
+    width: var(--diff-card) !important;
+    max-width: none !important;
+    height: var(--diff-card) !important;
+    border-radius: clamp(18px, 4.6vw, 24px) !important;
+    padding: clamp(12px, 3vw, 18px) !important;
   }
 
   .diff-principle-card__inner {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 88% !important;
-    text-align: center !important;
+    max-width: 92% !important;
   }
 
   .diff-principle-card__title {
-    font-family: 'Manrope', sans-serif !important;
-    font-size: clamp(13px, 3.6vw, 15.5px) !important;
-    font-weight: 700 !important;
-    letter-spacing: -0.01em !important;
+    font-size: clamp(13px, min(3.8vw, 2.1svh), 16px) !important;
     line-height: 1.25 !important;
-    text-transform: none !important;
-    text-align: center !important;
-    margin: 0 !important;
+  }
+}
+
+/* Mobile, motion allowed: 280vh = 100vh sticky frame + 180vh runway (same as desktop) */
+@media screen and (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .ovals-diff__sticky {
+    height: 100vh;
+    height: 100svh;
+  }
+}
+
+/* Mobile, reduced motion: static flow, no pin */
+@media screen and (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .ovals-diff-section {
+    padding-block: clamp(64px, 8.5vh, 88px) !important;
   }
 }
 
@@ -4161,6 +4177,103 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
+/* Mobile, motion allowed: pinned frame with the deck dealt as a vertically overlapping stack.
+   300vh = 100vh sticky frame + 200vh runway. Each card overlaps the previous one, leaving the
+   previous card's title strip (--m-step) visible. */
+@media screen and (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .mgmt-section {
+    height: 300vh !important;
+    padding: 0 !important;
+  }
+
+  .mgmt-sticky-frame {
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    height: 100svh !important;
+    min-height: 0 !important;
+    justify-content: center !important;
+    padding: clamp(24px, 5svh, 48px) 0 !important;
+    overflow: hidden !important;
+  }
+
+  .mgmt-sticky-frame .container,
+  .mgmt-section .container {
+    height: 100% !important;
+    justify-content: center !important;
+    gap: clamp(20px, 3.5svh, 36px) !important;
+  }
+
+  .mgmt-header {
+    margin-bottom: 0 !important;
+  }
+
+  .mgmt-title {
+    font-size: clamp(34px, min(9vw, 5.6svh), 46px) !important;
+  }
+
+  .mgmt-stack-stage {
+    --m-step: clamp(58px, 9.4svh, 84px);
+    --m-card-h: clamp(104px, 15svh, 132px);
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    max-width: 360px !important;
+    height: calc(5 * var(--m-step) + var(--m-card-h)) !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .mgmt-card-slot {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: calc(var(--card-idx) * var(--m-step)) !important;
+    width: auto !important;
+    max-width: none !important;
+    height: var(--m-card-h) !important;
+    margin: 0 !important;
+    transform-origin: center bottom !important;
+  }
+
+  .mgmt-card {
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: clamp(12px, 1.9svh, 18px) 22px !important;
+    justify-content: flex-start !important;
+  }
+
+  .mgmt-card-slot:last-child .mgmt-card {
+    padding-bottom: clamp(12px, 1.9svh, 18px) !important;
+  }
+
+  /* Titles flow on one or two lines so each stays readable in its visible strip */
+  .mgmt-card__title {
+    font-size: clamp(15px, min(4.4vw, 2.3svh), 18px) !important;
+    line-height: 1.25 !important;
+  }
+
+  .mgmt-card__line {
+    display: inline !important;
+    white-space: normal !important;
+  }
+
+  .mgmt-card__line:not(:last-child)::after {
+    content: ' ';
+  }
+}
+
+/* Desktop, reduced motion: one static screen with the settled deck (no sticky runway) */
+@media screen and (min-width: 992px) and (prefers-reduced-motion: reduce) {
+  .mgmt-section {
+    height: auto;
+  }
+
+  .mgmt-sticky-frame {
+    position: relative;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .mgmt-card-slot,
   .mgmt-card,
@@ -4517,7 +4630,7 @@ footer,
 /* Section Labels (matches website typography scale) */
 .footer__label {
   font-family: 'Manrope', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -4554,7 +4667,7 @@ footer,
   border: 1px solid rgba(255, 255, 255, 0.16);
   padding: 0.75rem 1rem;
   font-family: 'Manrope', sans-serif;
-  font-size: 0.92rem;
+  font-size: 0.84rem;
   font-weight: 400;
   outline: none;
   border-radius: 8px;
@@ -4577,7 +4690,7 @@ footer,
 .footer__form-textarea::placeholder {
   color: rgba(255, 255, 255, 0.4);
   font-weight: 400;
-  font-size: 0.92rem;
+  font-size: 0.84rem;
 }
 
 .footer__form-input:focus,
@@ -4615,12 +4728,6 @@ footer,
   cursor: pointer;
   outline: none;
   transform: none !important;
-  transition: background-color 0.2s ease;
-}
-
-.footer__back-to-top:hover {
-  background-color: #E2E8F0;
-  transform: none !important;
 }
 
 .footer__back-to-top:focus-visible {
@@ -4641,16 +4748,10 @@ footer,
   gap: 8px;
   cursor: pointer;
   font-family: 'Manrope', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   outline: none;
-  transform: none !important;
-  transition: background-color 0.2s ease;
-}
-
-.footer__submit-btn:hover {
-  background-color: #E2E8F0;
   transform: none !important;
 }
 
@@ -4665,7 +4766,7 @@ footer,
   color: #ffffff;
   padding: 1.2rem;
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 500;
   margin-top: 1.25rem;
   line-height: 1.5;
@@ -4688,7 +4789,7 @@ footer,
 
 .footer__location {
   font-family: 'Manrope', sans-serif;
-  font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+  font-size: clamp(0.85rem, 0.95vw, 1rem);
   font-weight: 500;
   color: #ffffff;
   margin-top: 0.75rem;
@@ -4712,17 +4813,11 @@ footer,
   width: fit-content;
   max-width: 100%;
   font-family: 'Manrope', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   white-space: nowrap;
   outline: none;
-  transform: none !important;
-  transition: background-color 0.2s ease;
-}
-
-.footer__email-btn:hover {
-  background-color: #E2E8F0;
   transform: none !important;
 }
 
@@ -4754,13 +4849,6 @@ footer,
   color: #ffffff;
   text-decoration: none;
   outline: none;
-  transform: none !important;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.footer__social-btn:hover {
-  background-color: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.35);
   transform: none !important;
 }
 
@@ -4819,7 +4907,7 @@ footer,
   justify-content: space-between;
   align-items: center;
   font-family: 'Manrope', sans-serif;
-  font-size: clamp(0.78rem, 0.85vw, 0.88rem);
+  font-size: clamp(0.7rem, 0.75vw, 0.78rem);
   color: rgba(255, 255, 255, 0.45);
   box-sizing: border-box;
 }
@@ -4836,12 +4924,7 @@ footer,
   font-family: 'Manrope', sans-serif;
   font-size: inherit;
   font-weight: 500;
-  transition: color 0.2s ease;
   outline: none;
-}
-
-.footer__legal-item:hover {
-  color: #ffffff;
 }
 
 .footer__legal-item:focus-visible {
@@ -4901,18 +4984,18 @@ footer,
   }
 
   .footer__location {
-    font-size: 15.5px;
+    font-size: 14px;
     white-space: normal;
   }
 
   .footer__email-btn {
     height: 40px;
-    font-size: 13.5px;
+    font-size: 12.5px;
   }
 
   .footer__submit-btn {
     height: 40px;
-    font-size: 13.5px;
+    font-size: 12.5px;
   }
 
   .footer__back-to-top {
@@ -4944,7 +5027,7 @@ footer,
     gap: 0.75rem;
     align-items: center;
     text-align: center;
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .footer__legal-links {

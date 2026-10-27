@@ -36,8 +36,10 @@ export default function HeroScrollMobile({ isLoaded = true }) {
 
     if (!container || !stickyFrame || !videoBox || !rowsParent) return;
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Gracefully handle mobile video autoplay
-    if (videoElement) {
+    if (videoElement && !prefersReducedMotion) {
       videoElement.muted = true;
       videoElement.playsInline = true;
       videoElement.setAttribute('muted', '');
@@ -71,7 +73,10 @@ export default function HeroScrollMobile({ isLoaded = true }) {
       const savedX1 = gsap.getProperty(row1, 'x') || 0;
       const savedX2 = gsap.getProperty(row2, 'x') || 0;
       const savedX3 = gsap.getProperty(row3, 'x') || 0;
+      const rowsInner = rowsParent.firstElementChild;
+      const savedInnerScale = gsap.getProperty(rowsInner, 'scale') || 1;
 
+      gsap.set(rowsInner, { scale: 1 });
       gsap.set(rowsParent, { scale: 1, y: 0, transformOrigin: '50% 50%' });
       gsap.set([row1, row2, row3], { x: 0 });
 
@@ -85,6 +90,7 @@ export default function HeroScrollMobile({ isLoaded = true }) {
       const calculatedRadius = Math.round(targetRect.width / 2) || defaultRadius;
 
       // Restore transforms
+      gsap.set(rowsInner, { scale: savedInnerScale });
       gsap.set(rowsParent, { scale: savedScale, y: savedY, transformOrigin: savedOrigin });
       gsap.set(row1, { x: savedX1 });
       gsap.set(row2, { x: savedX2 });
@@ -100,10 +106,20 @@ export default function HeroScrollMobile({ isLoaded = true }) {
     let { clipX, clipY, radius } = getTargetCoordinates();
 
     const ctx = gsap.context(() => {
+      // Reduced motion: no pin or scrub. Show the settled typographic field with nav and
+      // tagline visible; the looping video is paused and hidden behind the target portrait.
+      if (prefersReducedMotion) {
+        if (videoElement) videoElement.pause();
+        gsap.set(videoBox, { opacity: 0 });
+        gsap.set(rowsParent, { opacity: 1, scale: 1, y: 0 });
+        gsap.set([row1, row2, row3], { x: 0 });
+        return;
+      }
+
       const initialTextScale = 3.8;
 
-      // Calculate mobile horizontal shift based on viewport and track geometry
-      const shiftDistance = Math.round(window.innerWidth * 0.38);
+      // Rows travel about one word-width, matching the desktop glide relative to the type size
+      const shiftDistance = Math.round(window.innerWidth * 0.5);
 
       // 1. Initial State: Video is 100% fullscreen, centered on the target coordinate
       gsap.set(videoBox, {
@@ -130,12 +146,13 @@ export default function HeroScrollMobile({ isLoaded = true }) {
         gsap.set(centerImgRef.current, { opacity: 1, scale: 1.05 });
       }
 
-      // Master Mobile Timeline pinned seamlessly across runway with responsive 0.5s scrub damping
+      // Master Mobile Timeline: same stage timings as desktop. Ending at "bottom bottom" means the
+      // whole sequence settles exactly as About's top edge reaches the bottom of the viewport.
       const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
           start: 'top top',
-          end: 'bottom top',
+          end: 'bottom bottom',
           pin: stickyFrame,
           pinSpacing: false,
           scrub: 0.5,
@@ -156,7 +173,7 @@ export default function HeroScrollMobile({ isLoaded = true }) {
         masterTl.to(navRef.current, {
           opacity: 0,
           y: -18,
-          duration: 0.8,
+          duration: 1.2,
           ease: 'power2.out'
         }, 0.0);
       }
@@ -165,7 +182,7 @@ export default function HeroScrollMobile({ isLoaded = true }) {
         masterTl.to(heroBottom, {
           opacity: 0,
           y: -15,
-          duration: 0.9,
+          duration: 1.5,
           ease: 'power2.out'
         }, 0.0);
       }
@@ -175,7 +192,7 @@ export default function HeroScrollMobile({ isLoaded = true }) {
         clipPath: `circle(150vmax at ${clipX}px ${clipY}px)`
       }, {
         clipPath: () => `circle(${radius}px at ${clipX}px ${clipY}px)`,
-        duration: 3.2,
+        duration: 5.4,
         ease: 'power2.inOut'
       }, 0.0);
 
@@ -184,7 +201,7 @@ export default function HeroScrollMobile({ isLoaded = true }) {
         scale: initialTextScale
       }, {
         scale: 1.0,
-        duration: 3.2,
+        duration: 5.2,
         ease: 'power2.out'
       }, 0.0);
 
@@ -197,35 +214,35 @@ export default function HeroScrollMobile({ isLoaded = true }) {
         }, {
           opacity: 1,
           scale: 1.05,
-          duration: 2.0,
+          duration: 2.8,
           stagger: {
-            each: 0.06,
+            each: 0.08,
             from: 'center'
           },
           ease: 'power1.out'
-        }, 0.4);
+        }, 0.5);
       }
 
       // Stage 4: Seamless handoff - Video dissolves into the perfectly aligned underlying circular portrait
       masterTl.to(videoBox, {
         opacity: 0,
-        duration: 0.6,
+        duration: 0.8,
         ease: 'power1.in'
-      }, 2.6);
+      }, 4.8);
 
       // Stage 5: Horizontal gliding of rows starts once video has cleanly settled into circle
       masterTl
-        .to(row1, { x: `+=${shiftDistance}px`, ease: 'none', duration: 2.4 }, 3.4)
-        .to(row2, { x: `-=${shiftDistance}px`, ease: 'none', duration: 2.4 }, 3.4)
-        .to(row3, { x: `+=${shiftDistance}px`, ease: 'none', duration: 2.4 }, 3.4);
+        .to(row1, { x: `+=${shiftDistance}px`, ease: 'none', duration: 3.8 }, 5.6)
+        .to(row2, { x: `-=${shiftDistance}px`, ease: 'none', duration: 3.8 }, 5.6)
+        .to(row3, { x: `+=${shiftDistance}px`, ease: 'none', duration: 3.8 }, 5.6);
 
-      // Stage 6: Seamless settle into natural exit
-      masterTl.to(rowsParent, {
-        scale: 0.95,
-        y: () => -Math.round(window.innerHeight * 0.12),
+      // Stage 6: Exit zoom-out, pulling the typography field back before About covers the hero.
+      // Scales the inner rows so the parent's 100vw overflow clip stays edge-to-edge.
+      masterTl.to(rowsParent.firstElementChild, {
+        scale: 0.85,
         duration: 1.2,
         ease: 'power2.inOut'
-      }, 5.0);
+      }, 8.6);
 
     }, container);
 

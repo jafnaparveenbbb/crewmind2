@@ -11,7 +11,6 @@ export default function CoreValues() {
   const streamRef = useRef(null);
   const col1Ref = useRef(null);
   const col2Ref = useRef(null);
-  const mobileTrackRef = useRef(null);
 
   const coreCards = [
     {
@@ -57,7 +56,8 @@ export default function CoreValues() {
       const mm = gsap.matchMedia();
 
       // DESKTOP (>= 768px): Counter-Parallax Stream Scroll Animation
-      mm.add("(min-width: 768px)", () => {
+      // (reduced motion: static side-by-side layout in CSS)
+      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
         if (!col1 || !col2 || !stream) return;
         gsap.set(stream, { clearProps: "x,transform" });
 
@@ -100,64 +100,46 @@ export default function CoreValues() {
         }
       });
 
-      // MOBILE (< 768px): Pinned section with horizontal cards track driven by vertical scroll
-      mm.add("(max-width: 767px)", () => {
-        const mobileTrack = mobileTrackRef.current;
-        const sticky = stickyRef.current;
-        if (!mobileTrack || !sticky) return;
+      // MOBILE (< 768px): Same counter-parallax stream as desktop inside a CSS-sticky frame.
+      // The tilted two-column stream sits beneath the heading block; columns drift in opposite directions.
+      // Reduced motion gets no pin and no movement (static layout in CSS).
+      mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+        if (!col1 || !col2) return;
 
-        gsap.set(mobileTrack, { clearProps: "all", x: 0 });
-
-        const getTravelDistance = () => {
-          return Math.max(0, mobileTrack.scrollWidth - window.innerWidth + 32);
-        };
-
-        const horizTween = gsap.to(mobileTrack, {
-          x: () => -getTravelDistance(),
-          ease: "none",
-          force3D: true
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.6,
+            invalidateOnRefresh: true
+          }
         });
 
-        const st = ScrollTrigger.create({
-          id: "core-values-mobile-pin",
-          trigger: section,
-          pin: sticky,
-          start: "top top",
-          end: () => `+=${Math.round(getTravelDistance() * 1.25)}`,
-          scrub: 0.4,
-          animation: horizTween,
-          invalidateOnRefresh: true
-        });
+        tl.fromTo(col1, { yPercent: 18 }, { yPercent: -42, ease: "none", duration: 1 }, 0);
+        tl.fromTo(col2, { yPercent: -35 }, { yPercent: 20, ease: "none", duration: 1 }, 0);
 
-        let headingTween = null;
+        // Short settle so the drift completes before the section releases
+        tl.to({}, { duration: 0.12 });
+
         if (leftRef.current) {
-          headingTween = gsap.fromTo(
+          gsap.fromTo(
             leftRef.current.children,
-            { opacity: 0, y: 20 },
+            { opacity: 0, y: 30 },
             {
               opacity: 1,
               y: 0,
-              duration: 0.65,
-              stagger: 0.08,
+              duration: 0.8,
+              stagger: 0.1,
               ease: "power2.out",
               scrollTrigger: {
                 trigger: section,
-                start: "top 85%",
-                toggleActions: "play none none none"
+                start: "top 70%",
+                toggleActions: "play none none reverse"
               }
             }
           );
         }
-
-        return () => {
-          if (st) st.kill();
-          if (horizTween) horizTween.kill();
-          if (headingTween) headingTween.kill();
-          gsap.set(mobileTrack, { clearProps: "transform" });
-          if (leftRef.current) {
-            gsap.set(leftRef.current.children, { clearProps: "opacity,transform" });
-          }
-        };
       });
 
     }, section);
@@ -237,18 +219,6 @@ export default function CoreValues() {
                   </div>
                 </div>
 
-              </div>
-
-              {/* Mobile Stream (Single flat horizontal track matching HorizontalStats) */}
-              <div ref={mobileTrackRef} className="crewmind-about-stats__mobile-track">
-                {coreCards.map((card, idx) => (
-                  <div key={idx} className={`crewmind-egg-card ${card.cardClass}`}>
-                    <div className="crewmind-egg-card__content">
-                      <h3 className="capsule-topic-heading">{card.title}</h3>
-                      <p className="capsule-topic-desc">{card.desc}</p>
-                    </div>
-                  </div>
-                ))}
               </div>
 
             </div>

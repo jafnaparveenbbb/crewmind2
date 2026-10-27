@@ -136,8 +136,68 @@ export default function ManagementPartners() {
       masterTl.to({}, { duration: 0.5 });
     });
 
-    // Mobile & Tablet (< 992px): Natural, responsive flow with individual card reveals (zero empty scroll void)
-    mm.add("(max-width: 991px)", () => {
+    // Mobile (< 768px): Same pinned deal as desktop, with the deck stacked vertically.
+    // Cards rise from below, rotate and scale into place one after another, then the deck holds.
+    mm.add("(max-width: 767px)", () => {
+      const cardSlots = stage.querySelectorAll('.mgmt-card-slot');
+      if (!cardSlots.length) return;
+
+      const masterTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.6,
+          invalidateOnRefresh: true
+        }
+      });
+
+      if (header) {
+        masterTl.fromTo(
+          header.children,
+          { opacity: 0, y: 18 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.06,
+            ease: "power2.out"
+          },
+          0
+        );
+      }
+
+      cardSlots.forEach((slot, idx) => {
+        const config = CARD_CONFIG[idx] || CARD_CONFIG[0];
+        masterTl.fromTo(
+          slot,
+          {
+            opacity: 0,
+            x: 0,
+            y: () => window.innerHeight * 0.35,
+            rotation: config.enterRot,
+            scale: 0.92
+          },
+          {
+            opacity: 1,
+            // Desktop's alternating vertical offset becomes a sideways offset in the vertical stack
+            x: config.y,
+            y: 0,
+            rotation: config.rot * 0.7,
+            scale: 1,
+            duration: 0.8,
+            ease: "power2.out"
+          },
+          idx === 0 ? 0.35 : ">-0.45"
+        );
+      });
+
+      // Longer resting hold than desktop so the settled deck can be read before unsticking
+      masterTl.to({}, { duration: 0.9 });
+    });
+
+    // Tablet (768px - 991px): Natural, responsive flow with individual card reveals (zero empty scroll void)
+    mm.add("(min-width: 768px) and (max-width: 991px)", () => {
       const cardSlots = stage.querySelectorAll('.mgmt-card-slot');
       if (!cardSlots.length) return;
 

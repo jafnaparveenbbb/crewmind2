@@ -34,7 +34,9 @@ export default function CustomCursor() {
 
     window.addEventListener('mousemove', onMouseMove, { passive: true });
 
-    const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .hero__circle, .cards__item, .mgmt-card, .zero-g-card, .crewmind-egg-card, .diff-core-circle');
+    // Footer controls are excluded: the footer has no hover animation (client feedback)
+    const interactiveElements = [...document.querySelectorAll('a, button, input, textarea, select, .hero__circle, .cards__item, .mgmt-card, .zero-g-card, .crewmind-egg-card, .diff-core-circle')]
+      .filter(el => !el.closest('footer'));
     interactiveElements.forEach(el => {
       el.addEventListener('mouseenter', onMouseEnterInteractive, { passive: true });
       el.addEventListener('mouseleave', onMouseLeaveInteractive, { passive: true });

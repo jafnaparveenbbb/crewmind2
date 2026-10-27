@@ -22,8 +22,10 @@ export default function MagneticButton({
     }
   }, [children]);
 
+  const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const handleMouseEnter = () => {
-    if (!text1Ref.current || !text2Ref.current) return;
+    if (!text1Ref.current || !text2Ref.current || prefersReducedMotion()) return;
     const chars1 = text1Ref.current.querySelectorAll('.char');
     const chars2 = text2Ref.current.querySelectorAll('.char');
     
@@ -33,7 +35,7 @@ export default function MagneticButton({
   };
 
   const handleMouseLeave = () => {
-    if (!text1Ref.current || !text2Ref.current) return;
+    if (!text1Ref.current || !text2Ref.current || prefersReducedMotion()) return;
     const chars1 = text1Ref.current.querySelectorAll('.char');
     const chars2 = text2Ref.current.querySelectorAll('.char');
     

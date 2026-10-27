@@ -67,12 +67,14 @@ export default function App() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
     // 2. Initialize Lenis Smooth Scrolling with responsive, faster scroll speed
+    // (reduced motion: native wheel scrolling without inertia)
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const lenis = new Lenis({
       duration: 0.85,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
-      smoothWheel: true,
+      smoothWheel: !prefersReducedMotion,
       wheelMultiplier: 1.25,
       touchMultiplier: 1.15,
       infinite: false
@@ -101,12 +103,13 @@ export default function App() {
         document.body.setAttribute('theme', 'navy');
       }
 
-      // Hide scroll indicator arrow when scrolled past Hero
-      if (scrollY > window.innerHeight * 2.8) {
-        setArrowVisible(false);
-      } else {
-        setArrowVisible(true);
-      }
+      // Hide scroll indicator arrow once About starts entering, so it never sits over About's
+      // content (e.g. the Support Early bubble). Desktop and mobile heroes have different lengths.
+      const about = document.getElementById('about');
+      const aboutEntering = about
+        ? about.getBoundingClientRect().top < window.innerHeight * 0.95
+        : scrollY > window.innerHeight * 2.8;
+      setArrowVisible(!aboutEntering);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -171,10 +174,11 @@ export default function App() {
 
   const handleScrollArrowClick = () => {
     const footer = document.getElementById('footer') || document.querySelector('footer');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (footer && lenisRef.current) {
-      lenisRef.current.scrollTo(footer, { duration: 1.8 });
+      lenisRef.current.scrollTo(footer, reduced ? { immediate: true } : { duration: 1.8 });
     } else if (footer) {
-      footer.scrollIntoView({ behavior: 'smooth' });
+      footer.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
     }
   };
 
