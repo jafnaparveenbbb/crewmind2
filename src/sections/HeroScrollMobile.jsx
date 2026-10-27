@@ -133,7 +133,7 @@ export default function HeroScrollMobile({ isLoaded = true }) {
           end: 'bottom bottom',
           pin: stickyFrame,
           pinSpacing: false,
-          scrub: 0.5,
+          scrub: 0.25,
           invalidateOnRefresh: true,
           onEnterBack: () => document.body.setAttribute('theme', 'navy'),
           onRefresh: () => {

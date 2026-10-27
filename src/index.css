@@ -1684,9 +1684,9 @@ body[theme="footer-cta"] .scroll-arrow:hover {
      DEDICATED MOBILE HERO (HEROSCROLLMOBILE)
      ========================================================================== */
 
-  /* 260vh = 100vh pinned frame + 160vh scrub runway (desktop: 100vh + 140vh) */
+  /* 200vh = 100vh pinned frame + 100vh scrub runway (desktop: 100vh + 140vh) */
   .hero-mob-sticky {
-    height: 260vh !important;
+    height: 200vh !important;
     position: relative !important;
     width: 100% !important;
     background-color: var(--navy) !important;
@@ -2750,10 +2750,10 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 }
 
 /* Mobile: desktop-style pinned horizontal track, one full-width slide per statistic.
-   480vh = 100vh sticky frame + 380vh runway (same as desktop). */
+   340vh = 100vh sticky frame + 240vh runway (desktop: 480vh). */
 @media screen and (max-width: 767px) {
   .horizontal {
-    height: 480vh;
+    height: 340vh;
   }
 
   .horizontal__sticky {
@@ -3131,11 +3131,11 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Mobile: 300vh = 100vh sticky frame + 200vh runway. The heading block stays on top
+/* Mobile: 220vh = 100vh sticky frame + 120vh runway. The heading block stays on top
    (layered above the stream as on desktop) while the tilted columns drift beneath it. */
 @media screen and (max-width: 767px) {
   .crewmind-about-stats {
-    height: 300vh;
+    height: 220vh;
   }
 
   .crewmind-about-stats__sticky {
@@ -3512,8 +3512,12 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   }
 }
 
-/* Mobile: 280vh = 100vh sticky frame + 180vh runway (same as desktop) */
+/* Mobile: 200vh = 100vh sticky frame + 100vh runway (desktop: 280vh) */
 @media screen and (max-width: 767px) {
+  .ovals-diff-section {
+    height: 200vh;
+  }
+
   .ovals-diff__sticky {
     height: 100vh;
     height: 100svh;
@@ -3886,11 +3890,11 @@ body[theme="footer-cta"] .scroll-arrow:hover {
 }
 
 /* Mobile: pinned frame with the deck dealt as a vertically overlapping stack.
-   300vh = 100vh sticky frame + 200vh runway. Each card overlaps the previous one, leaving the
+   240vh = 100vh sticky frame + 140vh runway. Each card overlaps the previous one, leaving the
    previous card's title strip (--m-step) visible. */
 @media screen and (max-width: 767px) {
   .mgmt-section {
-    height: 300vh !important;
+    height: 240vh !important;
     padding: 0 !important;
   }
 

@@ -135,7 +135,7 @@ export default function HorizontalStats() {
           start: "top top",
           end: "bottom bottom",
           animation: tl,
-          scrub: 0.5,
+          scrub: 0.25,
           invalidateOnRefresh: true
         });
 

@@ -31,8 +31,10 @@ export default function AboutSection() {
 
       const mm = gsap.matchMedia();
 
-      // ALL VIEWPORTS: Full kinetic reveal and word scrub animation (same choreography on mobile)
-      mm.add("all", () => {
+      // ALL VIEWPORTS: Full kinetic reveal and word scrub animation (same choreography on mobile;
+      // mobile uses a tighter scrub so the words track the finger without trailing behind)
+      mm.add({ isMobile: "(max-width: 767px)", isDesktop: "(min-width: 768px)" }, (context) => {
+        const { isMobile } = context.conditions;
         // Section Entry: Label & Heading Masked Rise-Up Animation
         if (labelRef.current) {
           gsap.fromTo(labelRef.current,
@@ -90,7 +92,7 @@ export default function AboutSection() {
                 trigger: wordsWrapRef.current,
                 start: "top 78%",
                 end: "bottom 50%",
-                scrub: 0.8
+                scrub: isMobile ? 0.25 : 0.8
               }
             }
           );

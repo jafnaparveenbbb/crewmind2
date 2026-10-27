@@ -78,7 +78,8 @@ export default function App() {
       smoothWheel: true,
       syncTouch: true,
       wheelMultiplier: 1.25,
-      touchMultiplier: 1.15,
+      touchMultiplier: 1.6,
+      touchInertiaExponent: 1.85,
       infinite: false,
       respectReducedMotion: false
     });

@@ -139,7 +139,7 @@ export default function ManagementPartners() {
           trigger: section,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.6,
+          scrub: 0.25,
           invalidateOnRefresh: true
         }
       });
