@@ -186,11 +186,11 @@ export default function Footer() {
                 Dubai, United Arab Emirates
               </p>
               <a
-                href="mailto:crewmind2026@gmail.com"
+                href="mailto:contact@crewmind.co"
                 className="footer__email-btn"
-                aria-label="Email crewmind2026@gmail.com"
+                aria-label="Email contact@crewmind.co"
               >
-                <span>crewmind2026@gmail.com</span>
+                <span>contact@crewmind.co</span>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
