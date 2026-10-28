@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { stickyEnd } from '../utils/stickyEnd';
 import MagneticButton from '../components/MagneticButton';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -99,7 +100,7 @@ export default function WhatMakesUsDifferent() {
         ScrollTrigger.create({
           trigger: section,
           start: "top top",
-          end: "bottom bottom",
+          end: stickyEnd(section, sticky),
           scrub: true,
           onUpdate: (self) => {
             const p = self.progress;

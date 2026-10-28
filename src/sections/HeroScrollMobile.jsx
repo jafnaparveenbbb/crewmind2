@@ -3,15 +3,17 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ASSETS } from '../utils/assets';
 import { playWhenAllowed } from '../utils/playWhenAllowed';
+import { stickyEnd } from '../utils/stickyEnd';
 import Navbar from '../components/Navbar';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function HeroScrollMobile({ isLoaded = true }) {
+export default function HeroScrollMobile() {
   const containerRef = useRef(null);
   const stickyRef = useRef(null);
   const navRef = useRef(null);
   const videoBoxRef = useRef(null);
+  const videoInnerRef = useRef(null);
   const videoElementRef = useRef(null);
   const rowsParentRef = useRef(null);
   const centerCircleRef = useRef(null);
@@ -20,13 +22,13 @@ export default function HeroScrollMobile({ isLoaded = true }) {
   const row2Ref = useRef(null);
   const row3Ref = useRef(null);
   const bottomRef = useRef(null);
-  const refreshLayoutRef = useRef(null);
 
   useEffect(() => {
     let isMounted = true;
     const container = containerRef.current;
     const stickyFrame = stickyRef.current;
     const videoBox = videoBoxRef.current;
+    const videoInner = videoInnerRef.current;
     const videoElement = videoElementRef.current;
     const rowsParent = rowsParentRef.current;
     const centerCircle = centerCircleRef.current;
@@ -35,7 +37,7 @@ export default function HeroScrollMobile({ isLoaded = true }) {
     const row3 = row3Ref.current;
     const heroBottom = bottomRef.current;
 
-    if (!container || !stickyFrame || !videoBox || !rowsParent) return;
+    if (!container || !stickyFrame || !videoBox || !videoInner || !rowsParent) return;
 
     // Gracefully handle mobile video autoplay (retries on first touch if autoplay is blocked)
     const stopVideoRetry = playWhenAllowed(videoElement);
@@ -93,6 +95,48 @@ export default function HeroScrollMobile({ isLoaded = true }) {
 
     let { clipX, clipY, radius } = getTargetCoordinates();
 
+    // The contracting video is a circular mask (videoBox, border-radius 50%) scaled down around the
+    // target point, with the video (videoInner) counter-scaled so it stays put. This draws the same
+    // circle as an animated clip-path, but as two composited transforms instead of a per-frame repaint.
+    // coverRadius is the smallest circle around the target that covers the whole frame (down to the
+    // large viewport height, so the video still fills the screen when the browser toolbar collapses).
+    let coverRadius = 1;
+    const layoutVideoMask = () => {
+      const width = stickyFrame.clientWidth;
+      const height = Math.max(stickyFrame.clientHeight, videoInner.offsetHeight);
+      coverRadius = Math.ceil(Math.hypot(Math.max(clipX, width - clipX), Math.max(clipY, height - clipY))) + 2;
+      gsap.set(videoBox, {
+        left: clipX - coverRadius,
+        top: clipY - coverRadius,
+        width: coverRadius * 2,
+        height: coverRadius * 2
+      });
+      gsap.set(videoInner, {
+        left: coverRadius - clipX,
+        top: coverRadius - clipY,
+        transformOrigin: `${clipX}px ${clipY}px`
+      });
+    };
+
+    const mask = { r: 0 };
+    const renderMask = () => {
+      const s = Math.max(0.001, Math.min(1, mask.r / coverRadius));
+      gsap.set(videoBox, { scale: s, force3D: true });
+      gsap.set(videoInner, { scale: 1 / s, force3D: true });
+    };
+
+    // Geometry is measured before every ScrollTrigger refresh (load, fonts, width/orientation change),
+    // so the function-based tween values below are re-read with up-to-date numbers
+    const measure = () => {
+      if (!isMounted) return;
+      ({ clipX, clipY, radius } = getTargetCoordinates());
+      gsap.set(rowsParent, { transformOrigin: `${clipX}px ${clipY}px` });
+      layoutVideoMask();
+      renderMask();
+    };
+    measure();
+    ScrollTrigger.addEventListener('refreshInit', measure);
+
     const ctx = gsap.context(() => {
       const initialTextScale = 3.8;
 
@@ -100,10 +144,13 @@ export default function HeroScrollMobile({ isLoaded = true }) {
       const shiftDistance = Math.round(window.innerWidth * 0.5);
 
       // 1. Initial State: Video is 100% fullscreen, centered on the target coordinate
+      // (150vmax start radius, as before: the mask only starts to show once it is inside the frame)
+      mask.r = Math.max(window.innerWidth, window.innerHeight) * 1.5;
+      renderMask();
       gsap.set(videoBox, {
-        clipPath: `circle(150vmax at ${clipX}px ${clipY}px)`,
         opacity: 1,
-        zIndex: 15
+        zIndex: 15,
+        force3D: true
       });
 
       // 2. Initial State: Typography begins enlarged, anchored directly at (clipX, clipY)
@@ -111,10 +158,11 @@ export default function HeroScrollMobile({ isLoaded = true }) {
         opacity: 1,
         scale: initialTextScale,
         y: 0,
-        transformOrigin: `${clipX}px ${clipY}px`
+        transformOrigin: `${clipX}px ${clipY}px`,
+        force3D: true
       });
 
-      gsap.set([row1, row2, row3], { x: 0 });
+      gsap.set([row1, row2, row3], { x: 0, force3D: true });
 
       if (heroBottom) gsap.set(heroBottom, { opacity: 1, y: 0 });
       if (navRef.current) gsap.set(navRef.current, { opacity: 1, y: 0 });
@@ -124,25 +172,18 @@ export default function HeroScrollMobile({ isLoaded = true }) {
         gsap.set(centerImgRef.current, { opacity: 1, scale: 1.05 });
       }
 
-      // Master Mobile Timeline: same stage timings as desktop. Ending at "bottom bottom" means the
-      // whole sequence settles exactly as About's top edge reaches the bottom of the viewport.
+      // Master Mobile Timeline: same stage timings as desktop. The frame is CSS-sticky (composited by
+      // the browser, so it never lags native touch scrolling); the timeline ends exactly where the
+      // sticky frame releases, as About's top edge reaches the bottom of the frame.
       const masterTl = gsap.timeline({
+        defaults: { force3D: true },
         scrollTrigger: {
           trigger: container,
           start: 'top top',
-          end: 'bottom bottom',
-          pin: stickyFrame,
-          pinSpacing: false,
+          end: stickyEnd(container, stickyFrame),
           scrub: 0.25,
           invalidateOnRefresh: true,
-          onEnterBack: () => document.body.setAttribute('theme', 'navy'),
-          onRefresh: () => {
-            const updated = getTargetCoordinates();
-            clipX = updated.clipX;
-            clipY = updated.clipY;
-            radius = updated.radius;
-            gsap.set(rowsParent, { transformOrigin: `${clipX}px ${clipY}px` });
-          }
+          onEnterBack: () => document.body.setAttribute('theme', 'navy')
         }
       });
 
@@ -166,12 +207,13 @@ export default function HeroScrollMobile({ isLoaded = true }) {
       }
 
       // Stage 2: Contract fullscreen video smoothly into central circle
-      masterTl.fromTo(videoBox, {
-        clipPath: `circle(150vmax at ${clipX}px ${clipY}px)`
+      masterTl.fromTo(mask, {
+        r: () => Math.max(window.innerWidth, window.innerHeight) * 1.5
       }, {
-        clipPath: () => `circle(${radius}px at ${clipX}px ${clipY}px)`,
+        r: () => radius,
         duration: 5.4,
-        ease: 'power2.inOut'
+        ease: 'power2.inOut',
+        onUpdate: renderMask
       }, 0.0);
 
       // Stage 3: Typography zooms out in parallel from enlarged size anchored on target circle
@@ -224,75 +266,22 @@ export default function HeroScrollMobile({ isLoaded = true }) {
 
     }, container);
 
-    const refreshLayout = () => {
-      if (!isMounted) return;
-      const updated = getTargetCoordinates();
-      clipX = updated.clipX;
-      clipY = updated.clipY;
-      radius = updated.radius;
-      gsap.set(rowsParent, { transformOrigin: `${clipX}px ${clipY}px` });
-      ScrollTrigger.refresh();
-    };
-
-    refreshLayoutRef.current = refreshLayout;
-
+    // Web fonts change the word widths, and so the target circle's position. ScrollTrigger refreshes
+    // on load and on genuine width/orientation changes by itself (address-bar height changes are
+    // ignored via ignoreMobileResize); App refreshes once more after the loader.
     if (document.fonts) {
       document.fonts.ready.then(() => {
-        if (isMounted) refreshLayout();
+        if (isMounted) ScrollTrigger.refresh();
       });
     }
-
-    // Filtered resize handling:
-    // Ignores minor mobile address bar fluctuations (< 25%), while responding cleanly to genuine width/orientation changes
-    let lastWidth = window.innerWidth;
-    let lastHeight = window.innerHeight;
-    let resizeTimer = null;
-
-    const handleResize = () => {
-      const currentWidth = window.innerWidth;
-      const currentHeight = window.innerHeight;
-      const widthChanged = currentWidth !== lastWidth;
-      const significantHeightChange = Math.abs(currentHeight - lastHeight) > currentHeight * 0.25;
-
-      if (widthChanged || significantHeightChange) {
-        lastWidth = currentWidth;
-        lastHeight = currentHeight;
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          if (isMounted) refreshLayout();
-        }, 150);
-      }
-    };
-
-    const handleOrientation = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        if (isMounted) refreshLayout();
-      }, 200);
-    };
-
-    window.addEventListener('resize', handleResize, { passive: true });
-    window.addEventListener('orientationchange', handleOrientation, { passive: true });
 
     return () => {
       isMounted = false;
       stopVideoRetry();
-      refreshLayoutRef.current = null;
-      clearTimeout(resizeTimer);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleOrientation);
+      ScrollTrigger.removeEventListener('refreshInit', measure);
       ctx.revert();
     };
   }, []);
-
-  // Sync with loader completion
-  useEffect(() => {
-    if (!isLoaded) return;
-    const timer = setTimeout(() => {
-      refreshLayoutRef.current?.();
-    }, 200);
-    return () => clearTimeout(timer);
-  }, [isLoaded]);
 
   const circles = ASSETS.hero.circles;
 
@@ -312,18 +301,20 @@ export default function HeroScrollMobile({ isLoaded = true }) {
 
         {/* 1. Contracting Video Layer (Fullscreen -> Center Circle -> Dissolve) */}
         <div ref={videoBoxRef} className="hero-mob__video-box">
-          <video
-            ref={videoElementRef}
-            muted
-            autoPlay
-            loop
-            playsInline
-            preload="auto"
-            crossOrigin="anonymous"
-            poster={ASSETS.hero.placeholderMob}
-          >
-            <source src={ASSETS.hero.videoMobile} type="video/mp4" />
-          </video>
+          <div ref={videoInnerRef} className="hero-mob__video-inner">
+            <video
+              ref={videoElementRef}
+              muted
+              autoPlay
+              loop
+              playsInline
+              preload="auto"
+              crossOrigin="anonymous"
+              poster={ASSETS.hero.placeholderMob}
+            >
+              <source src={ASSETS.hero.videoMobile} type="video/mp4" />
+            </video>
+          </div>
         </div>
 
         {/* 2. Typographic Field with Oversized Words & Perfectly Concentric Target Circle */}

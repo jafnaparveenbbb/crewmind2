@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { stickyEnd } from '../utils/stickyEnd';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -133,7 +134,7 @@ export default function HorizontalStats() {
         ScrollTrigger.create({
           trigger: container,
           start: "top top",
-          end: "bottom bottom",
+          end: stickyEnd(container, container.querySelector('.horizontal__sticky') || container),
           animation: tl,
           scrub: 0.25,
           invalidateOnRefresh: true

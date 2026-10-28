@@ -1106,6 +1106,14 @@ body.burger-open .burger {
   pointer-events: all;
   overflow: hidden;
   user-select: none;
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+/* The page stays at the top until the loader hands over to the hero */
+html.is-loading,
+html.is-loading body {
+  overflow: hidden;
 }
 
 .loader-logo-wrap {
@@ -1693,18 +1701,28 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     z-index: 10;
   }
 
+  /* CSS-sticky (composited by the browser, so it moves with native touch scrolling in the same
+     frame). Height is the small viewport: it never changes while the toolbar collapses, so nothing
+     relayouts mid-scroll and the hero timeline always ends exactly where the frame releases.
+     Vertical overflow stays visible so the fullscreen video can extend under a collapsed toolbar. */
   .hero-mob-sticky-frame {
-    position: relative;
+    position: sticky !important;
+    top: 0 !important;
     width: 100vw !important;
+    height: 100vh !important;
     height: 100svh !important;
-    height: 100dvh !important;
-    min-height: 100svh !important;
-    max-height: 100dvh !important;
     overflow: hidden !important;
     background-color: var(--navy) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+  }
+
+  @supports (overflow: clip) {
+    .hero-mob-sticky-frame {
+      overflow-x: clip !important;
+      overflow-y: visible !important;
+    }
   }
 
   .hero-mob-nav-layer {
@@ -1718,30 +1736,39 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     visibility: visible;
   }
 
+  /* Circular mask: position, size and scale are set by HeroScrollMobile around the target circle */
   .hero-mob__video-box {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100svh !important;
-    height: 100dvh !important;
-    clip-path: circle(150vmax at 50% 50%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vw;
+    border-radius: 50%;
     overflow: hidden !important;
     z-index: 15 !important;
     pointer-events: none !important;
-    background-color: var(--navy) !important;
-    will-change: clip-path, opacity;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    transform-origin: 50% 50%;
+    will-change: transform, opacity;
   }
 
-  .hero-mob__video-box video {
+  /* Counter-scaled video layer, covering the frame down to the large viewport height */
+  .hero-mob__video-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100lvh;
+    background-color: var(--navy);
+    will-change: transform;
+  }
+
+  .hero-mob__video-inner video {
+    display: block;
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
     pointer-events: none !important;
-    transform: translateZ(0);
   }
 
   .hero-mob__rows--parent {
@@ -1749,8 +1776,9 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
+    height: 100vh !important;
     height: 100svh !important;
-    height: 100dvh !important;
+    will-change: transform;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2759,7 +2787,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   .horizontal__sticky {
     height: 100vh;
     height: 100svh;
-    height: 100dvh;
   }
 
   .horizontal__list {
@@ -3141,7 +3168,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   .crewmind-about-stats__sticky {
     height: 100vh;
     height: 100svh;
-    height: 100dvh;
   }
 
   .crewmind-about-stats__left {
@@ -3521,7 +3547,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   .ovals-diff__sticky {
     height: 100vh;
     height: 100svh;
-    height: 100dvh;
   }
 }
 
@@ -3903,7 +3928,6 @@ body[theme="footer-cta"] .scroll-arrow:hover {
     top: 0 !important;
     height: 100vh !important;
     height: 100svh !important;
-    height: 100dvh !important;
     min-height: 0 !important;
     justify-content: center !important;
     padding: clamp(24px, 5svh, 48px) 0 !important;
@@ -3984,11 +4008,11 @@ body[theme="footer-cta"] .scroll-arrow:hover {
   background-color: #ffffff !important;
   color: #00063D !important;
   height: 100vh;
-  height: 100dvh;
+  height: 100svh;
   min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100svh;
   max-height: 100vh;
-  max-height: 100dvh;
+  max-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;

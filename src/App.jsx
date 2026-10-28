@@ -66,26 +66,30 @@ export default function App() {
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-    // 2. Initialize Lenis Smooth Scrolling with responsive, faster scroll speed
-    // (same smoothing on every device, regardless of the OS reduced-motion setting).
-    // syncTouch routes finger scrolling through Lenis as well, so pins and scrubs advance in the
-    // same frame as the scroll on phones, exactly as they do with a wheel on desktop.
+    // 2. Initialize Lenis Smooth Scrolling for wheel/trackpad input only.
+    // Touch keeps the browser's native scrolling: on iOS, Lenis' simulated touch inertia (syncTouch)
+    // overshoots several sections per flick and runs the scroll on the main thread. Every pinned
+    // section is CSS-sticky, so pins stay in step with native scrolling without Lenis driving touch.
+    // Reduced motion is deliberately not respected: the site always shows the full choreography.
     const lenis = new Lenis({
       duration: 0.85,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      syncTouch: true,
+      syncTouch: false,
       wheelMultiplier: 1.25,
-      touchMultiplier: 1.6,
-      touchInertiaExponent: 1.85,
       infinite: false,
       respectReducedMotion: false
     });
     lenisRef.current = lenis;
     window.__lenis = lenis;
     lenis.scrollTo(0, { immediate: true });
+
+    // Keep the page at the top while the loader covers it, so a swipe during loading can't scroll
+    // the page underneath (which then flashed the footer before jumping back to the hero)
+    document.documentElement.classList.add('is-loading');
+    lenis.stop();
 
     // Connect Lenis to GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
@@ -97,45 +101,38 @@ export default function App() {
     gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
-    // Track scroll position for header state & scroll arrow visibility
+    // Track scroll position for header state (reads scrollY only, so no layout is forced mid-scroll)
+    let atTop = null;
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      if (scrollY > 50) {
-        document.body.classList.remove('at-top');
-      } else {
-        document.body.classList.add('at-top');
-        document.body.setAttribute('theme', 'navy');
-      }
-
-      // Hide scroll indicator arrow once About starts entering, so it never sits over About's
-      // content (e.g. the Support Early bubble). Desktop and mobile heroes have different lengths.
-      const about = document.getElementById('about');
-      const aboutEntering = about
-        ? about.getBoundingClientRect().top < window.innerHeight * 0.95
-        : scrollY > window.innerHeight * 2.8;
-      setArrowVisible(!aboutEntering);
+      const nowAtTop = window.scrollY <= 50;
+      if (nowAtTop === atTop) return;
+      atTop = nowAtTop;
+      document.body.classList.toggle('at-top', nowAtTop);
+      if (nowAtTop) document.body.setAttribute('theme', 'navy');
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
 
-    // Handle orientation changes gracefully with a debounced recalculation
-    let orientationTimer = null;
-    const handleOrientationChange = () => {
-      clearTimeout(orientationTimer);
-      orientationTimer = setTimeout(() => {
-        if (lenisRef.current) {
-          lenisRef.current.resize();
-        }
-        ScrollTrigger.refresh();
-      }, 200);
-    };
+    // Hide scroll indicator arrow once About starts entering, so it never sits over About's
+    // content (e.g. the Support Early bubble). Desktop and mobile heroes have different lengths.
+    const about = document.getElementById('about');
+    const arrowTrigger = about
+      ? ScrollTrigger.create({
+          trigger: about,
+          start: 'top 95%',
+          end: 'max',
+          onToggle: (self) => setArrowVisible(!self.isActive)
+        })
+      : null;
 
-    window.addEventListener('orientationchange', handleOrientationChange, { passive: true });
+    // Orientation changes need no handler of their own: they change the width, so ScrollTrigger's
+    // resize auto-refresh recalculates every section and Lenis re-measures via its ResizeObserver.
 
     return () => {
-      clearTimeout(orientationTimer);
-      window.removeEventListener('orientationchange', handleOrientationChange);
       window.removeEventListener('scroll', handleScroll);
+      arrowTrigger?.kill();
+      document.documentElement.classList.remove('is-loading');
 
       // Clean up Lenis scroll listener
       lenis.off('scroll', ScrollTrigger.update);
@@ -159,20 +156,22 @@ export default function App() {
   const handleLoaderComplete = () => {
     setLoading(false);
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.classList.remove('is-loading');
     if (lenisRef.current) {
-      lenisRef.current.scrollTo(0, { immediate: true });
+      lenisRef.current.scrollTo(0, { immediate: true, force: true });
+      lenisRef.current.start();
       lenisRef.current.resize();
     }
-    // Refresh ScrollTrigger cleanly once layout and loader are settled
-    clearTimeout(loaderRefreshTimerRef.current);
-    loaderRefreshTimerRef.current = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 150);
+    // Refresh ScrollTrigger once the loader has unmounted and the next frame has laid out
+    cancelAnimationFrame(loaderRefreshTimerRef.current);
+    loaderRefreshTimerRef.current = requestAnimationFrame(() => {
+      loaderRefreshTimerRef.current = requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
   };
 
   useEffect(() => {
     return () => {
-      clearTimeout(loaderRefreshTimerRef.current);
+      cancelAnimationFrame(loaderRefreshTimerRef.current);
     };
   }, []);
 
@@ -200,7 +199,7 @@ export default function App() {
       <main className="main">
         {/* 1. Hero Experience (Theme: Navy #00063D) */}
         {isMobile ? (
-          <HeroScrollMobile isLoaded={!loading} />
+          <HeroScrollMobile />
         ) : (
           <HeroScroll isLoaded={!loading} />
         )}

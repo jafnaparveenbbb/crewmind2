@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { stickyEnd } from '../utils/stickyEnd';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -138,7 +139,7 @@ export default function ManagementPartners() {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "bottom bottom",
+          end: stickyEnd(section, frameRef.current || section),
           scrub: 0.25,
           invalidateOnRefresh: true
         }
