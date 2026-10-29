@@ -312,7 +312,9 @@ export default function HeroScrollMobile() {
               crossOrigin="anonymous"
               poster={ASSETS.hero.placeholderMob}
             >
-              <source src={ASSETS.hero.videoMobile} type="video/mp4" />
+              {ASSETS.hero.videoMobile.map(({ src, type }) => (
+                <source key={src} src={src} type={type} />
+              ))}
             </video>
           </div>
         </div>

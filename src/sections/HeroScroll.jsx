@@ -316,7 +316,9 @@ export default function HeroScroll({ isLoaded = true }) {
             crossOrigin="anonymous"
             poster={typeof window !== 'undefined' && window.innerWidth <= 768 ? ASSETS.hero.placeholderMob : ASSETS.hero.placeholderPc}
           >
-            <source src={typeof window !== 'undefined' && window.innerWidth <= 768 ? ASSETS.hero.videoMobile : ASSETS.hero.videoDesktop} type="video/mp4" />
+            {(typeof window !== 'undefined' && window.innerWidth <= 768 ? ASSETS.hero.videoMobile : ASSETS.hero.videoDesktop).map(({ src, type }) => (
+              <source key={src} src={src} type={type} />
+            ))}
           </video>
         </div>
 
